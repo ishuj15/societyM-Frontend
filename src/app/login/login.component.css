@@ -1,0 +1,71 @@
+/* Container for the login form */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="username"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="username"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #c6c6c6;
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
