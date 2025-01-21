@@ -1,12 +1,20 @@
 /* Container for the login form */
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   margin: auto;
   padding: 20px;
-  background-color: #f4f4f9;
+  background-color: #c1c1f3;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Add absolute positioning */
+  top: 30%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h2 {
@@ -24,26 +32,28 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #0288d1; 
 }
 
 input[type="username"],
 input[type="password"] {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 5px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #0288d1;
   border-radius: 5px;
   outline: none;
 }
 
 input[type="username"]:focus,
 input[type="password"]:focus {
-  border-color: #007bff;
+  border-color: #0277bd;
+  background-color: #ffffff;
 }
 
 button {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   background-color: #007bff;
   color: white;

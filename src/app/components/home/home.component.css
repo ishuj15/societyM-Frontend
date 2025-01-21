@@ -1,0 +1,54 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8; /* Light grey-blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  /* Main container to center content */
+  .container {
+    text-align: center;
+  }
+  
+  /* Header styling */
+  h1 {
+    color: #01579b; /* Deep blue color */
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  }
+  
+  /* Button styling */
+  button {
+    background-color: #0288d1; /* Bright blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #0277bd; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+  }
+  
+  button:active {
+    background-color: #01579b; /* Even darker blue on click */
+  }
+  
+  /* Router outlet container */
+  router-outlet {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+  }
+  

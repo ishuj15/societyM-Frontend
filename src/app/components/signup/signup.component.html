@@ -1,0 +1,61 @@
+
+<div class ="signup-container">
+    <form [formGroup]="form" (ngSubmit)="OnRegister()">
+        <h2> SignUp</h2>
+    <div>
+        <label  for ="username"> UserName </label>
+        <input  id ="username" formControlName="username" type= "text" placeholder="Enter your username"    /> 
+    </div>
+
+    <div>
+        <label  for ="userRole"> UserRole </label>
+        <input  id ="userRole" formControlName="userRole" type= "text" placeholder="Enter your userRole"    /> 
+    </div>
+
+    <div>
+        <label  for ="email"> Email </label>
+        <input  id ="email" formControlName="email" type= "email" placeholder="Enter your email"    /> 
+    </div>
+
+    <div>
+        <label  for ="address"> Address </label>
+        <input  id ="address" formControlName="address" type= "text" placeholder="Enter your address"    /> 
+    </div>
+
+    <div>
+        <label  for ="phoneNo">Phone Number </label>
+        <input  id ="phoneNo" formControlName="phoneNo" type= "text" placeholder="Enter your phoneNo"    /> 
+    </div>
+
+
+    <div >
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="text" placeholder="Enter your password" />
+    </div>
+
+    <button type="submit"  [disabled] ="form.invalid"> Sign Up </button>
+    @if (UserNameIsInvalid) {
+        <p class="control-error">Please enter a valid email address.</p>
+      }
+    
+      @if (passwordIsInvalid) {
+        <p class="control-error">Please enter a valid password (at least 8 characters long) .</p>
+      }
+      
+      @if (UserRoleIsInvalid) {
+        <p class="control-error">Please enter a valid user role (e.g., ADMIN, RESIDENT, GUARD).</p>
+    }
+      
+      @if (PhoneNumberIsInvalid) {
+        <p class="control-error">Please enter a valid phone number (exactly 10 digits).</p>
+      }
+      @if (AddressIsInvalid) {
+        <p class="control-error">Please enter a valid address (at least 5 characters long).</p>
+      }
+      
+      @if (EmailIsInvalid) {
+        <p class="control-error">Please enter a valid email address.</p>
+      }
+
+    </form>
+</div>

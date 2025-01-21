@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup,  ReactiveFormsModule, Validators } from '@angular/forms';
-import { authService } from '../auth.services/auth.services';
+
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth-services/auth.services';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent {
 
-  constructor(private authService: authService){
+  constructor(private authService: AuthService){
 
   }
   form = new FormGroup({
@@ -30,8 +31,9 @@ export class LoginComponent {
     if(this.form.valid){
       const formUserName = this .form .value.username!
       const formPassword = this.form.value.password!;
-      this.authService.login(formUserName ,formPassword).subscribe({
-
+      this.authService.login(formUserName ,formPassword).subscribe( response => {
+        //const token= response.data['jwtToken']
+          
       });
     }
 
