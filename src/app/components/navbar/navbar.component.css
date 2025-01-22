@@ -1,0 +1,69 @@
+body {
+    font-family :'Franklin Gothic Medium', 'Arial Narrow';
+    margin: 0;
+    padding: 0;
+}
+
+.vertical-navbar {
+    width: 300px;
+    background-color: rgb(130, 214, 247); /* Slightly darker gray */
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    padding-top: 60px;
+    
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+    
+}
+
+.vertical-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vertical-navbar li {
+    text-align: left;
+    padding: 20px 20px;
+    display: block;
+    font-size: 22px; /* Increased font size */
+    font-weight: bold;
+}
+
+.vertical-navbar li a {
+    color: #1a0101; /* Pure white text */
+    text-decoration: none;
+    display: block;
+   
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
+}
+
+.vertical-navbar li a:hover {
+     /* Deeper hover color */
+    color: #3815e8;
+      text-decoration: underline;
+}
+
+.router-link-active {
+    background-color: #00c896; /* More vibrant active color */
+    color: white;
+}
+
+.hamburger {
+    font-size: 35px; /* Increase hamburger size */
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    color: #ffffff;
+    z-index: 1000;
+    padding: 10px;
+    background-color: #1c3b4d;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow to the hamburger */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.hamburger:hover {
+    background-color: #00c896; /* Match hover color with active link */
+}

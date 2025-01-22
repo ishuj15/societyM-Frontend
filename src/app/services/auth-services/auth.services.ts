@@ -1,15 +1,17 @@
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { loginResponse } from "../../models/auth.model";
 import { User } from "../../models/user.model";
+import { Roles } from "../../components/signup/signup.component";
 
 @Injectable({
     providedIn:"root"
 })
 export class AuthService{
     private httpClient = inject(HttpClient);
-    
+    loggedIn$= signal<boolean>(false);
+    role$ = signal<Roles| null>(Roles.RESIDENT);
 
     login(username: string, password: string) : Observable<loginResponse>{
        

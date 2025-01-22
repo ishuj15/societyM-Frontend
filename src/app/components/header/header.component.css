@@ -1,0 +1,49 @@
+/* header.component.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    
+}
+
+/* Flexbox layout for header, to display items horizontally */
+.header-container {
+    width:100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(153, 101, 238); 
+    padding-top: 60px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+     /* Ensures header is above content */
+    z-index: 0; /* Ensures header stays above the navbar */ 
+   
+}
+
+.welcome-message h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #1a0101;
+    margin: 0;
+  margin-left: 700px;
+  margin-bottom: 50px;
+}
+
+.logout button {
+    padding: 10px 20px;
+    font-size: 26px;
+    background-color: #1c3b4d;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 130px;
+    margin-bottom: 50px;
+}
+
+.logout button:hover {
+    background-color: #00c896;
+    color: #ffffff;
+}

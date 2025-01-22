@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup,  ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth-services/auth.services';
+import { loginResponse } from '../../models/auth.model';
+import {  Router } from '@angular/router';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
-  constructor(private authService: AuthService){
+  private destroyRef=inject(DestroyRef);
+  constructor(private authService: AuthService , private router :Router){
 
   }
   form = new FormGroup({
@@ -31,9 +34,29 @@ export class LoginComponent {
     if(this.form.valid){
       const formUserName = this .form .value.username!
       const formPassword = this.form.value.password!;
-      this.authService.login(formUserName ,formPassword).subscribe( response => {
-        //const token= response.data['jwtToken']
-          
+    
+      const sub = this.authService.login(formUserName ,formPassword).subscribe( {
+        next: (response:loginResponse) =>{
+          if(response.status.toString()==="SUCCESS")
+          {
+            this.authService.loggedIn$.set(true);
+            this.router.navigate(['/dashboard']);
+          }
+          else
+          {
+            alert("Couldn't login , Please try again");
+            this.router.navigate(['/login']);
+
+          }
+        },
+
+        error :() =>{
+
+        }
+       
+      });
+      this.destroyRef.onDestroy(()=>{
+        sub.unsubscribe();
       });
     }
 

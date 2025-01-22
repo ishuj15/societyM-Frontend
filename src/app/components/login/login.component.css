@@ -32,12 +32,12 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
-  color: #0288d1; 
+  color:darkmagenta; 
 }
 
 input[type="username"],
 input[type="password"] {
-  width: 90%;
+  width: 100%;
   padding: 10px;
   margin-top: 5px;
   font-size: 16px;
@@ -53,7 +53,7 @@ input[type="password"]:focus {
 }
 
 button {
-  width: 90%;
+  width: 100%;
   padding: 10px;
   background-color: #007bff;
   color: white;

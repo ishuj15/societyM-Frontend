@@ -7,8 +7,8 @@
     background-color: #c1c1f3;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: absolute; /* Add absolute positioning */
-    top: 30%; /* Center vertically */
+    position :absolute;/* Add absolute positioning */
+    top: 35%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust for exact centering */
     display: flex;

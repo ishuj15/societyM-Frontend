@@ -4,6 +4,7 @@ import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth-services/auth.services';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../models/auth.model';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-signup',
@@ -79,17 +80,7 @@ export class SignupComponent {
         //Handle observables error like when server is down
 
       }
-     });
-    //   this.authService.signup(user).subscribe( {
-    //     next : (response: loginResponse):void =>{
-    //       this.router.navigate(['/login']), 
-    //     },
-    //     error : {
-
-    //     },
-    // });
-
-      
+     });   
       
     }
 
