@@ -1,0 +1,73 @@
+/* Ensure the main container starts below the fixed header and navbar */
+.notice-container {
+    /* Adjust this value based on the combined height of your header and navbar */
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin-left: 300px;
+    margin-top: 0px;
+}
+
+.notice-header h2 {
+    font-size: 30px;
+    color: #333;
+    font-weight: bold;
+   
+}
+
+/* Styles for admin actions */
+.admin-actions {
+    margin-top: 20px;
+    background-color: #e6f7ff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.admin-actions .action-item {
+    background-color: #cce7ff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.admin-actions .action-item:hover {
+    background-color: #99c2ff;
+}
+
+/* Notice list styles */
+.notice-list {
+    margin-top: 30px;
+}
+
+.notice-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notice-item p {
+    margin: 5px 0;
+    color: #444;
+}
+
+/* Responsive design adjustments */
+/* @media screen and (max-width: 768px) {
+    .notice-container {
+        padding: 10px;
+    }
+    
+    .notice-header h2 {
+        font-size: 24px;
+    }
+
+    .admin-actions .action-item {
+        font-size: 16px;
+    }
+    
+    .notice-item {
+        padding: 12px;
+    }
+} */

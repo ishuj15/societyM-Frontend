@@ -11,7 +11,7 @@ import { Roles } from "../../components/signup/signup.component";
 export class AuthService{
     private httpClient = inject(HttpClient);
     loggedIn$= signal<boolean>(false);
-    role$ = signal<Roles| null>(Roles.RESIDENT);
+    role$ = signal<Roles| null>(null);
 
     login(username: string, password: string) : Observable<loginResponse>{
        

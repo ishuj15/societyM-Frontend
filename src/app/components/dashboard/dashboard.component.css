@@ -1,0 +1,64 @@
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: 300px; /* Offset for the vertical navbar */
+    padding: 100px 20px 20px 20px; /* Padding for proper spacing */
+    height: calc(100vh - 100px); /* Full height minus header height */
+    background-color: #f5f5f5; /* Light background for dashboard area */
+}
+
+/* Blocks */
+.dashboard-block {
+    width: 300px;
+    height: 200px;
+    background-color: #1c3b4d;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-block h2 {
+    margin: 0;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.dashboard-block p {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Hover Effect */
+.dashboard-block:hover {
+    background-color: #00c896;
+    transform: scale(1.05);
+}
+
+/* Notice Block */
+#notice-block {
+    background-color: #3b5998; /* Specific color for notice block */
+}
+
+#notice-block:hover {
+    background-color: #00c896; /* Matches hover effect with others */
+}
+
+/* Alert Block */
+#alert-block {
+    background-color: #e74c3c; /* Specific color for alert block */
+}
+
+#alert-block:hover {
+    background-color: #00c896;
+}

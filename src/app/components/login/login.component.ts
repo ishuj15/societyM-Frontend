@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth-services/auth.services';
 import { loginResponse } from '../../models/auth.model';
 import {  Router } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
+import { Roles } from '../signup/signup.component';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -39,8 +41,13 @@ export class LoginComponent {
         next: (response:loginResponse) =>{
           if(response.status.toString()==="SUCCESS")
           {
+            localStorage.setItem('authToken', (response.data as any )['JWT Token']);
+            const decodeToken :{role:string} = jwtDecode( (response.data as any)['JWT Token']);
             this.authService.loggedIn$.set(true);
-            this.router.navigate(['/dashboard']);
+            this.authService.role$.set(decodeToken.role as Roles);
+
+            
+            this.router.navigate(['/home/dashboard']);
           }
           else
           {

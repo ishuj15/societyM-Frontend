@@ -1,1 +1,31 @@
-<p>notice works!</p>
+<!-- <div>
+
+    <div> 
+        <h2>  View Notices</h2>
+    </div>
+    <div ***ngIf="role===admin">
+        <!-- @if (role===admin)
+         { -->
+            <div> Add Notices/div>
+                <div> Delete Notices  </div>
+                <div> Update Notices </div>
+        <!-- } -->
+
+    <!-- </div> -->
+   
+<!-- </div> --> -->
+
+<div class="notice-container">
+    <!-- <div class="notice-header">
+        <h2>View Notices</h2>
+    </div> -->
+
+
+    <div class="action-item" class ="admin-actions"> 1. View Notices</div>
+    <div *ngIf="role === admin" class="admin-actions">
+        <div  class="action-item" >2. Add Notices</div>
+        <div class="action-item">3. Delete Notices</div>
+        <div class="action-item">4.Update Notices</div>
+    </div>
+   
+</div>
