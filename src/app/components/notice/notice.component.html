@@ -1,31 +1,100 @@
-<!-- <div>
-
-    <div> 
-        <h2>  View Notices</h2>
-    </div>
+<!-- 
     <div ***ngIf="role===admin">
-        <!-- @if (role===admin)
-         { -->
+       -     @if (role===admin)
+         { 
             <div> Add Notices/div>
                 <div> Delete Notices  </div>
                 <div> Update Notices </div>
-        <!-- } -->
-
-    <!-- </div> -->
-   
-<!-- </div> --> -->
-
+        } -->
+ 
+        <!-- <button class="delete-btn">Delete</button> -->
 <div class="notice-container">
-    <!-- <div class="notice-header">
-        <h2>View Notices</h2>
-    </div> -->
+    
+    <div  class="admin-actions">
+       @if(role === admin){
+        <div (click)="onClickingViewNotice()" class="action-item" > 1. View Notices</div>
+        <div  (click)="onClickingAddNotice()" class="action-item" >2. Add Notices</div>
+        <div  (click)=" onClickingViewNotice()" class="action-item" >3. Delete Notices</div>
 
-
-    <div class="action-item" class ="admin-actions"> 1. View Notices</div>
-    <div *ngIf="role === admin" class="admin-actions">
-        <div  class="action-item" >2. Add Notices</div>
-        <div class="action-item">3. Delete Notices</div>
-        <div class="action-item">4.Update Notices</div>
+        <div  (click)=" onClickingViewNotice()" class="action-item">4.Update Notices</div>
+        }
     </div>
-   
+
+    <!-- Add notice form -->
+    <div>@if(isAddNoticeVisible){
+    <form [formGroup]="form" (ngSubmit)="onSubmitNewNotice()"> 
+        <div>
+            <label for ="title">  Title </label>
+            <input  id ="title"  formControlName="title"  placeholder="Enter Notice tile"> 
+        </div>
+        <div>
+            <label for="message">Message</label> 
+            <textarea id="message" formControlName="message" placeholder="Enter Notice Message"></textarea>
+    
+        </div>
+    
+        <div>
+            <label for="targetRole">Target Role</label>
+            <select id="targetRole" formControlName="targetRole" placeholder="select target Role">
+                <option value=resident>Resident</option>
+                <option value=guard>Guard</option>
+                <option value="ALL">All</option>
+            </select>
+        </div>
+    
+        <div>
+            <label for="date">Date</label>
+            <input type="date" id="date" formControlName="date" placeholder="Enter Notice Date">
+        </div>
+        <button type="submit" [disabled]="form.invalid">Submit</button>
+    </form>
+       }
+    </div> 
+
+       
+    <!--Admin  Notices Table -->
+    <div> @if(toShowTable)
+        {
+
+         <table  class="notice-table">
+     
+             <thead>
+                 <tr>
+                     <th>#</th>
+                     <th>Title</th>
+                     <th>Notice</th>
+                     <th>Role</th>
+                     <th>Date</th>
+                 </tr>
+             </thead>
+             <tbody >
+                 
+               
+                 <tr *ngFor="let notice of notices let i = index"
+                    (click)="onSelectingNotice(notice)"
+                    [class.selected]="notice === selectedNotice"
+                    >
+                     <td>{{i+1}}</td>
+                     <td>{{notice.title}}</td>
+                     <td>{{notice.message}}</td>
+                     <td>{{notice.targetRole}}</td>
+                     <td>
+                       {{ notice.date}}
+                     </td>
+                 </tr>
+             
+                
+             </tbody>
+         </table>
+        }
+    </div>
+
+
+    <!-- Delete Button -->
+    <div>
+        @if(deleteButton){
+            <button (click)= "onClickingDeleteButton()" class="delete-btn">Delete</button>
+        }
+    </div>
+
 </div>

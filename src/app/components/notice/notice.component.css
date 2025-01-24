@@ -1,20 +1,11 @@
-/* Ensure the main container starts below the fixed header and navbar */
 .notice-container {
-    /* Adjust this value based on the combined height of your header and navbar */
     padding: 20px;
     background-color: #f4f4f4;
     margin-left: 300px;
     margin-top: 0px;
+    height: 100%;
 }
 
-.notice-header h2 {
-    font-size: 30px;
-    color: #333;
-    font-weight: bold;
-   
-}
-
-/* Styles for admin actions */
 .admin-actions {
     margin-top: 20px;
     background-color: #e6f7ff;
@@ -35,39 +26,148 @@
     background-color: #99c2ff;
 }
 
-/* Notice list styles */
-.notice-list {
-    margin-top: 30px;
+/* Add Notice Form Styles */
+.add-notice-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
-.notice-item {
-    background-color: white;
-    padding: 15px;
+.add-notice-form .form-group {
     margin-bottom: 15px;
-    border-radius: 10px;
+}
+
+.add-notice-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.add-notice-form input,
+.add-notice-form textarea,
+.add-notice-form select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-notice-form button {
+    padding: 10px 20px;
+    background-color: #1c3b4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-notice-form button:hover {
+    background-color: #00c896;
+}
+
+/* Table Styling for Notices */
+.notice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.notice-item p {
-    margin: 5px 0;
-    color: #444;
+.notice-table th,
+.notice-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
 }
 
-/* Responsive design adjustments */
-/* @media screen and (max-width: 768px) {
-    .notice-container {
-        padding: 10px;
-    }
-    
-    .notice-header h2 {
-        font-size: 24px;
-    }
+.notice-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    color: #333;
+}
 
-    .admin-actions .action-item {
-        font-size: 16px;
-    }
-    
-    .notice-item {
-        padding: 12px;
-    }
-} */
+.notice-table td {
+    color: #555;
+}
+
+/* Table Row Hover Effect */
+.notice-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #e60000;
+}
+
+/* Add/Edit Notice Modal */
+.add-notice-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-notice-modal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+}
+
+/* Hide the table when adding a new notice */
+.no-notice-table {
+    display: none;
+}
+.notice-table tr.selected {
+    background-color: #d3f4ff;
+    cursor: pointer;
+  }
+  .notice-table tr:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  /* Delete Button */
+.delete-btn {
+    background-color: #ff4d4d; /* Default red color */
+    color: white;
+    padding: 8px 16px; /* Adjusted padding for better usability */
+    font-size: 16px; /* Clear and readable font size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */
+}
+
+.delete-btn:hover {
+    background-color: #e60000; /* Darker red for hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+}
+
+.delete-btn:focus {
+    outline: none; /* Removes the default browser focus outline */
+    box-shadow: 0 0 5px 2px #ff6666; /* Adds a subtle focus ring for accessibility */
+}
+
+.delete-btn:active {
+    background-color: #cc0000; /* Even darker red when pressed */
+    transform: scale(0.95); /* Slightly shrinks the button when clicked */
+}
