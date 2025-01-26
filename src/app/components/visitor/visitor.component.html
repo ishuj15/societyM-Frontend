@@ -1,1 +1,136 @@
-<p>visitor works!</p>
+<div class="visitor-container">
+  <!-- Header Section -->
+  <h1>Visitor Management</h1>
+
+ 
+  <div class="action-buttons">
+    <button (click)="onViewAllVisitorByAdmin()">View All Visitors</button>
+    <button (click)="onClickingAddVisitor()">Add Visitor</button>
+    <button (click)="onClickingManageRequests()">Manage Requests</button>
+  </div>
+
+  <!-- Add Visitor Form -->
+  <div *ngIf="addVisitorFormVisibility" class="form-container">
+    <h2>Add Visitor</h2>
+    <form [formGroup]="form" (ngSubmit)="OnSubmitAddVisitor()">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" />
+      </div>
+
+      <div>
+        <label for="purpose">Purpose</label>
+        <input id="purpose" type="text" formControlName="purpose" />
+      </div>
+
+      <div>
+        <label for="arrivalDate">Arrival Date</label>
+        <input id="arrivalDate" type="date" formControlName="arrivalDate" />
+      </div>
+
+      <div>
+        <label for="arrivalTime">Arrival Time</label>
+        <input id="arrivalTime" type="time" formControlName="arrivalTime" />
+      </div>
+
+      <div>
+        <label for="dep_date">Departure Date</label>
+        <input id="dep_date" type="date" formControlName="dep_date" />
+      </div>
+
+      <div>
+        <label for="departureTime">Departure Time</label>
+        <input id="departureTime" type="time" formControlName="departureTime" />
+      </div>
+
+      <div>
+        <label for="contactNo">Contact Number</label>
+        <input id="contactNo" type="text" formControlName="contactNo" />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="!form.valid">Add Visitor</button>
+        <button type="button" (click)="onClickingAddVisitor()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Visitors Table Admin -->
+  <div *ngIf="showTableByAdmin" class="table-container">
+    <h2>All Visitors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Arrival Date</th>
+          <th>Contact No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visitor of listOfVisitors">
+          <td>{{ visitor.name }}</td>
+          <td>{{ visitor.purpose }}</td>
+          <td>{{ visitor.arrivalDate }}</td>
+          <td>{{ visitor.contactNo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- View visitor by user -->
+  <div *ngIf="showTableByUsern" class="table-container">
+    <h2>All Visitors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Arrival Date</th>
+          <th>Contact No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visitor of listOfVisitors">
+          <td>{{ visitor.name }}</td>
+          <td>{{ visitor.purpose }}</td>
+          <td>{{ visitor.arrivalDate }}</td>
+          <td>{{ visitor.contactNo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pending Requests Table -->
+  <div *ngIf="ViewPendingRequestsTable" class="table-container">
+    <h2>Pending Requests</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Arrival Date</th>
+          <th>Contact No</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of listOfPendingRequests" >
+          <td>{{ request.name }}</td>
+          <td>{{ request.purpose }}</td>
+          <td>{{ request.arrivalDate }}</td>
+          <td>{{ request.contactNo }}</td>
+          <td>
+            <button (click)="onSelectingVisitor(request)">Select</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="showChangestatusButton" class="status-change">
+    <p>Manage status for selected visitor:</p>
+    <button (click)="onClickingChangeStatusButton('approved')">Approve</button>
+    <button (click)="onClickingChangeStatusButton('denied')">Deny</button>
+  </div>
+</div>

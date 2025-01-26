@@ -1,5 +1,5 @@
 export interface Visitor {
-   
+    idVisitor:string,
     userId: string;
     name: string;
     purpose: string;

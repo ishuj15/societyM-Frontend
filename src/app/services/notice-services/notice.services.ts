@@ -28,13 +28,12 @@ export class NoticeService{
         return this.httpClient.get<ResponseEntity>( `http://localhost:8080/notice/${id}`, {});
     }
 
-    updateNotice(notice: DatabaseNotice, id:string) :Observable<ResponseEntity>{
+    updateNotice( id:string ,notice: DatabaseNotice) :Observable<ResponseEntity>{
         
-        return this.httpClient.patch<ResponseEntity>(   `http://localhost:8080/notice/${id}`, notice);
+        return this.httpClient.put<ResponseEntity>(   `http://localhost:8080/notice/${id}`, notice);
     }
 
     deleteNotice(id:string) :Observable<ResponseEntity>{
-        console.log(id);
         return this.httpClient.delete<ResponseEntity>( `http://localhost:8080/notice/${id}`,{});
     }
 

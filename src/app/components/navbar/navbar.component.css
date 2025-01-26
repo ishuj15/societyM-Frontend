@@ -6,7 +6,7 @@ body {
 
 .vertical-navbar {
     width: 300px;
-    background-color: rgb(130, 214, 247); /* Slightly darker gray */
+    background-color: #A9C46C    ; /* Slightly darker gray */
     position: fixed;
     height: 100%;
     overflow: auto;

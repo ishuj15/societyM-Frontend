@@ -50,18 +50,19 @@ export class SignupComponent {
     if(this.form.valid){
 
       const user : User={
+        id:'',
         userName: this .form .value.username!,
         password: this.form.value.password!,
         email:this.form.value.email!,
         phoneNo:this.form.value.phoneNo!,
         address:this.form.value.address!,
-        userRole: this.form.value.userRole!
+        userRole: this.form.value.userRole! as Roles
       };
      this.authService.signup(user).subscribe({
       next: (response: loginResponse) :void=> {
         if(response.status.toString()==="SUCCESS")
         {
-          if(user.userRole!="admin")
+          if(user.userRole!=Roles.ADMIN)
           {
             alert('Registered successfully, Please login to continue');
             this.router.navigate(['/login']);

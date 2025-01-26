@@ -5,6 +5,7 @@ export type loginResponse={
     statusCode : HttpStatusCode,
      message :string,
      data :object
+     error:object
 }
 
 export type ApiResponseStatus= {

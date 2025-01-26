@@ -23,10 +23,20 @@ export class VisitorService {
     }
 
     updateVisitor(visitorId: string, visitor: Visitor): Observable<ResponseEntity> {
-        return this.httpClient.patch<ResponseEntity>(`http://localhost:8080/visitor/${visitorId}`, visitor);
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/${visitorId}`, visitor);
     }
 
     deleteVisitor(visitorId: string): Observable<ResponseEntity> {
         return this.httpClient.delete<ResponseEntity>(`http://localhost:8080/visitor/${visitorId}`);
     }
+
+    getVisitorByStatus( userId:string, status :string ) : Observable<ResponseEntity>{
+        return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitor/${userId}/${status}`);
+        // return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/status` , status );
+    }
+    updateVisitorStatus(visitorId: string, status :string ) :  Observable<ResponseEntity> {
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/{status}`, visitorId);
+    }
+
+ 
 }

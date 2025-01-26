@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NoticeComponent } from './components/notice/notice.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing-page/landing.component';
+import { VisitorComponent } from './components/visitor/visitor.component';
 
 export const routes: Routes = [
     // {
@@ -65,6 +66,10 @@ export const routes: Routes = [
                 path :'notice',
                 component:NoticeComponent
             },
+            {
+              path:'visitor',
+              component:VisitorComponent
+            }
         ]
     },
    

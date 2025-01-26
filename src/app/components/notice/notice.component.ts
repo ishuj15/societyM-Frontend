@@ -13,99 +13,33 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-notice',
   standalone:true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor , NgIf],
   templateUrl: './notice.component.html',
   styleUrl: './notice.component.css'
 })
 export class NoticeComponent {
-  constructor(private authService : AuthService , private noticeService : NoticeService, private router: Router){  
-  }
+  constructor(private authService : AuthService , private noticeService : NoticeService, private router: Router){  }
   
+  role : Roles|null | undefined =Roles.ADMIN;
+  admin=Roles.ADMIN;
+  resident =Roles.RESIDENT;
+  guard =Roles.GUARD;
+  
+  notices :DatabaseNotice[] =[];
+
+  ngOnInit() {
+    this.role = this.authService.role$();
+  }
+
+  //1. Adding Notice By admin only
+  isAddNoticeVisible: boolean=false;
+  onClickingAddNotice(){   this.isAddNoticeVisible=!this.isAddNoticeVisible;}
   form  = new FormGroup({
     title : new FormControl('',{}),
     message : new FormControl('',{}),
     targetRole :new FormControl<TargetRole| null>(null,{}),
      date :new FormControl('',{}),
   });
-  // index$ = signal<number>(0);
-  // role: Roles | null = null; // Static role
- role=Roles.ADMIN;
-  admin=Roles.ADMIN;
-  resident =Roles.RESIDENT;
-  guard =Roles.GUARD;
-  isAddNoticeVisible: boolean=false;
-  toShowTable : boolean= false;
-  notices :DatabaseNotice[] =[];
-  // deleteNotice =signal<DatabaseNotice| null>(null);
-  selectedNotice: DatabaseNotice| null= null;
-  deleteButton:Boolean=false
-
-  onClickingAddNotice(){
-    if(this.isAddNoticeVisible===false)
-    {
-      this.isAddNoticeVisible=true;
-    }
-    else
-    this.isAddNoticeVisible=false;
-  }
-  onClickingViewNotice(){
-    if(this.toShowTable===false)
-    {
-      this.onFetchingNotices();
-      this.toShowTable=true;
-    }
-    else
-    {
-      this.toShowTable=false;
-    }
-
-  }
-  
-  onSelectingNotice( notice: DatabaseNotice){
-    this.deleteButton=true;
-    this.selectedNotice=notice;
-  }
-
-
-
-  ngOnInit(){
-    // this.role=this.authService.role$();
-    // console.log(this.role);
-  }
-  onFetchingNotices(){
-    const sub = this.noticeService.getAllNotice().subscribe({
-      next : (response : ResponseEntity) =>
-      {
-
-      if(response.status.toString()==="SUCCESS")
-      {
-        this.notices= response.data as DatabaseNotice[];
-        // console.log(this.notices);
-        // console.log(response.data )
-      }
-    },
-
-    }) ;
-  }
-
-  onClickingDeleteButton(){
-  
-    const sub =this.noticeService.deleteNotice(this.selectedNotice!.idNotices).subscribe({
-      next: (response: ResponseEntity) =>{
-        if(response.status.toString()==="SUCCESS")
-          {
-            alert("Notice Deleted Successfully");
-            this.toShowTable=false;
-            this.deleteButton=false;
-            // this.router.navigate(['/home/notice']);
-
-          }
-
-      }
-    });
-  }
-
-
   onSubmitNewNotice(){
 
     if(this.form.valid){
@@ -129,16 +63,139 @@ export class NoticeComponent {
             // this.router.navigate(['/home/notice']);
           }
       },
-
-      // next: () =>{
-
-      // },
-      error :()=>{
-
-      }
     })
   }
-
   }
 
+  //2. ViewingNotice by resident or guard
+  ShowTableToUser : boolean= false;
+  onClickingViewNoticeUser(){   
+      this.ShowTableToUser=!this.ShowTableToUser; 
+      this.selectedNoticeForUpdate = null; // Reset selected notice for update
+      this.selectedNotice = null;   // Reset selected notice
+      this.updateOption = false;    // Hide update option
+      this.deleteButton = false;    // Hide delete button
+    if(this.ShowTableToUser)
+      this.onFetchingNoticesUser();
+     }
+  onFetchingNoticesUser(){
+    const sub = this.noticeService.getNoticeByRole(this.role!).subscribe({
+      next : (response : ResponseEntity) =>
+      {
+      if(response.status.toString()==="SUCCESS")
+      {
+        this.notices= response.data as DatabaseNotice[]; 
+      }
+    },
+    }) ;
+  }
+
+  //  3. Viewing Notice by admin
+  showTableAdmin: boolean=false;
+  onClickingViewNoticeAdmin(){
+    this.showTableAdmin= !this.showTableAdmin;
+    if(this.showTableAdmin)
+    this.onFetchingNoticesAdmin();
+  }
+  onFetchingNoticesAdmin(){
+    const sub = this.noticeService.getAllNotice().subscribe({
+      next : (response : ResponseEntity) =>
+      {
+      if(response.status.toString()==="SUCCESS")
+      {
+        this.notices= response.data as DatabaseNotice[]; 
+      }
+    },
+    }) ;
+  }
+
+    
+  //4. Delete Notice By admin only
+  //a) Showing  table to select
+  // same view all notices so no need to write function refer fun-> ViewNotice
+  //b) Selecting the notice and setting it to the selectedNotice and showing deletebutton as well
+  selectedNotice: DatabaseNotice| null= null;
+  deleteButton:Boolean=false;  
+  onSelectingNotice( notice: DatabaseNotice){ this.deleteButton=!this.deleteButton; this.selectedNotice=notice;  }
+  //c) Deleting notice and also set everything back 
+  onClickingDeleteButton(){
+    const sub =this.noticeService.deleteNotice(this.selectedNotice!.idNotices).subscribe({
+      next: (response: ResponseEntity) =>{
+        if(response.status.toString()==="SUCCESS")
+          {
+            alert("Notice Deleted Successfully");
+            this.showTableAdmin=false;
+            this.deleteButton=false;
+            this.selectedNotice=null;
+          }
+      }
+    });
+  } 
+
+  onCancelDelete() {
+    this.deleteButton = false;
+    this.selectedNotice = null;
+  }
+  //5. Update Notice
+  // a) Showing table to select for updation
+  selectedNoticeForUpdate: DatabaseNotice| null= null;
+  updateButton:Boolean=false;  
+  updateOption:Boolean=false; 
+  UpdateNoticeOption(){
+    this.updateOption=!this.updateOption;
+    if(this.updateOption===true){
+      this.onClickingViewNoticeAdmin();
+    }
+  }
+  updateForm = new FormGroup({
+    title: new FormControl('', {}),
+    message: new FormControl('', {}),
+    date: new FormControl('', {}),
+  });
+  onSelectingNoticeUpdate( notice: DatabaseNotice) { this.updateButton= !this.updateButton; this.selectedNoticeForUpdate=notice 
+    this.selectedNoticeForUpdate = notice;
+    this.updateButton = true;
+    // Pre-fill the form with the selected notice's values
+    this.updateForm.setValue({
+      title: notice.title,
+      message: notice.message,
+      date: notice.date,
+    });
+  }
+  //c) on clicking update show update form 
+
+
+  onClicikingUpdateButton(){
+    if (this.updateForm.valid && this.selectedNoticeForUpdate) {
+      // Create a copy of the updated notice
+      
+        const updatedNotice: DatabaseNotice = {
+          ...this.selectedNoticeForUpdate,
+          title: this.updateForm.value.title ?? this.selectedNoticeForUpdate.title, // Default to existing value
+          message: this.updateForm.value.message ?? this.selectedNoticeForUpdate.message, // Default to existing value
+          date: this.updateForm.value.date ?? this.selectedNoticeForUpdate.date, // Default to existing value
+        };
+    
+      // Call the service to update the notice
+      const sub = this.noticeService.updateNotice( this.selectedNoticeForUpdate.idNotices, updatedNotice).subscribe({
+        next: (response: ResponseEntity) => {
+          if (response.status.toString() === 'SUCCESS') {
+            alert('Notice Updated Successfully');
+            this.updateButton = false;
+            this.selectedNoticeForUpdate = null;
+            this.updateOption=false;
+            this.showTableAdmin=false;
+  
+            // Refresh the notices list
+            // this.onFetchingNoticesAdmin();
+          }
+        },
+      });
+    }
 }
+onCancelUpdate() {
+  this.updateButton = false;
+  this.selectedNoticeForUpdate = null;
+}
+}
+

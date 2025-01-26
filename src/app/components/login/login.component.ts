@@ -8,6 +8,7 @@ import {  Router } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
 import { Roles } from '../signup/signup.component';
 import { jwtDecode } from 'jwt-decode';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -41,11 +42,18 @@ export class LoginComponent {
         next: (response:loginResponse) =>{
           if(response.status.toString()==="SUCCESS")
           {
-            localStorage.setItem('authToken', (response.data as any )['JWT Token']);
-            const decodeToken :{role:string} = jwtDecode( (response.data as any)['JWT Token']);
-            this.authService.loggedIn$.set(true);
-            this.authService.role$.set(decodeToken.role as Roles);
+            const token = (response.data as any)['JWT Token'];
+            localStorage.setItem('authToken', token);
+            const decodeToken :{role:string} = jwtDecode( token);
 
+            //role is not stored in token
+            // console.log(decodeToken);
+
+            this.authService.loggedIn$.set(true);
+            this.authService.user$.set(  response.error as User);
+            // console.log(this.authService.user$());
+            this.authService.role$.set(this.authService.user$()?.userRole);
+            // console.log(this.authService.role$());
             
             this.router.navigate(['/home/dashboard']);
           }

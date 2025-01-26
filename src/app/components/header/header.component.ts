@@ -14,8 +14,12 @@ export class HeaderComponent {
 
   }
   logout(): void {
+    localStorage.removeItem('authToken');
+    this.authService.loggedIn$.set(false);
+    this.authService.user$.set(null);       
+    this.authService.role$.set(undefined);
     alert('You have logged out!');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/landing']);
 
     // Implement your logout logic here, e.g., clear session, redirect to login, etc.
   }

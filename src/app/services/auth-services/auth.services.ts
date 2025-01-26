@@ -4,14 +4,38 @@ import { Observable } from "rxjs";
 import { loginResponse } from "../../models/auth.model";
 import { User } from "../../models/user.model";
 import { Roles } from "../../components/signup/signup.component";
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
     providedIn:"root"
 })
 export class AuthService{
-    private httpClient = inject(HttpClient);
-    loggedIn$= signal<boolean>(false);
-    role$ = signal<Roles| null>(null);
+
+    constructor(   private httpClient: HttpClient) {}
+  
+    loggedIn$= signal<boolean>(this.hasValidToken());
+    role$ = signal<Roles| undefined>(undefined);
+    user$ = signal<User |null>(null);
+  
+    private hasValidToken(): boolean {
+        const token = localStorage.getItem('authToken');
+    
+        if (!token) {
+          return false;
+        }
+    
+        try {
+          const decodedToken: { exp: number } = jwtDecode(token);
+          const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    
+          // Check if the token has expired
+          return decodedToken.exp > currentTime;
+        } catch (error) {
+          // In case of any error (invalid token format, decoding issues), treat it as invalid
+          return false;
+        }
+      }
+    
 
     login(username: string, password: string) : Observable<loginResponse>{
        
@@ -26,4 +50,5 @@ export class AuthService{
             user
         );
     }
+   
 }
