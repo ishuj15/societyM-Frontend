@@ -23,13 +23,12 @@
     <form [formGroup]="form" (ngSubmit)="OnSubmitAddVisitor()">
       <div *ngIf="role?.toString() === 'guard'" class="form-group">
         <label for="username">Select Username</label>
-        <select formControlName="selectedUsername" >
-          <option *ngFor="let user of listOfUsernames" [value]="user.userName">
+        <select id="username" formControlName="selectedUsername" >
+          <option *ngFor="let user of listOfUsernames" [value]="user.idUser">
             {{ user.userName }}
           </option>
         </select>
       </div>
-
       <label for="name">Name</label>
       <input id="name" type="text" formControlName="name" />
 
@@ -165,5 +164,3 @@
   </div>
 
 </div>
-
-

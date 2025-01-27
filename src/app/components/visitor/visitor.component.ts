@@ -9,8 +9,8 @@ import { User } from '../../models/user.model';
 import { Roles } from '../signup/signup.component';
 import { UserService } from '../../services/user-services/user.services';
 import { v4 as uuidv4 } from 'uuid';
-
-import * as QRCode from 'qrcode';
+import { QRCode } from 'qrcode';
+// import * as QRCode from 'qrcode';
 
 
 @Component({
@@ -83,7 +83,6 @@ ngOnInit() {
   
 });
 OnSubmitAddVisitor() {
-  
   let userID: string | undefined = undefined;
   let status: string | undefined = undefined;
   console.log(this.selectedUsername)
@@ -91,18 +90,10 @@ OnSubmitAddVisitor() {
     userID = this.user!.idUser;
     status = "Approved";
   
-  } else if (this.role?.toString() === 'guard') {
+  } else if (this.role?.toString() === "guard") {
     status = "Pending";
-    // console.log("guard")
-    const selectedUser = this.listOfUsernames.find(
-      (user) => user.userName === this.selectedUsername
-    );
-    if (!selectedUser) {
-      alert('Please select a valid username.');
-      return;
-    }
-    userID = selectedUser.idUser;
-    // console.log("Guard User ID: ", userID);
+    userID = this.form.value.selectedUsername!
+   
   }
 
   const visitor: Visitor = {
@@ -128,7 +119,7 @@ OnSubmitAddVisitor() {
         if (response.status.toString() === "SUCCESS") {
           alert("Visitor Added Successfully");
           this.addVisitorFormVisibility = false;
-          console.log("Visitor added successfully, User ID: ", userID);
+          // console.log("Visitor added successfully, User ID: ", userID);
         }
       },
       error: (err) => {
@@ -198,14 +189,15 @@ onClickingViewVisitorByUser(){
   onClickingManageRequests(){
      this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; 
      if(this.ViewPendingRequestsTable) 
-      this.FetchPendingRequestTableData() }
+      this.FetchPendingRequestTableData()
+     }
   FetchPendingRequestTableData(){
   const sub = this.visitorService.getVisitorByStatus(this.user!.idUser , "Pending").subscribe({
     
     next: (response:ResponseEntity) => {
       if(response.status.toString()==="SUCCESS"){
         this.listOfPendingRequests= response.data as Visitor[];
-        console.log(this.listOfPendingRequests + this.user!.idUser)
+         console.log(this.listOfPendingRequests )
       }
     }
   });
