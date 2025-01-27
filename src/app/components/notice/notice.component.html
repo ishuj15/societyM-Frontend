@@ -1,28 +1,25 @@
 <div class="notice-container">
     
-    <!-- Resident or guard Actions -->
-    <div class="admin-actions">
       <!-- Actions for Residents/Guards -->
-      <div *ngIf="role === resident || role === guard">
-        <div (click)="onClickingViewNoticeUser()" class="action-item">
-          View Notices
-        </div>
+      <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="notice-options resident-guard-role">
+        <div class="option-box view-notice" (click)="onClickingViewNoticeUser()">View Notices</div>
       </div>
-  
+      
+     
       <!-- Actions for Admin -->
-      <div class="admin-actions" >
-        <div (click)="onClickingViewNoticeAdmin()" class="action-item">
+      <div  *ngIf= "role?.toString()   === 'admin'"  class="notice-options admin-role" >
+        <div (click)="onClickingViewNoticeAdmin()" class="option-box view-notice">
           View Notices
         </div>
-        <div (click)="onClickingAddNotice()" class="action-item">
+        <div (click)="onClickingAddNotice()" class="option-box add-notice">
           Add Notices
         </div>
-        <div (click)="onClickingViewNoticeAdmin()" class="action-item">
+        <div (click)="onClickingViewNoticeAdmin()" class="option-box delete-notice">
           Delete Notices
         </div>
-        <div (click) ="UpdateNoticeOption()"   class="action-item" >Update Notice</div>
+        <div (click) ="UpdateNoticeOption()"  class="option-box update-notice">Update Notice</div>
       </div>
-    <!-- </div> -->
+    </div>
   
     <!-- Add Notice Form -->
     <div *ngIf="isAddNoticeVisible" class="add-notice-form">
@@ -104,6 +101,31 @@
         <button type="submit">Update Notice</button>
         <button type="button" (click)="onCancelUpdate()">Cancel</button>
       </form>
+    </div>
+
+    <div *ngIf="ShowTableToUser" class="notice-table-container">
+      <table class="notice-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Notice</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let notice of notices; let i = index"
+            (click)="onSelectingNotice(notice)"
+            [class.selected]="notice === selectedNotice"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ notice.title }}</td>
+            <td>{{ notice.message }}</td>
+            <td>{{ notice.date }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>

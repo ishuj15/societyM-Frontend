@@ -9,45 +9,19 @@ import { LandingComponent } from './components/landing-page/landing.component';
 import { VisitorComponent } from './components/visitor/visitor.component';
 
 export const routes: Routes = [
-    // {
-    //     path:  '',
-    //     pathMatch:'prefix',
-    //     children:[
-    //         {
-    //             path:'',
-    //             component:LandingComponent
-    //         },
-    //         {
-    //             path: 'login',
-    //             component:LoginComponent
-    //         },
-    //         {
-    //             path:'signup',
-    //             component:SignupComponent
-    //         },
-
-    //     ]
-    // },
+ 
     {
         path: '',
         component: LandingComponent,
-        children: [
-        //   {
-        //     path: '',
-        //     redirectTo: 'login',
-        //     pathMatch: 'full',
-        //   },
-          {
-            path: 'login',
-            component: LoginComponent,
-          },
-          {
-            path: 'signup',
-            component: SignupComponent,
-          },
-        ],
       },
-  
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'signup',
+        component: SignupComponent,
+      },
     {
         path:'home',
         component: HomeComponent,

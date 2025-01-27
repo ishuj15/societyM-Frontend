@@ -1,8 +1,16 @@
 
-<!-- <div class="hamburger" onclick="toggleNavbar()" >
-    &#9776;
-</div> -->
-    <nav  id="navbar"class="vertical-navbar">
+<!-- <div class="hamburger" (click)="toggleNavbar()"> <!-- Use Angular event binding -->
+    <!-- &#9776; -->
+<!-- </div> --> 
+
+<nav id="navbar" class="vertical-navbar">
+    <ul class="vertical-navbar ul">
+        <li *ngFor="let item of sidebarItems" [ngStyle]="{ 'background-color': item.backgroundColor }">
+            <a [routerLink]="item.link" routerLinkActive="router-link-active">{{ item.label }}</a>
+        </li>
+    </ul>
+</nav>
+    <!-- <nav  id="navbar"class="vertical-navbar">
         <ul>
             <li><a routerLink="/home" routerLinkActive="router-link-active">Dashboard</a></li>
             <li><a routerLink="/user" routerLinkActive="router-link-active">Profile Management</a></li>
@@ -10,6 +18,6 @@
             <li><a routerLink="/services" routerLinkActive="router-link-active">Services</a></li>
             <li><a routerLink="/home/visitor" routerLinkActive="router-link-active">Visitor</a></li>
         </ul>
-    </nav>
+    </nav> -->
 
     

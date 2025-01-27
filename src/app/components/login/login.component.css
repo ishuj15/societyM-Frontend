@@ -1,31 +1,67 @@
+
+.body {
+  background-color: #DDEEBB; /* Your desired background color */
+  height: 100vh; /* Fill the viewport height */
+  display: flex; /* To arrange children (login-container and others) */
+  justify-content: flex-end; /* Push login container to the right */
+  align-items: center; /* Vertically center the login container */
+  padding-right: 40px; /* Optional: Add space from the right edge */
+}
+
+/* Text Container for the Left Side */
+.text-container {
+  position: absolute;
+  right: 60%; /* Shift it to the right side */
+  top: 30%; /* Vertically align the text in the middle */
+  padding-right: 40px;
+  font-size: 60px; /* Increased font size */
+  color: #333; /* Dark color for text */
+  font-weight: bold;
+  font-style: italic; /* Make the text italic */
+  line-height: 1.4; /* Adjust line height for readability */
+  width: 550px; /* Adjust the width to prevent overflow */
+  text-align: right; /* Align the text to the right */
+}
+
+.text-container span {
+  display: block; /* Ensure that the text wraps properly */
+  font-size: 70px; /* Increased font size for emphasis */
+}
+
+
 /* Container for the login form */
 .login-container {
   width: 100%;
-  max-width: 800px;
-  margin: auto;
+  max-width: 500px;
+  margin-top: 350px;
+  margin-left: 1000px;
   padding: 20px;
-  background-color: #c1c1f3;
+  background-color: #F2F4E9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: absolute; /* Add absolute positioning */
-  top: 30%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  right: 50px; /* Shift it to the right */
+ 
+  /* top: 30%; Center vertically */
+  /* left: 50%; Center horizontally */
   transform: translate(-50%, -50%); /* Adjust for exact centering */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 350px;
 }
 
 h2 {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
+   font-size: 25px;
 }
 
 /* Form elements */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 label {
@@ -33,6 +69,7 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
   color:darkmagenta; 
+  font-size: 20px;
 }
 
 input[type="username"],
@@ -44,6 +81,7 @@ input[type="password"] {
   border: 1px solid #0288d1;
   border-radius: 5px;
   outline: none;
+  font-size: 20px;
 }
 
 input[type="username"]:focus,

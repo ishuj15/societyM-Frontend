@@ -31,12 +31,12 @@ export class VisitorService {
     }
 
     getVisitorByStatus( userId:string, status :string ) : Observable<ResponseEntity>{
-        return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitor/${userId}/${status}`);
+                                          
+        return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/${status}`);
         // return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/status` , status );
     }
     updateVisitorStatus(visitorId: string, status :string ) :  Observable<ResponseEntity> {
         return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/{status}`, visitorId);
     }
 
- 
 }

@@ -1,4 +1,9 @@
-
+<app-header />
+<div class="body">
+  <!-- Text on the left side -->
+  <div class="text-container">
+    <span>Welcome Back! Log in to Stay Connected.</span>
+  </div>
 <div class="login-container">
 <form   [formGroup]="form"  (ngSubmit)="onSubmit()">
     <h2>Login</h2>
@@ -22,4 +27,5 @@
         <p class="control-error">Please enter a valid password (at least 8 characters long) .</p>
       }
 </form>
+</div>
 </div>

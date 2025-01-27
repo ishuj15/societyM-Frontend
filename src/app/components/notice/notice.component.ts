@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { AuthService } from '../../services/auth-services/auth.services';
 import { NoticeService } from '../../services/notice-services/notice.services';
@@ -19,16 +19,13 @@ import { Router } from '@angular/router';
 })
 export class NoticeComponent {
   constructor(private authService : AuthService , private noticeService : NoticeService, private router: Router){  }
-  
-  role : Roles|null | undefined =Roles.ADMIN;
-  admin=Roles.ADMIN;
-  resident =Roles.RESIDENT;
-  guard =Roles.GUARD;
-  
+  private destroyRef=inject(DestroyRef);
+  role : Roles|null | undefined =null;
   notices :DatabaseNotice[] =[];
 
   ngOnInit() {
     this.role = this.authService.role$();
+    // console.log(this.role)
   }
 
   //1. Adding Notice By admin only
@@ -63,7 +60,8 @@ export class NoticeComponent {
             // this.router.navigate(['/home/notice']);
           }
       },
-    })
+    });
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
   }
 
@@ -71,10 +69,6 @@ export class NoticeComponent {
   ShowTableToUser : boolean= false;
   onClickingViewNoticeUser(){   
       this.ShowTableToUser=!this.ShowTableToUser; 
-      this.selectedNoticeForUpdate = null; // Reset selected notice for update
-      this.selectedNotice = null;   // Reset selected notice
-      this.updateOption = false;    // Hide update option
-      this.deleteButton = false;    // Hide delete button
     if(this.ShowTableToUser)
       this.onFetchingNoticesUser();
      }
@@ -87,13 +81,18 @@ export class NoticeComponent {
         this.notices= response.data as DatabaseNotice[]; 
       }
     },
-    }) ;
+    }) ; 
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
 
   //  3. Viewing Notice by admin
   showTableAdmin: boolean=false;
   onClickingViewNoticeAdmin(){
     this.showTableAdmin= !this.showTableAdmin;
+    this.selectedNoticeForUpdate = null; // Reset selected notice for update
+      this.selectedNotice = null;   // Reset selected notice
+      this.updateOption = false;    // Hide update option
+      this.deleteButton = false;    // Hide delete button
     if(this.showTableAdmin)
     this.onFetchingNoticesAdmin();
   }
@@ -107,6 +106,7 @@ export class NoticeComponent {
       }
     },
     }) ;
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
 
     
@@ -130,6 +130,7 @@ export class NoticeComponent {
           }
       }
     });
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   } 
 
   onCancelDelete() {
@@ -191,6 +192,7 @@ export class NoticeComponent {
           }
         },
       });
+      this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
     }
 }
 onCancelUpdate() {

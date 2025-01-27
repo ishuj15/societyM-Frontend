@@ -1,36 +1,34 @@
-/* header.component.css */
+/* Header Styles */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow';
-    
 }
 
 /* Flexbox layout for header, to display items horizontally */
 .header-container {
-    width:100%;
+    width: 100%;
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #809D3C; 
-   
+    background-color: #809D3C;
     padding-top: 60px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
-     /* Ensures header is above content */
-    z-index: 0; /* Ensures header stays above the navbar */ 
-   
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+    position: fixed; /* Fix the header at the top */
+    top: 0;
+    left: 0;
+    z-index: 10; /* Ensure header stays above content */
 }
 
 .welcome-message h1 {
-    
-    font-family: mogra; 
+    font-family: mogra;
     font-size: 35px;
     font-weight: bold;
     color: #1a0101;
     margin: 0;
-  margin-left: 700px;
-  margin-bottom: 50px;
+    margin-left: 700px;
+    margin-bottom: 50px;
 }
 
 .logout button {
@@ -47,6 +45,6 @@ body {
 }
 
 .logout button:hover {
-    background-color:#A9C46C;
+    background-color: #A9C46C;
     color: #ffffff;
 }

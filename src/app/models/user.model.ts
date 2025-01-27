@@ -1,7 +1,7 @@
 import { Roles } from "../components/signup/signup.component";
 
 export interface User {
-    id:string,
+    idUser:string,
     email:string,
     password:string,
     address:string,

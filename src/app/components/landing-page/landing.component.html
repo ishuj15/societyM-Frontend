@@ -1,7 +1,18 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
 
-<div class="container">
-    <button routerLink="/signup">Sign Up</button>
-    <button routerLink="/login" >Log In</button>
+<div class="landing-page">
+    <!-- Landing Page Content Section -->
+    <div class="landing-content">
+        <div class="text-container">
+            <p class="landing-text">Your Society, Your Control – All in One App!</p>
+          </div>
+          <div class="button-container">
+        <button class="signup-button" routerLink="/signup">Sign Up</button>
+        <button class="login-button" routerLink="/login">Log In</button>
+    </div>
+    </div>
+
+    <!-- Image on the right side -->
+    <img src="Landing Image.png" alt="Landing Page Image" class="landing-image"/>
 </div>

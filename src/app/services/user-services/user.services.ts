@@ -29,5 +29,8 @@ export class UserService {
     deleteUser(userId: string): Observable<ResponseEntity> {
         return this.httpClient.delete<ResponseEntity>(`http://localhost:8080/user/${userId}`);
     }
+    getUserNames() :Observable<ResponseEntity> {
+        return this.httpClient.get<ResponseEntity>("http://localhost:8080/userName");
+    }
     
 }

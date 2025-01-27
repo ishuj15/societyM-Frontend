@@ -13,7 +13,7 @@ import { User } from '../../models/user.model';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule ],
+  imports: [ReactiveFormsModule , HeaderComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -46,33 +46,21 @@ export class LoginComponent {
             localStorage.setItem('authToken', token);
             const decodeToken :{role:string} = jwtDecode( token);
 
-            //role is not stored in token
-            // console.log(decodeToken);
-
+           
             this.authService.loggedIn$.set(true);
             this.authService.user$.set(  response.error as User);
-            // console.log(this.authService.user$());
-            this.authService.role$.set(this.authService.user$()?.userRole);
-            // console.log(this.authService.role$());
-            
+            console.log(this.authService.user$());
+            this.authService.role$.set(this.authService.user$()?.userRole); 
             this.router.navigate(['/home/dashboard']);
           }
           else
           {
             alert("Couldn't login , Please try again");
             this.router.navigate(['/login']);
-
           }
         },
-
-        error :() =>{
-
-        }
-       
       });
-      this.destroyRef.onDestroy(()=>{
-        sub.unsubscribe();
-      });
+      this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
     }
 
   }

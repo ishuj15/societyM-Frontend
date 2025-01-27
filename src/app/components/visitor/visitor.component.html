@@ -1,18 +1,32 @@
 <div class="visitor-container">
   <!-- Header Section -->
   <h1>Visitor Management</h1>
-
- 
-  <div class="action-buttons">
-    <button (click)="onViewAllVisitorByAdmin()">View All Visitors</button>
+  <!-- // Resident and guard common action- Add visitor  -->
+  <div *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="action-buttons">
     <button (click)="onClickingAddVisitor()">Add Visitor</button>
+  </div>
+ 
+  <div  *ngIf="role?.toString()==='resident'" class="action-buttons">
+    <button (click)="onClickingViewVisitorByUser()">View All Visitors</button>
     <button (click)="onClickingManageRequests()">Manage Requests</button>
   </div>
-
+  <div *ngIf="role?.toString()==='admin'" class="action-buttons">
+    <button  (click)="onViewAllVisitorByAdmin()">  View List of All Visitor </button>
+  </div >
   <!-- Add Visitor Form -->
   <div *ngIf="addVisitorFormVisibility" class="form-container">
     <h2>Add Visitor</h2>
     <form [formGroup]="form" (ngSubmit)="OnSubmitAddVisitor()">
+
+      <div *ngIf="role?.toString()==='guard'" class="form-group">
+        <label for="username">Select Username</label>
+        <select formControlName="selectedUsername" required>
+          <option *ngFor="let user of listOfUsernames" [value]="user.userName">
+            {{ user.userName }}
+          </option>
+        </select>
+      </div>
+
       <div>
         <label for="name">Name</label>
         <input id="name" type="text" formControlName="name" />
@@ -61,18 +75,29 @@
     <table>
       <thead>
         <tr>
+          <th>S.No</th>
           <th>Name</th>
+          <th>Contact</th>
           <th>Purpose</th>
           <th>Arrival Date</th>
-          <th>Contact No</th>
-        </tr>
+          <th>Arrival Time</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Status</th>
+          <th>Username</th>
       </thead>
       <tbody>
-        <tr *ngFor="let visitor of listOfVisitors">
+        <tr *ngFor="let visitor of listOfVisitors; let i = index">
+          <td>{{ i + 1 }}</td>
           <td>{{ visitor.name }}</td>
+          <td>{{ visitor.contactNo }}</td>
           <td>{{ visitor.purpose }}</td>
           <td>{{ visitor.arrivalDate }}</td>
-          <td>{{ visitor.contactNo }}</td>
+          <td>{{ visitor.arrivalTime }}</td>
+          <td>{{ visitor.dep_date }}</td>
+          <td>{{ visitor.departureTime }}</td>
+          <td>{{ visitor.status }}</td>
+          <td>{{ getUserName(visitor.userId) }}</td>
         </tr>
       </tbody>
     </table>
@@ -84,23 +109,33 @@
     <table>
       <thead>
         <tr>
+          <th>S.No</th>
           <th>Name</th>
+          <th>Contact</th>
           <th>Purpose</th>
           <th>Arrival Date</th>
-          <th>Contact No</th>
+          <th>Arrival Time</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let visitor of listOfVisitors">
+        <tr *ngFor="let visitor of listOfVisitorsByUser; let i = index">
+          <td>{{ i + 1 }}</td>
           <td>{{ visitor.name }}</td>
+          <td>{{ visitor.contactNo }}</td>
           <td>{{ visitor.purpose }}</td>
           <td>{{ visitor.arrivalDate }}</td>
-          <td>{{ visitor.contactNo }}</td>
+          <td>{{ visitor.arrivalTime }}</td>
+          <td>{{ visitor.dep_date }}</td>
+          <td>{{ visitor.departureTime }}</td>
+          <td>{{ visitor.status }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-
+  
   <!-- Pending Requests Table -->
   <div *ngIf="ViewPendingRequestsTable" class="table-container">
     <h2>Pending Requests</h2>

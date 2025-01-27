@@ -9,7 +9,7 @@ import { HeaderComponent } from '../header/header.component';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HeaderComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -50,7 +50,7 @@ export class SignupComponent {
     if(this.form.valid){
 
       const user : User={
-        id:'',
+        idUser:'',
         userName: this .form .value.username!,
         password: this.form.value.password!,
         email:this.form.value.email!,

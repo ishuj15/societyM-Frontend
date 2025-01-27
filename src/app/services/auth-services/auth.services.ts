@@ -7,7 +7,7 @@ import { Roles } from "../../components/signup/signup.component";
 import { jwtDecode } from "jwt-decode";
 
 @Injectable({
-    providedIn:"root"
+    providedIn:'root'
 })
 export class AuthService{
 

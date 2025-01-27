@@ -1,98 +1,115 @@
+.body {
+  background-color: #DDEEBB; /* Your desired background color */
+  height: 100vh; /* Fill the viewport height */
+  display: flex; /* To arrange children (signup-container and others) */
+  justify-content: flex-end; /* Push signup container to the right */
+  align-items: center; /* Vertically center the signup container */
+  padding-right: 40px; /* Optional: Add space from the right edge */
+}
+
+/* Text Container for the Left Side */
+.text-container-signup {
+  position: absolute;
+  right: 60%; /* Shift it to the right side */
+  top: 30%; /* Vertically align the text in the middle */
+  padding-right: 40px;
+  font-size: 60px; /* Increased font size */
+  color: #333; /* Dark color for text */
+  font-weight: bold;
+  font-style: italic; /* Make the text italic */
+  line-height: 1.4; /* Adjust line height for readability */
+  width: 550px; /* Adjust the width to prevent overflow */
+  text-align: right; /* Align the text to the right */
+}
+
+.text-container-signup span {
+  display: block; /* Ensure that the text wraps properly */
+  font-size: 70px; /* Increased font size for emphasis */
+}
+
 /* Container for the signup form */
 .signup-container {
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background-color: #c1c1f3;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position :absolute;/* Add absolute positioning */
-    top: 55%; /* Center vertically */
-    left: 80%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for exact centering */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
+  width: 100%;
+  max-width: 500px;
+  margin-top: 700px;
+  margin-left: 1000px;
+  padding: 20px;
+  background-color: #F2F4E9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Add absolute positioning */
+  right: 50px; /* Shift it to the right */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 450px; /* Increased the minimum height for signup */
+}
 
-  .signup-image {
-    width: 58%; /* Adjust the image width as needed */
-    height: auto;
-    object-fit: cover; /* Ensure the image covers the area */
-    border-radius: 10px;
-    margin-top: 4%;
-    margin-left: 2%;
-  }
-  
-  /* Form elements */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #0288d1;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  select {
-    width: 90%;
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
-    border: 1px solid #0288d1;
-    border-radius: 5px;
-    outline: none;
-  }
-  
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  input[type="number"]:focus,
-  select:focus {
-    border-color: #0277bd;
-    background-color: #ffffff;
-  }
-  
-  /* Submit button */
-  button {
-    width: 90%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  button:disabled {
-    background-color: #c6c6c6;
-    cursor: not-allowed;
-  }
-  
-  /* Error message styling */
-  .error {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  
+.signup-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+/* Form elements */
+.signup-form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: darkmagenta;
+  font-size: 20px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #0288d1;
+  border-radius: 5px;
+  outline: none;
+  font-size: 20px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+  border-color: #0277bd;
+  background-color: #ffffff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #c6c6c6;
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

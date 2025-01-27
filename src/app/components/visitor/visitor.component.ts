@@ -1,10 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth-services/auth.services';
 import { VisitorService } from '../../services/visitor-services/visitor.services';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Visitor } from '../../models/visitor.model';
 import { ResponseEntity } from '../../models/response.model';
 import { NgFor, NgIf } from '@angular/common';
+import { User } from '../../models/user.model';
+import { Roles } from '../signup/signup.component';
+import { UserService } from '../../services/user-services/user.services';
 
 @Component({
   selector: 'app-visitor',
@@ -14,14 +17,16 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './visitor.component.css'
 })
 export class VisitorComponent {
-
-constructor(private authService: AuthService, private visitorService: VisitorService){
-  
-this.usedId= this.authService.user$()?.id!;
-
+   private destroyRef=inject(DestroyRef);
+   role : Roles|null | undefined =null;
+constructor(private authService: AuthService, private userService: UserService ,private visitorService: VisitorService){}
+user: User | null = null;
+ngOnInit() {
+  this.user = this.authService.user$();
+  this.role = this.authService.role$();
+  console.log(this.role);
 }
  //variables
-  usedId:string;
   
   listOfVisitors :Visitor[] =[];
   listOfPendingRequests :Visitor[] =[];
@@ -33,7 +38,30 @@ this.usedId= this.authService.user$()?.id!;
 
   //Adding New Visitor 
   addVisitorFormVisibility: boolean =false;
-  onClickingAddVisitor(){ this.addVisitorFormVisibility=!this.addVisitorFormVisibility; }
+  selectedUsername: string | null = null;
+  listOfUsernames: User[] = [];
+  onClickingAddVisitor(){ 
+    this.addVisitorFormVisibility=!this.addVisitorFormVisibility;
+    if (this.role?.toString() === "guard" && this.addVisitorFormVisibility) {
+      this.fetchUser();
+      // console.log(" oncl"+this.listOfUsernames)
+    }
+  }
+
+  fetchUser() {
+    const sub = this.userService.getUserNames().subscribe({
+      next: (response: ResponseEntity) => {
+        if (response.status.toString() === 'SUCCESS') {
+          this.listOfUsernames = response.data as User[];
+          // console.log(this.listOfUsernames)
+        }
+      },
+    });
+    this.destroyRef.onDestroy(() => {
+      sub.unsubscribe();
+    });
+  }
+
   form = new FormGroup({
     name: new FormControl( '',[Validators.required,  Validators.minLength(3)]
   ),
@@ -49,13 +77,27 @@ this.usedId= this.authService.user$()?.id!;
     ),
     contactNo: new FormControl( '',[Validators.required, Validators.pattern('^[0-9]{10}$')]
   ),
+  selectedUsername: new FormControl('', [Validators.required]) 
   
 });
   OnSubmitAddVisitor(){
-    
+    let userID: string;
+    if (this.role === Roles.RESIDENT) {
+      userID = this.user!.idUser;
+    } else if (this.role === Roles.GUARD) {
+      const selectedUser = this.listOfUsernames.find(
+        (user) => user.userName === this.selectedUsername
+      );
+      if (!selectedUser) {
+        alert('Please select a valid username.');
+        return;
+      }
+      userID = selectedUser.idUser;
+    }
+
     const visitor : Visitor={
       idVisitor:'null',
-      userId: this.authService.user$()?.id! ,
+      userId: userID!,
       name: this.form.value.name!,
       purpose :this.form.value.purpose!,
       arrivalTime :this.form.value.arrivalTime!,
@@ -66,7 +108,7 @@ this.usedId= this.authService.user$()?.id!;
       status:'null'
     } 
     if(this.form.valid){
-      const sub = this.visitorService.createVisitor(this.usedId, visitor).subscribe({
+      const sub = this.visitorService.createVisitor(this.user!.idUser, visitor).subscribe({
         next : (response:ResponseEntity)=>
         {
           if(response.status.toString()==="SUCCESS")
@@ -74,73 +116,84 @@ this.usedId= this.authService.user$()?.id!;
             alert("Visitor Added Successfully");
             this.addVisitorFormVisibility=false;
           }
-          else
-          {
-            //error from backend
-          }
-
         },
-        error :() =>{
-          //error from observable
-        }
+      });
+      this.destroyRef.onDestroy(()=>{
+        sub.unsubscribe();
       });
     }
   }
 
+
+
+
 //View All Visitor By Admin
 showTableByAdmin: boolean=false;
-onViewAllVisitorByAdmin(){this.showTableByAdmin = !this.showTableByAdmin;   this.ViewAllVisitorByAdmin()}
+onViewAllVisitorByAdmin(){
+  this.showTableByAdmin = !this.showTableByAdmin; 
+    this.ViewAllVisitorByAdmin()
+    this.fetchUser();
+  
+  }
   ViewAllVisitorByAdmin(){
     const sub = this.visitorService.getAllVisitors().subscribe({
       next: (response: ResponseEntity) =>{
         if(response.status.toString()==="SUCCESS")
         {
           this.listOfVisitors= response.data as Visitor[];
-        }
-        else{
-          //backend error
-        }        
+        }    
       },
-      error:() =>{
-        //observable error
-      }
     });
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
-
+  // get USerName
+  getUserName(userId: string): string {
+    const user = this.listOfUsernames.find(u => u.idUser === userId);
+    return user ? user.userName : 'Unknown';  
+  }
+ 
 //View All Vistor By User
 showTableByUsern: boolean=false;
 
 onClickingViewVisitorByUser(){ 
+
   this.showTableByUsern = !this.showTableByUsern ;
+  if(this.showTableByUsern)
   this.onViewAllVisitorByUser(); 
  }
 
   onViewAllVisitorByUser(){
-    console.log(this.authService.user$()?.id);
-    const sub = this.visitorService.getVisitorsByUser(this.usedId) . subscribe({
+  
+    const sub = this.visitorService.getVisitorsByUser(this.user!.idUser) . subscribe({
       next: (response: ResponseEntity) =>{
         if(response.status.toString()==="SUCCESS")
           {
           this.listOfVisitorsByUser= response.data as Visitor[];
-          console.log(  this.listOfVisitorsByUser);
         }     
       },
     });
+     this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
 
-  //Managing Request By visitor
+//Managing Request By visitor
   //1. Showing Pending requests data
   
   ViewPendingRequestsTable:boolean =false;  // showPendingRequests:boolean=false;
-  onClickingManageRequests(){ this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; if(this.ViewPendingRequestsTable) this.FetchPendingRequestTableData() }
+  onClickingManageRequests(){
+     this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; 
+     if(this.ViewPendingRequestsTable) 
+      this.FetchPendingRequestTableData() }
   FetchPendingRequestTableData(){
-  const sub = this.visitorService.getVisitorByStatus(this.usedId , "pending").subscribe({
+  const sub = this.visitorService.getVisitorByStatus(this.user!.idUser , "Pending").subscribe({
+    
     next: (response:ResponseEntity) => {
       if(response.status.toString()==="SUCCESS"){
         this.listOfPendingRequests= response.data as Visitor[];
+        console.log(this.listOfPendingRequests + this.user!.idUser)
       }
     }
   });
+  this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
 }
   //2.  Select Visitor to approve or deny and show approve or deny button
   showChangestatusButton=false;
@@ -160,9 +213,7 @@ onClickingViewVisitorByUser(){
             this.ViewPendingRequestsTable=false;
           }
       },
-  
     });
-
+    this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
-
 }
