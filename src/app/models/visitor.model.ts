@@ -10,4 +10,5 @@ export interface Visitor {
     status: string;
     contactNo: string;
     token:string;
+    qrCodeBase64:string
 }

@@ -16,6 +16,10 @@
     <ng-container *ngIf="role?.toString() === 'admin'">
       <div class="option-box" (click)="onViewAllVisitorByAdmin()">View List of All Visitors</div>
     </ng-container>
+
+    <ng-container *ngIf="role?.toString() === 'guard'">
+      <div class="option-box" (click)="toggleScanner()">Scan Visitor QR Code</div>
+    </ng-container>
   </div>
   <!-- Add Visitor Form -->
   <div *ngIf="addVisitorFormVisibility" class="add-visitor-form">
@@ -162,5 +166,15 @@
     <button (click)="onClickingChangeStatusButton('approved')">Approve</button>
     <button (click)="onClickingChangeStatusButton('denied')">Deny</button>
   </div>
+  <div *ngIf="qrCodeImage" class="qr-code-section">
+    <h3>Visitor QR Code:</h3>
+    <img [src]="qrCodeImage" alt="QR Code">
+  </div>
 
+  <!-- QR Code Scanner -->
+  <div *ngIf="showScanner" class="qr-scanner">
+    <h2>Scan Visitor QR Code</h2>
+    <ngx-scanner-qrcode #scanner="scanner"  [src]="image"></ngx-scanner-qrcode>
+    <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p> 
+  </div>
 </div>

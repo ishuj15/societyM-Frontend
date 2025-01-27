@@ -8,39 +8,33 @@ import { NgFor, NgIf } from '@angular/common';
 import { User } from '../../models/user.model';
 import { Roles } from '../signup/signup.component';
 import { UserService } from '../../services/user-services/user.services';
-import { v4 as uuidv4 } from 'uuid';
-import { QRCode } from 'qrcode';
-// import * as QRCode from 'qrcode';
 
+import { QRCode } from 'qrcode';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-visitor',
   standalone:true,
-  imports: [NgIf,NgFor,ReactiveFormsModule],
+  imports: [NgIf,NgFor,ReactiveFormsModule ,NgxScannerQrcodeModule],
   templateUrl: './visitor.component.html',
   styleUrl: './visitor.component.css'
 })
 export class VisitorComponent {
+[x: string]: any;
    private destroyRef=inject(DestroyRef);
    role : Roles|null | undefined =null;
+   user: User | null = null;
 constructor(private authService: AuthService, private userService: UserService ,private visitorService: VisitorService){}
-user: User | null = null;
 ngOnInit() {
   this.user = this.authService.user$();
   this.role = this.authService.role$();
-  console.log(this.role);
 }
  //variables
-  
-  listOfVisitors :Visitor[] =[];
-  listOfPendingRequests :Visitor[] =[];
-  listOfVisitorsByUser :Visitor[] =[];
- 
+  // used for both delete and update 
   selectedVisitorId=signal<string | null>(null);
-  // selectedVisitor=signal<Visitor | null>(null);
- 
 
   //Adding New Visitor 
+  qrCodeImage: string | null = null;
   addVisitorFormVisibility: boolean =false;
   selectedUsername: string | null = null;
   listOfUsernames: User[] = [];
@@ -85,7 +79,7 @@ ngOnInit() {
 OnSubmitAddVisitor() {
   let userID: string | undefined = undefined;
   let status: string | undefined = undefined;
-  console.log(this.selectedUsername)
+  // console.log(this.selectedUsername)
   if (this.role?.toString() === "resident") {
     userID = this.user!.idUser;
     status = "Approved";
@@ -93,7 +87,6 @@ OnSubmitAddVisitor() {
   } else if (this.role?.toString() === "guard") {
     status = "Pending";
     userID = this.form.value.selectedUsername!
-   
   }
 
   const visitor: Visitor = {
@@ -107,19 +100,21 @@ OnSubmitAddVisitor() {
     contactNo: this.form.value.contactNo!,
     arrivalDate: this.form.value.arrivalDate!,
     status: status!,
-    token:''
+    token:'',
+    qrCodeBase64: ''
   };
-
-  console.log("Visitor Object: ", visitor);
 
   if (this.form.valid) {
     const sub = this.visitorService.createVisitor(userID!, visitor).subscribe({
       next: (response: ResponseEntity) => {
-        console.log("Response from createVisitor: ", response);
+        // console.log("Response from createVisitor: ", response);
         if (response.status.toString() === "SUCCESS") {
           alert("Visitor Added Successfully");
           this.addVisitorFormVisibility = false;
-          // console.log("Visitor added successfully, User ID: ", userID);
+          const responseVisitor :Visitor = response.data as Visitor ;
+
+          const qrCodeBase64 = responseVisitor.qrCodeBase64;
+          this.qrCodeImage = 'data:image/png;base64,' + qrCodeBase64;
         }
       },
       error: (err) => {
@@ -133,8 +128,8 @@ OnSubmitAddVisitor() {
   }
 }
 
-
 //View All Visitor By Admin
+listOfVisitors :Visitor[] =[];
 showTableByAdmin: boolean=false;
 onViewAllVisitorByAdmin(){
   this.showTableByAdmin = !this.showTableByAdmin; 
@@ -161,7 +156,7 @@ onViewAllVisitorByAdmin(){
  
 //View All Vistor By User
 showTableByUsern: boolean=false;
-
+listOfVisitorsByUser :Visitor[] =[];
 onClickingViewVisitorByUser(){ 
 
   this.showTableByUsern = !this.showTableByUsern ;
@@ -184,7 +179,7 @@ onClickingViewVisitorByUser(){
 
 //Managing Request By visitor
   //1. Showing Pending requests data
-  
+  listOfPendingRequests :Visitor[] =[];
   ViewPendingRequestsTable:boolean =false;  // showPendingRequests:boolean=false;
   onClickingManageRequests(){
      this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; 
@@ -225,37 +220,53 @@ onClickingViewVisitorByUser(){
     this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
 
-
-
   //Verify Visitor by guard 
-qrResultString: string = '';
-showScanner: boolean = true;
+ // Variables for QR scanning and verification
+ qrResultString: string = '';
+ showScanner: boolean = false;
+  image="qrcode.png";
+ // Toggle QR code scanner visibility
+ toggleScanner() {
+   this.showScanner = !this.showScanner;
+ }
 
-onCodeResult(result: string) {
-this.qrResultString = result;
-this.verifyVisitor(result);
-}
+ // Handle QR code scan result
+ onCodeResult(result: string) {
+   this.qrResultString = result; // Save the scanned QR token
+   this.verifyVisitor(result); // Verify the visitor based on the QR token
+ }
+ scannedData: any;
 
-verifyVisitor(qrCodeToken: string) {
-this.visitorService.verifyVisitorByQRCode(qrCodeToken).subscribe({
-  next: (response: ResponseEntity) => {
-    if (response.status.toString() === 'SUCCESS') {
-    const visitor  = response.data as Visitor;
+ onScanSuccess(result: any) {
+   this.scannedData = result;
+ }
+ 
 
-      if(visitor.status==="Approved"){
-        alert('Visitor Verified');
-      }
-      else if(visitor.status==="Pending")
-        alert('Visitor Request is pending ');
-      else{
-        alert("Visitor Rejected");
-      }
-    } else {
-      alert('Visitor not verified or invalid QR code');
-    }
-  },
-});
-}
+ // Verify visitor status using QR code token
+ verifyVisitor(qrCodeToken: string) {
+
+  const sub=  this.visitorService.verifyVisitorByQRCode(qrCodeToken).subscribe({
+     next: (response: ResponseEntity) => {
+       if (response.status.toString() === 'SUCCESS') {
+         const visitor = response.data as Visitor;
+
+         if (visitor.status === 'Approved') {
+           alert(`Visitor Verified: ${visitor.name} is approved.`);
+         } else if (visitor.status === 'Pending') {
+           alert(`Visitor ${visitor.name}'s request is still pending.`);
+         } else {
+           alert(`Visitor ${visitor.name}'s request has been rejected.`);
+         }
+       } else {
+         alert('Invalid QR code or visitor not found.');
+       }
+     },
+     error: (err) => {
+       console.error('Error verifying visitor:', err);
+       alert('An error occurred while verifying the visitor.');
+     },
+   });
+ }
 }
 
 
