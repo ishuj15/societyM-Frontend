@@ -8,6 +8,10 @@ import { NgFor, NgIf } from '@angular/common';
 import { User } from '../../models/user.model';
 import { Roles } from '../signup/signup.component';
 import { UserService } from '../../services/user-services/user.services';
+import { v4 as uuidv4 } from 'uuid';
+
+import * as QRCode from 'qrcode';
+
 
 @Component({
   selector: 'app-visitor',
@@ -44,7 +48,6 @@ ngOnInit() {
     this.addVisitorFormVisibility=!this.addVisitorFormVisibility;
     if (this.role?.toString() === "guard" && this.addVisitorFormVisibility) {
       this.fetchUser();
-      // console.log(" oncl"+this.listOfUsernames)
     }
   }
 
@@ -53,7 +56,6 @@ ngOnInit() {
       next: (response: ResponseEntity) => {
         if (response.status.toString() === 'SUCCESS') {
           this.listOfUsernames = response.data as User[];
-          // console.log(this.listOfUsernames)
         }
       },
     });
@@ -67,64 +69,78 @@ ngOnInit() {
   ),
   purpose: new FormControl( '',[Validators.required]
   ),
-  arrivalTime: new FormControl( '',[Validators.required]
+  arrivalTime: new FormControl( '',
   ),
   departureTime: new FormControl( '',{}
   ),
-  arrivalDate: new FormControl( '',[Validators.required]
+  arrivalDate: new FormControl( '',
     ),
     dep_date: new FormControl( '',{}
     ),
     contactNo: new FormControl( '',[Validators.required, Validators.pattern('^[0-9]{10}$')]
   ),
-  selectedUsername: new FormControl('', [Validators.required]) 
+  selectedUsername: new FormControl('', ) 
   
 });
-  OnSubmitAddVisitor(){
-    let userID: string;
-    if (this.role === Roles.RESIDENT) {
-      userID = this.user!.idUser;
-    } else if (this.role === Roles.GUARD) {
-      const selectedUser = this.listOfUsernames.find(
-        (user) => user.userName === this.selectedUsername
-      );
-      if (!selectedUser) {
-        alert('Please select a valid username.');
-        return;
-      }
-      userID = selectedUser.idUser;
+OnSubmitAddVisitor() {
+  
+  let userID: string | undefined = undefined;
+  let status: string | undefined = undefined;
+  console.log(this.selectedUsername)
+  if (this.role?.toString() === "resident") {
+    userID = this.user!.idUser;
+    status = "Approved";
+  
+  } else if (this.role?.toString() === 'guard') {
+    status = "Pending";
+    // console.log("guard")
+    const selectedUser = this.listOfUsernames.find(
+      (user) => user.userName === this.selectedUsername
+    );
+    if (!selectedUser) {
+      alert('Please select a valid username.');
+      return;
     }
-
-    const visitor : Visitor={
-      idVisitor:'null',
-      userId: userID!,
-      name: this.form.value.name!,
-      purpose :this.form.value.purpose!,
-      arrivalTime :this.form.value.arrivalTime!,
-       departureTime: this.form.value.departureTime!,
-        dep_date :this.form.value.dep_date!,
-       contactNo :this.form.value.contactNo!,
-      arrivalDate:this.form.value.arrivalDate!,
-      status:'null'
-    } 
-    if(this.form.valid){
-      const sub = this.visitorService.createVisitor(this.user!.idUser, visitor).subscribe({
-        next : (response:ResponseEntity)=>
-        {
-          if(response.status.toString()==="SUCCESS")
-          {
-            alert("Visitor Added Successfully");
-            this.addVisitorFormVisibility=false;
-          }
-        },
-      });
-      this.destroyRef.onDestroy(()=>{
-        sub.unsubscribe();
-      });
-    }
+    userID = selectedUser.idUser;
+    // console.log("Guard User ID: ", userID);
   }
 
+  const visitor: Visitor = {
+    idVisitor: 'null',
+    userId: userID!,
+    name: this.form.value.name!,
+    purpose: this.form.value.purpose!,
+    arrivalTime: this.form.value.arrivalTime!,
+    departureTime: this.form.value.departureTime!,
+    dep_date: this.form.value.dep_date!,
+    contactNo: this.form.value.contactNo!,
+    arrivalDate: this.form.value.arrivalDate!,
+    status: status!,
+    token:''
+  };
 
+  console.log("Visitor Object: ", visitor);
+
+  if (this.form.valid) {
+    const sub = this.visitorService.createVisitor(userID!, visitor).subscribe({
+      next: (response: ResponseEntity) => {
+        console.log("Response from createVisitor: ", response);
+        if (response.status.toString() === "SUCCESS") {
+          alert("Visitor Added Successfully");
+          this.addVisitorFormVisibility = false;
+          console.log("Visitor added successfully, User ID: ", userID);
+        }
+      },
+      error: (err) => {
+        console.error("Error adding visitor: ", err);
+      },
+    });
+
+    this.destroyRef.onDestroy(() => {
+      sub.unsubscribe();
+    });
+  }
+}
 
 
 //View All Visitor By Admin
@@ -216,4 +232,39 @@ onClickingViewVisitorByUser(){
     });
     this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
+
+
+
+  //Verify Visitor by guard 
+qrResultString: string = '';
+showScanner: boolean = true;
+
+onCodeResult(result: string) {
+this.qrResultString = result;
+this.verifyVisitor(result);
 }
+
+verifyVisitor(qrCodeToken: string) {
+this.visitorService.verifyVisitorByQRCode(qrCodeToken).subscribe({
+  next: (response: ResponseEntity) => {
+    if (response.status.toString() === 'SUCCESS') {
+    const visitor  = response.data as Visitor;
+
+      if(visitor.status==="Approved"){
+        alert('Visitor Verified');
+      }
+      else if(visitor.status==="Pending")
+        alert('Visitor Request is pending ');
+      else{
+        alert("Visitor Rejected");
+      }
+    } else {
+      alert('Visitor not verified or invalid QR code');
+    }
+  },
+});
+}
+}
+
+
+  

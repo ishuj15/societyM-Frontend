@@ -39,4 +39,8 @@ export class VisitorService {
         return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/{status}`, visitorId);
     }
 
+    verifyVisitorByQRCode(token: string) {
+        return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitor/verify/${token}`);
+      }
+
 }

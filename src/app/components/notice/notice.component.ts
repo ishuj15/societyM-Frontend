@@ -25,7 +25,7 @@ export class NoticeComponent {
 
   ngOnInit() {
     this.role = this.authService.role$();
-    // console.log(this.role)
+ 
   }
 
   //1. Adding Notice By admin only

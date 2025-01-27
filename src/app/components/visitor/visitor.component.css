@@ -1,166 +1,131 @@
+/* Visitor Container */
 .visitor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-left: 300px; /* Offset for the vertical navbar */
-  /* padding: 100px 20px 20px 20px; Padding for proper spacing */
+  padding: 100px 20px 20px 20px; /* Padding for proper spacing */
   height: calc(100vh - 100px); /* Full height minus header height */
-  background-color: #DDEEBB; 
-
+  background-color: #DDEEBB;
+  max-width: 100%;
 }
 
-h1, h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
+/* Visitor Options Section */
+.visitor-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px; /* Space between options */
 }
 
-.action-buttons {
+.visitor-options .option-box {
+  width: 200px;
+  height: 100px;
+  border-radius: 999px; /* Circular corners */
+  background-color: rgba(53, 95, 46, 0.8); /* Color with opacity */
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.action-buttons button {
-  padding: 10px 20px;
-  background-color: #007bff;
+  align-items: center;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.action-buttons button:hover {
-  background-color: #0056b3;
-}
-
-.form-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
-  margin: 20px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-container label {
-  display: block;
-  margin-bottom: 8px;
   font-weight: bold;
-  color: #555;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.form-container input {
+.visitor-options .option-box:hover {
+  transform: scale(1.05);
+  background-color: rgba(53, 95, 46, 1); /* Darker color on hover */
+}
+
+/* Visibility for Roles */
+.visitor-options.resident-role .option-box:not(.view-visitor),
+.visitor-options.guard-role .option-box:not(.view-visitor) {
+  display: none; /* Hide options for other roles */
+}
+
+/* Add Visitor Form */
+.add-visitor-form {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 60%;
+}
+
+.add-visitor-form .form-group {
+  margin-bottom: 15px;
+}
+
+.add-visitor-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.add-visitor-form input,
+.add-visitor-form textarea,
+.add-visitor-form select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.form-container button {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
   border-radius: 5px;
+}
+
+.add-visitor-form button {
+  padding: 10px 20px;
+  background-color: #1c3b4d;
+  color: #fff;
+  border: none;
+  border-radius: 75px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.form-container button:hover {
-  background-color: #218838;
+.add-visitor-form button:hover {
+  background-color: #00c896;
+  transform: scale(1.05);
 }
 
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+/* Visitor Table Container */
+.view-visitor-table-container {
+  margin-top: 20px;
+  width: 90%;
 }
 
-.table-container {
-  margin: 300px;
-  overflow-x: auto;
-  margin-top: 40px;
-}
-
-table {
+/* Visitor Table */
+.view-visitor-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+/* Table Header and Cell Styling */
+.view-visitor-table th,
+.view-visitor-table td {
   padding: 12px;
+  text-align: left;
   border: 1px solid #ddd;
-  text-align: center;
 }
 
-th {
-  background-color: #f4f4f4;
-  color: #333;
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-tr:hover {
+.view-visitor-table th {
   background-color: #f1f1f1;
+  color: #333;
 }
 
-.status-change {
-  text-align: center;
-  margin-top: 20px;
+/* Highlight Row on Selection */
+.view-visitor-table tr.selected {
+  background-color: #d3f4ff;
 }
 
-.status-change button {
-  padding: 10px 20px;
-  background-color: #ffc107;
-  color: white;
-  border: none;
-  border-radius: 5px;
+/* Hover Effect for Rows */
+.view-visitor-table tr:hover {
+  background-color: #f9f9f9;
   cursor: pointer;
-  margin: 5px;
-  transition: background-color 0.3s ease;
 }
 
-.status-change button:hover {
-  background-color: #e0a800;
-}
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f8f9fa;
-}
-
-@media screen and (max-width: 768px) {
-  .action-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .form-container, table {
-    width: 100%;
-  }
-
-  th, td {
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-select:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-}

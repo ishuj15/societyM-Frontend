@@ -1,11 +1,10 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth-interceptor.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
+import { QRCode } from 'qrcode';
 export const appConfig: ApplicationConfig = {
   providers: [
     
@@ -20,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(),
     provideAnimationsAsync(),
+    
   ]
 };

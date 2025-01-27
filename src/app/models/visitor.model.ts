@@ -9,4 +9,5 @@ export interface Visitor {
     dep_date: string;
     status: string;
     contactNo: string;
+    token:string;
 }
