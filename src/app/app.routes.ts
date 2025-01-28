@@ -7,6 +7,7 @@ import { NoticeComponent } from './components/notice/notice.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing-page/landing.component';
 import { VisitorComponent } from './components/visitor/visitor.component';
+import { UserComponent } from './components/user/user.component';
 
 export const routes: Routes = [
  
@@ -43,6 +44,11 @@ export const routes: Routes = [
             {
               path:'visitor',
               component:VisitorComponent
+            },
+            {
+              path:'account',
+              component:UserComponent
+
             }
         ]
     },

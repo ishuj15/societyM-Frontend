@@ -23,22 +23,21 @@ export class NavbarComponent implements OnInit{
     if (this.role === 'admin') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Profile', link: '/user', backgroundColor: '#DDEEBB' },
+        { label: 'Manage Users', link: '/home/account', backgroundColor: '#DDEEBB' },
         { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         // { label: 'Services', link: '/services', backgroundColor: '#DDEEBB' },
-        { label: 'Visitor', link: '/home/visitor', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-      ];
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },      ];
     } else if (this.role === 'resident') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Profile', link: '/user', backgroundColor: '#DDEEBB' },
+        { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },
         { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Visitor', link: '/home/visitor', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },
       ];
     } else if (this.role === 'guard') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Profile', link: '/user', backgroundColor: '#DDEEBB' },
+        { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },
         { label: 'Notices', link: '/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Visitor', link: '/visitor', backgroundColor: '#DDEEBB' }
       ];

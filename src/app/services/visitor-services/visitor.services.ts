@@ -36,8 +36,7 @@ export class VisitorService {
         // return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/status` , status );
     }
     updateVisitorStatus(visitorId: string, status :string ) :  Observable<ResponseEntity> {
-        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/{status}`, visitorId);
-    }
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/${status}`, visitorId);    }
 
     verifyVisitorByQRCode(token: string) {
         return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitor/verify/${token}`);
