@@ -6,7 +6,6 @@
   margin-left: 300px; /* Offset for the vertical navbar */
   padding: 100px 20px 20px 20px; /* Padding for proper spacing */
   height: calc(100vh - 100px); /* Full height minus header height */
-  background-color: #DDEEBB;
   max-width: 100%;
 }
 

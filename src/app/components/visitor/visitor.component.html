@@ -112,7 +112,9 @@
         <th>Username</th>
     </thead>
     <tbody>
-      <tr *ngFor="let visitor of listOfVisitors; let i = index">
+      <tr *ngFor="let visitor of listOfVisitors; let i = index;"
+     
+      >
         <td>{{ i + 1 }}</td>
         <td>{{ visitor.name }}</td>
         <td>{{ visitor.contactNo }}</td>
@@ -146,7 +148,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let visitor of listOfPendingRequests;  let i = index" >
+        <tr *ngFor="let visitor of listOfPendingRequests;  let i = index" 
+         (click)="onSelectingVisitor(visitor)"  >
           <td>{{ i + 1 }}</td>
           <td>{{ visitor.name }}</td>
           <td>{{ visitor.contactNo }}</td>
@@ -163,18 +166,22 @@
 
   <div *ngIf="showChangestatusButton" class="status-change">
     <p>Manage status for selected visitor:</p>
-    <button (click)="onClickingChangeStatusButton('approved')">Approve</button>
-    <button (click)="onClickingChangeStatusButton('denied')">Deny</button>
+    <div class="button-container">
+    <button   class="status-button approve"(click)="onClickingChangeStatusButton('Approved')">Approve</button>
+    <button  class="status-button deny"  (click)="onClickingChangeStatusButton('denied')">Deny</button>
+  </div>
   </div>
   <div *ngIf="qrCodeImage" class="qr-code-section">
     <h3>Visitor QR Code:</h3>
     <img [src]="qrCodeImage" alt="QR Code">
   </div>
-
-  <!-- QR Code Scanner -->
+<!-- QR Code Scanner -->
   <div *ngIf="showScanner" class="qr-scanner">
     <h2>Scan Visitor QR Code</h2>
-    <ngx-scanner-qrcode #scanner="scanner"  [src]="image"></ngx-scanner-qrcode>
-    <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p> 
+    <ngx-scanner-qrcode
+      #action="scanner"
+      (result)="onCodeResult($event)"
+    ></ngx-scanner-qrcode>
+    <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p>
   </div>
 </div>

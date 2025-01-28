@@ -29,14 +29,15 @@ export class VisitorService {
     deleteVisitor(visitorId: string): Observable<ResponseEntity> {
         return this.httpClient.delete<ResponseEntity>(`http://localhost:8080/visitor/${visitorId}`);
     }
-
+//user pending visitors
     getVisitorByStatus( userId:string, status :string ) : Observable<ResponseEntity>{
                                           
         return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/${status}`);
-        // return this.httpClient.get<ResponseEntity>(`http://localhost:8080/visitors/${userId}/status` , status );
+   
     }
     updateVisitorStatus(visitorId: string, status :string ) :  Observable<ResponseEntity> {
-        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/{status}`, visitorId);
+        console.log(status);
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/visitor/update/${status}`, visitorId);
     }
 
     verifyVisitorByQRCode(token: string) {

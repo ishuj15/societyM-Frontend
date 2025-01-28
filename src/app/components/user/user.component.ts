@@ -1,12 +1,133 @@
 import { Component } from '@angular/core';
+import { User } from '../../models/user.model';
+import { UserService } from '../../services/user-services/user.services';
+import { AuthService } from '../../services/auth-services/auth.services';
+import { ResponseEntity } from '../../models/response.model';
+import { Route, Router } from '@angular/router';
+import { Roles } from '../signup/signup.component';
+import { NgFor, NgIf } from '@angular/common';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
   standalone:true,
-  imports: [],
+  imports: [NgIf,NgFor],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+ 
+  currentUser:User|null=null;
+   role : Roles|null | undefined =null;
+  constructor(private userService: UserService, private authService:AuthService , private router: Router) {}
+
+  ngOnInit(): void {
+   this.currentUser= this.authService.user$();
+   this.role = this.authService.role$();
+  }
+  viewProfile:boolean=false;
+  onClickViewProfile(){
+    this.viewProfile=!this.viewProfile;
+  }
+
+  //view all user by admin
+  viewUserOption :boolean=false;
+  users: User[]=[]
+  onclickViewUSer(){
+    this.viewUserOption= ! this.viewUserOption;
+  this.viewAllUsers();
+  }
+  viewAllUsers() {
+   const sub = this.userService.getAllUsers().subscribe( {
+      next: (response: ResponseEntity) =>{
+        this.users=response.data as User[];
+      }
+    });
+  }
+// 5. Update User
+// a) Showing table to select for update
+selectedUserForUpdate: User | null = null;
+// updateUserButton: boolean = false;
+// updateUserOption: boolean = false;
+
+// UpdateUserOption() {
+//   this.updateUserOption = !this.updateUserOption;
+//   if (this.updateUserOption === true) {
+//     this.onClickViewAllUsers(); // Function to fetch all users for the admin
+//   }
+// }
+
+updateUserForm = new FormGroup({
+  userName: new FormControl('', {}),
+  email: new FormControl('', {}),
+  phone: new FormControl('', {}),
+  address: new FormControl('', {}),
+  password: new FormControl('', {}),
+});
+
+onSelectingUserUpdate(user: User) {
+  // this.updateUserButton = !this.updateUserButton;
+  this.selectedUserForUpdate = user;
+  // this.updateUserButton = true;
+
+  // Pre-fill the form with the selected user's values
+  this.updateUserForm.setValue({
+    userName: user.userName,
+    email: user.email,
+    phone: user.phoneNo,
+    address: user.address,
+    password: user.password
+  });
+}
+
+// c) On clicking update, show update form
+// onClickingUpdateUserButton() {
+//   if (this.updateUserForm.valid && this.selectedUserForUpdate) {
+//     // Create a copy of the updated user
+//     const updatedUser: User = {
+//       ...this.selectedUserForUpdate,
+//       userName: this.updateUserForm.value.name ?? this.selectedUserForUpdate.userName, // Default to existing value
+//       email: this.updateUserForm.value.email ?? this.selectedUserForUpdate, // Default to existing value
+//       phoneNo: this.updateUserForm.value.phone ?? this.selectedUserForUpdate.phoneNo, // Default to existing value
+//       address: this.updateUserForm.value.role ?? this.selectedUserForUpdate.address, // Default to existing value
+//       password:  this.updateUserForm.value.role ?? this.selectedUserForUpdate.password
+//     };
+
+//     // Call the service to update the user
+//     const sub = this.userService.updateUser(this.selectedUserForUpdate.idUser, updatedUser).subscribe({
+//       next: (response: ResponseEntity) => {
+//         if (response.status.toString() === 'SUCCESS') {
+//           alert('User Updated Successfully');
+//           this.updateUserButton = false;
+//           this.selectedUserForUpdate = null;
+//           this.updateUserOption = false;
+
+//           // Refresh the user list
+//           // this.onFetchingAllUsers();
+//         }
+//       },
+//     });
+//     // this.destroyRef.onDestroy(() => {
+//     //   sub.unsubscribe();
+//     // });
+//   }
+// }
+
+  //delete user 
+  deleteUser(userId:string): void {
+    const sub=  this.userService.deleteUser(userId).subscribe(
+      {
+        next: (response:ResponseEntity) =>{
+          if(response.status.toString() ==="SUCCESS")
+          {
+            alert("Account deleted succuessfully");
+
+            this.router.navigate(['/landing']);
+          }
+        }
+      });
+    }
+
+ 
 
 }

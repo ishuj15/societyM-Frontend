@@ -1,1 +1,72 @@
-<p>user works!</p>
+<div class="user-container">
+  <div *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options">
+    <h2>Resident Options</h2>
+    <button class="btn" (click)="onClickViewProfile()">View Profile</button>
+    <button class="btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</button>
+  </div>
+
+  <div *ngIf="role?.toString()==='admin'" class="admin-options">
+    <h2>Admin Options</h2>
+    <button class="btn" (click)="onclickViewUSer()">View All Users</button>
+  </div>
+
+  <div *ngIf="viewProfile">
+    <h2>User Details</h2>
+    <table class="vertical-table">
+      <tr>
+        <th>Name:</th>
+        <td>{{ currentUser?.userName }}</td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td>{{ currentUser?.email }}</td>
+      </tr>
+      <!-- <tr>
+        <th>Role:</th>
+        <td>{{ currentUser.role }}</td>
+      </tr> -->
+      <tr>
+        <th>Phone:</th>
+        <td>{{ currentUser?.phoneNo }}</td>
+      </tr>
+      <tr>
+        <th>Address:</th>
+        <td>{{ currentUser?.address }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="viewUserOption">
+    <h2>All Users</h2>
+    <table class="horizontal-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th> Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+        
+          <td>{{ user.userName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.userRole }}</td>
+          <td>{{ user.phoneNo }}</td>
+          <td> {{ user.address}}</td>
+          <td>
+            <!-- <button class="btn" (click)="updateUser(user)">Update</button> -->
+            <button class="btn delete" (click)="deleteUser(user.idUser)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

@@ -6,16 +6,15 @@ body {
 }
 
 .vertical-navbar {
-    width: 300px;
-    background-color: #A9C46C; /* Slightly darker gray */
+    padding: 10px;
     position: fixed;
     height: 100%;
     overflow: auto;
     padding-top: 60px; /* Push navbar down to avoid overlap with header */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
     margin-top: 60px; 
     display: block; /* Always show the navbar */
     z-index:1;
+    width: 15%;
 }
 
 .vertical-navbar ul {
@@ -29,7 +28,9 @@ body {
     padding: 20px 20px;
     display: block;
     font-size: 22px; /* Increased font size */
-    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-family: sans-serif;
 }
 
 /* Alternate background colors for list items */
