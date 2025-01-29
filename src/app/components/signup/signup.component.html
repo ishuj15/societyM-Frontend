@@ -63,4 +63,11 @@
       }
 
     </form>
+
+    <div  *ngIf="qrCodeVisibility" class="qr-code-section">
+      <h3>MFA QrCode:</h3>
+      <img [src]="qrImage" alt="QR Code" />
+      <button (click)="onSigningUp()" > Click to login</button>
+      <!-- <p *ngIf="!qrImage">QR code not available</p> -->
+    </div>
 </div>

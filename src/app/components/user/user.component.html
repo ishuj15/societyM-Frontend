@@ -1,9 +1,10 @@
 <div class="user-container">
 
     <<ng-container *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options" >
-      <div class="btn" (click)="onClickViewProfile()">View Profile</div>
-      <div class="btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
-      <div class="btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</div>
+      <div class="resident-options btn" (click)="onClickViewProfile()">View Profile</div>
+      <div class="resident-options btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
+      <div class=" resident-options btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</div>
+      <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
     </ng-container>
   
     <div *ngIf="role?.toString()==='admin'" class="admin-options">
@@ -12,7 +13,7 @@
       <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
     </div>
   
-    <div  class="qr-code-section">
+    <div *ngIf="codeVisiblity" class="qr-code-section">
       <h3>MFA QrCode:</h3>
       <img *ngIf="qrCodeImage" [src]="qrCodeImage" alt="QR Code" />
       <p *ngIf="!qrCodeImage">QR code not available</p>

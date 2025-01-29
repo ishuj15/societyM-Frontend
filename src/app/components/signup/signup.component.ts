@@ -5,11 +5,12 @@ import { AuthService } from '../../services/auth-services/auth.services';
 import { Router } from '@angular/router';
 import { loginResponse } from '../../models/auth.model';
 import { HeaderComponent } from '../header/header.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent],
+  imports: [ReactiveFormsModule, HeaderComponent,NgIf],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -45,10 +46,9 @@ export class SignupComponent {
     })
 
   });
-
+  qrImage: string | null = null;
   OnRegister() : void {
     if(this.form.valid){
-
       const user : User={
         idUser:'',
         userName: this .form .value.username!,
@@ -64,24 +64,20 @@ export class SignupComponent {
       next: (response: loginResponse) :void=> {
         if(response.status.toString()==="SUCCESS")
         {
-         
-            alert('Registered successfully, Please login to continue');
-            this.router.navigate(['/login']);
+          const user= response.data as User;
+          this.qrImage= user.qrImage;
+            alert('Registered successfully, Please scan your MFA Qr code to continue');
+            this.qrCodeVisibility=true; 
         }
-        else
-        {
-          //handle error try 
-        }
-
       },
-      error :() =>{
-        //Handle observables error like when server is down
-
-      }
-     });   
-      
+     });       
     }
-
+  }
+  qrCodeVisibility:boolean=false;
+ 
+  onSigningUp(){
+    this.router.navigate(['/login']);
+  
   }
 
   get UserNameIsInvalid() {

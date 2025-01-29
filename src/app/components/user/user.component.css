@@ -1,14 +1,12 @@
 .user-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 300px; /* Offset for the vertical navbar */
-    padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-    height: calc(100vh - 100px); /* Full height minus header height */
-    background-color: #DDEEBB; /* Similar background color as notice component */
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 300px; /* Offset for the vertical navbar */
+  padding: 100px 20px 20px 20px; /* Padding for proper spacing */
+  height: calc(100vh - 100px); /* Full height minus header height */
+  background-color: #DDEEBB;
+  max-width: 100%;
   }
 
   /* Options Section */
@@ -40,12 +38,33 @@
     background-color: rgba(53, 95, 46, 1); /* Slightly darker on hover */
   }
 
-  h2 {
+  /* h2 {
     color: #333;
     margin-bottom: 20px;
+  } */
+
+  .admin-actions {
+    margin-top: 20px;
+    margin-left: 400px;
+    height: 50px;
+    padding: 15px;
+    background-color: #e6f7ff;
+    border-radius: 10px;
   }
-
-
+  
+  .admin-actions .action-item {
+    background-color: #cce7ff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .admin-actions .action-item:hover {
+    background-color: #99c2ff;
+  }
+  
  
   /* Visibility for Roles */
   .resident-options .btn:not(.view-profile),
