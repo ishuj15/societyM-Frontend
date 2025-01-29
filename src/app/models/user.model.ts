@@ -8,4 +8,6 @@ export interface User {
     phoneNo:string,
     userRole:Roles,
     userName: string
+    qrToken:string,
+    qrImage:string
 }

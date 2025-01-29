@@ -45,9 +45,16 @@ export class AuthService{
     }
 
     signup(user: User) : Observable<loginResponse>{
-       
+       console.log("signup");
         return this.httpClient.post<loginResponse>( "http://localhost:8080/api/auth/user",
-            user
+            {
+              userName: user.userName,
+              password:user.password,
+              userRole:user.userRole,
+              email:user.email,
+              address:user.address,
+              phoneNo: user.phoneNo
+            }
         );
     }
    

@@ -72,7 +72,7 @@ label {
   font-size: 20px;
 }
 
-input[type="username"],
+input[type="text"],
 input[type="password"] {
   width: 100%;
   padding: 10px;
@@ -84,7 +84,7 @@ input[type="password"] {
   font-size: 20px;
 }
 
-input[type="username"]:focus,
+input[type="text"]:focus,
 input[type="password"]:focus {
   border-color: #0277bd;
   background-color: #ffffff;

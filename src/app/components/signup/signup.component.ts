@@ -56,20 +56,17 @@ export class SignupComponent {
         email:this.form.value.email!,
         phoneNo:this.form.value.phoneNo!,
         address:this.form.value.address!,
-        userRole: this.form.value.userRole! as Roles
+        userRole: this.form.value.userRole! as Roles,
+        qrToken:'',
+        qrImage:''
       };
      this.authService.signup(user).subscribe({
       next: (response: loginResponse) :void=> {
         if(response.status.toString()==="SUCCESS")
         {
-          if(user.userRole!=Roles.ADMIN)
-          {
+         
             alert('Registered successfully, Please login to continue');
             this.router.navigate(['/login']);
-          }
-          else{
-            //back to options
-          }
         }
         else
         {

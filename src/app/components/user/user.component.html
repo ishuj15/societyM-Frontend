@@ -1,4 +1,6 @@
 <div class="user-container">
+  
+  
     <div *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options">
       <h2>Resident Options</h2>
       <button class="btn" (click)="onClickViewProfile()">View Profile</button>
@@ -6,10 +8,18 @@
     </div>
   
     <div *ngIf="role?.toString()==='admin'" class="admin-options">
-      <h2>Admin Options</h2>
+       
       <button class="btn" (click)="onclickViewUSer()">View All Users</button>
+      <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
     </div>
   
+    <div *ngIf="codeVisiblity" class="qr-code-section">
+      <h3>MFA QrCode:</h3>
+      <img *ngIf="qrCodeImage" [src]="qrCodeImage" alt="QR Code" />
+      <p *ngIf="!qrCodeImage">QR code not available</p>
+    </div>
+
+
     <div *ngIf="viewProfile">
       <h2>User Details</h2>
       <table class="vertical-table">
@@ -36,9 +46,9 @@
       </table>
     </div>
   
-    <div *ngIf="viewUserOption">
+    <div *ngIf="viewUserOption">   
       <h2>All Users</h2>
-      <table class="horizontal-table">
+      <table class="user-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -65,4 +75,8 @@
         </tbody>
       </table>
     </div>
+
+
+  
+    
   </div>

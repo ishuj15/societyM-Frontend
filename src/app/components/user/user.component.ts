@@ -7,23 +7,30 @@ import { Route, Router } from '@angular/router';
 import { Roles } from '../signup/signup.component';
 import { NgFor, NgIf } from '@angular/common';
 import { FormGroup, FormControl } from '@angular/forms';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
 @Component({
   selector: 'app-user',
   standalone:true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf,NgFor,NgxScannerQrcodeModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-
   currentUser:User|null=null;
-   role : Roles|null | undefined =null;
+  role : Roles|null | undefined =null;
   constructor(private userService: UserService, private authService:AuthService , private router: Router) {}
+  
+  qrCodeImage: string | null = null;
+  qrCodqrCodeBase64: string | null = null;
 
   ngOnInit(): void {
-   this.currentUser= this.authService.user$();
-   this.role = this.authService.role$();
+    this.currentUser= this.authService.user$();
+    this.role = this.authService.role$();
+   const  qrCodeBase64 = this.currentUser?.qrImage;
+    this.qrCodeImage = qrCodeBase64 ? 'data:image/png;base64,' + qrCodeBase64 : null;
   }
+
   viewProfile:boolean=false;
   onClickViewProfile(){
     this.viewProfile=!this.viewProfile;
@@ -120,10 +127,20 @@ onSelectingUserUpdate(user: User) {
           if(response.status.toString() ==="SUCCESS")
           {
             alert("Account deleted succuessfully");
-
+            if(this.role?.toString()!='admin')
             this.router.navigate(['/landing']);
+          else{
+            this.viewUserOption=false;
+          }
           }
         }
       });
+    }
+    //View qr code
+
+    codeVisiblity:boolean=false;
+    onClickViewQr(){
+      this.codeVisiblity= !this.codeVisiblity;
+
     }
 }

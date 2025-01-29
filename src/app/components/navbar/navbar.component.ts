@@ -2,6 +2,7 @@ import { NgFor, NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-services/auth.services';
+import { Roles } from '../signup/signup.component';
 
 @Component({
   selector: 'app-navbar',
@@ -12,29 +13,31 @@ import { AuthService } from '../../services/auth-services/auth.services';
 })
 export class NavbarComponent implements OnInit{
   // role: string|null= this.authService.roles$().toString();
-  role: string = 'admin';
+  role: Roles | null = null;
   sidebarItems: SidebarItem[] = []; 
   constructor(private authService: AuthService){}
   ngOnInit() {
+    this.role=this.authService.role$()!;
     this.loadSidebarItems();
+    // console.log(this.role)
   }
 
   loadSidebarItems() {
-    if (this.role === 'admin') {
+    if (this.role?.toString() === 'admin') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Manage Users', link: '/home/account', backgroundColor: '#DDEEBB' },
         { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         // { label: 'Services', link: '/services', backgroundColor: '#DDEEBB' },
         { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },      ];
-    } else if (this.role === 'resident') {
+    } else if (this.role?.toString() === 'resident') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },
         { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },
       ];
-    } else if (this.role === 'guard') {
+    } else if (this.role?.toString() === 'guard') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },

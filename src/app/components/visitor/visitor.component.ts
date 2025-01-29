@@ -40,6 +40,10 @@ ngOnInit() {
   listOfUsernames: User[] = [];
   onClickingAddVisitor(){ 
     this.addVisitorFormVisibility=!this.addVisitorFormVisibility;
+    // this.showTableByAdmin = false;
+    this.showTableByUsern = false;
+    this.ViewPendingRequestsTable=false;
+    
     if (this.role?.toString() === "guard" && this.addVisitorFormVisibility) {
       this.fetchUser();
     }
@@ -135,7 +139,6 @@ onViewAllVisitorByAdmin(){
   this.showTableByAdmin = !this.showTableByAdmin; 
     this.ViewAllVisitorByAdmin()
     this.fetchUser();
-  
   }
   ViewAllVisitorByAdmin(){
     const sub = this.visitorService.getAllVisitors().subscribe({
@@ -160,6 +163,9 @@ listOfVisitorsByUser :Visitor[] =[];
 onClickingViewVisitorByUser(){ 
 
   this.showTableByUsern = !this.showTableByUsern ;
+  this.addVisitorFormVisibility = false;
+  this.ViewPendingRequestsTable=false;
+  
   if(this.showTableByUsern)
   this.onViewAllVisitorByUser(); 
  }
@@ -183,6 +189,8 @@ onClickingViewVisitorByUser(){
   ViewPendingRequestsTable:boolean =false;  // showPendingRequests:boolean=false;
   onClickingManageRequests(){
      this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; 
+     this.showTableByUsern = false ;
+  this.addVisitorFormVisibility = false;
      if(this.ViewPendingRequestsTable) 
       this.FetchPendingRequestTableData()
      }
@@ -236,12 +244,6 @@ onClickingViewVisitorByUser(){
    this.qrResultString = result; // Save the scanned QR token
    this.verifyVisitor(result); // Verify the visitor based on the QR token
  }
-//  scannedData: any;
-
-//  onScanSuccess(result: any) {
-//    this.scannedData = result;
-//  }
-
  // Verify visitor status using QR code token
  verifyVisitor(qrCodeToken: string) {
 

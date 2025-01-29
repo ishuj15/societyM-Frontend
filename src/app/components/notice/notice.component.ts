@@ -20,11 +20,11 @@ import { Router } from '@angular/router';
 export class NoticeComponent {
   constructor(private authService : AuthService , private noticeService : NoticeService, private router: Router){  }
   private destroyRef=inject(DestroyRef);
-  role : Roles|null | undefined =null;
+  role : Roles|null  =null;
   notices :DatabaseNotice[] =[];
 
   ngOnInit() {
-    this.role = this.authService.role$();
+    this.role = this.authService.role$()!;
  
   }
 
@@ -66,9 +66,14 @@ export class NoticeComponent {
   }
 
   //2. ViewingNotice by resident or guard
+  
+  
   ShowTableToUser : boolean= false;
   onClickingViewNoticeUser(){   
-      this.ShowTableToUser=!this.ShowTableToUser; 
+    if(this.role?.toString()==='resident' ||this.role?.toString()==='guard'  ){
+      this.ShowTableToUser=true;
+    }
+      
     if(this.ShowTableToUser)
       this.onFetchingNoticesUser();
      }
@@ -145,7 +150,9 @@ export class NoticeComponent {
   UpdateNoticeOption(){
     this.updateOption=!this.updateOption;
     if(this.updateOption===true){
-      this.onClickingViewNoticeAdmin();
+      this.showTableAdmin=true;
+    if(this.showTableAdmin)
+    this.onFetchingNoticesAdmin();
     }
   }
   updateForm = new FormGroup({
@@ -153,9 +160,10 @@ export class NoticeComponent {
     message: new FormControl('', {}),
     date: new FormControl('', {}),
   });
-  onSelectingNoticeUpdate( notice: DatabaseNotice) { this.updateButton= !this.updateButton; this.selectedNoticeForUpdate=notice 
-    this.selectedNoticeForUpdate = notice;
-    this.updateButton = true;
+  onSelectingNoticeUpdate( notice: DatabaseNotice) {
+     this.updateButton= !this.updateButton;
+     this.selectedNoticeForUpdate=notice 
+ 
     // Pre-fill the form with the selected notice's values
     this.updateForm.setValue({
       title: notice.title,
@@ -186,9 +194,7 @@ export class NoticeComponent {
             this.selectedNoticeForUpdate = null;
             this.updateOption=false;
             this.showTableAdmin=false;
-  
-            // Refresh the notices list
-            // this.onFetchingNoticesAdmin();
+
           }
         },
       });
