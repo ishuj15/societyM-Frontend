@@ -1,19 +1,18 @@
 <div class="user-container">
-  
-  
-    <div *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options">
-      <h2>Resident Options</h2>
-      <button class="btn" (click)="onClickViewProfile()">View Profile</button>
-      <button class="btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</button>
-    </div>
+
+    <<ng-container *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options" >
+      <div class="btn" (click)="onClickViewProfile()">View Profile</div>
+      <div class="btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
+      <div class="btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</div>
+    </ng-container>
   
     <div *ngIf="role?.toString()==='admin'" class="admin-options">
-       
+      <button class="btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</button>
       <button class="btn" (click)="onclickViewUSer()">View All Users</button>
       <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
     </div>
   
-    <div *ngIf="codeVisiblity" class="qr-code-section">
+    <div  class="qr-code-section">
       <h3>MFA QrCode:</h3>
       <img *ngIf="qrCodeImage" [src]="qrCodeImage" alt="QR Code" />
       <p *ngIf="!qrCodeImage">QR code not available</p>
@@ -31,10 +30,6 @@
           <th>Email:</th>
           <td>{{ currentUser?.email }}</td>
         </tr>
-        <!-- <tr>
-          <th>Role:</th>
-          <td>{{ currentUser.role }}</td>
-        </tr> -->
         <tr>
           <th>Phone:</th>
           <td>{{ currentUser?.phoneNo }}</td>

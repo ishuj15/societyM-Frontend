@@ -27,6 +27,7 @@ export class UserComponent {
   ngOnInit(): void {
     this.currentUser= this.authService.user$();
     this.role = this.authService.role$();
+    console.log(this.role)
    const  qrCodeBase64 = this.currentUser?.qrImage;
     this.qrCodeImage = qrCodeBase64 ? 'data:image/png;base64,' + qrCodeBase64 : null;
   }
@@ -36,7 +37,7 @@ export class UserComponent {
     this.viewProfile=!this.viewProfile;
   }
 
-  //view all user by admin
+  //view all user by admin --working
   viewUserOption :boolean=false;
   users: User[]=[]
   onclickViewUSer(){
@@ -50,11 +51,11 @@ export class UserComponent {
       }
     });
   }
-// 5. Update User
+// 5. Update User 
 // a) Showing table to select for update
 selectedUserForUpdate: User | null = null;
-// updateUserButton: boolean = false;
-// updateUserOption: boolean = false;
+updateUserButton: boolean = false;
+updateUserOption: boolean = false;
 
 // UpdateUserOption() {
 //   this.updateUserOption = !this.updateUserOption;
@@ -64,7 +65,7 @@ selectedUserForUpdate: User | null = null;
 // }
 
 updateUserForm = new FormGroup({
-  userName: new FormControl('', {}),
+ 
   email: new FormControl('', {}),
   phone: new FormControl('', {}),
   address: new FormControl('', {}),
@@ -78,48 +79,53 @@ onSelectingUserUpdate(user: User) {
 
   // Pre-fill the form with the selected user's values
   this.updateUserForm.setValue({
-    userName: user.userName,
     email: user.email,
     phone: user.phoneNo,
     address: user.address,
     password: user.password
   });
 }
-
+   userID:string='';
 // c) On clicking update, show update form
-// onClickingUpdateUserButton() {
-//   if (this.updateUserForm.valid && this.selectedUserForUpdate) {
-//     // Create a copy of the updated user
-//     const updatedUser: User = {
-//       ...this.selectedUserForUpdate,
-//       userName: this.updateUserForm.value.name ?? this.selectedUserForUpdate.userName, // Default to existing value
-//       email: this.updateUserForm.value.email ?? this.selectedUserForUpdate, // Default to existing value
-//       phoneNo: this.updateUserForm.value.phone ?? this.selectedUserForUpdate.phoneNo, // Default to existing value
-//       address: this.updateUserForm.value.role ?? this.selectedUserForUpdate.address, // Default to existing value
-//       password:  this.updateUserForm.value.role ?? this.selectedUserForUpdate.password
-//     };
+onClickingUpdateUserButton() {
+  if (this.updateUserForm.valid && this.selectedUserForUpdate) {
+ 
+    // Create a copy of the updated user
+    const updatedUser: User = {
+      ...this.selectedUserForUpdate,
+      // Default to existing value
+      email: this.updateUserForm.value.email ?? this.selectedUserForUpdate.email, // Default to existing value
+      phoneNo: this.updateUserForm.value.phone ?? this.selectedUserForUpdate.phoneNo, // Default to existing value
+      address: this.updateUserForm.value.address ?? this.selectedUserForUpdate.address, // Default to existing value
+      password:  this.updateUserForm.value.password ?? this.selectedUserForUpdate.password
+    };
+    
+    // if(this.currentUser?.userRole.toString()==='admin'){
+    //  this.userID =null;
+    // }
+    // else
+    // {
+    //    this.userID=this.currentUser?.idUser;
+    // }
 
-//     // Call the service to update the user
-//     const sub = this.userService.updateUser(this.selectedUserForUpdate.idUser, updatedUser).subscribe({
-//       next: (response: ResponseEntity) => {
-//         if (response.status.toString() === 'SUCCESS') {
-//           alert('User Updated Successfully');
-//           this.updateUserButton = false;
-//           this.selectedUserForUpdate = null;
-//           this.updateUserOption = false;
+    // Call the service to update the user
+    const sub = this.userService.updateUser(this.userID!, updatedUser).subscribe({
+      next: (response: ResponseEntity) => {
+        if (response.status.toString() === 'SUCCESS') {
+          alert('User Updated Successfully');
+          this.updateUserButton = false;
+          this.selectedUserForUpdate = null;
+          this.updateUserOption = false;
+        }
+      },
+    });
+    // this.destroyRef.onDestroy(() => {
+    //   sub.unsubscribe();
+    // });
+  }
+}
 
-//           // Refresh the user list
-//           // this.onFetchingAllUsers();
-//         }
-//       },
-//     });
-//     // this.destroyRef.onDestroy(() => {
-//     //   sub.unsubscribe();
-//     // });
-//   }
-// }
-
-  //delete user 
+  //delete user  --working
   deleteUser(userId:string): void {
     const sub=  this.userService.deleteUser(userId).subscribe(
       {

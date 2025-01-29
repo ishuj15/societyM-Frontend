@@ -30,7 +30,19 @@ export class NoticeComponent {
 
   //1. Adding Notice By admin only
   isAddNoticeVisible: boolean=false;
-  onClickingAddNotice(){   this.isAddNoticeVisible=!this.isAddNoticeVisible;}
+  onClickingAddNotice(){  
+     this.isAddNoticeVisible=!this.isAddNoticeVisible;
+    if(this.isAddNoticeVisible){
+      this.ShowTableToUser = false;
+      this.showTableAdmin =false;
+      this.deleteButton  =false; 
+      this.updateButton =false;  
+      this.updateOption =false; 
+      this.deleteOption=false;
+    }
+    
+    
+    }
   form  = new FormGroup({
     title : new FormControl('',{}),
     message : new FormControl('',{}),
@@ -56,7 +68,14 @@ export class NoticeComponent {
           if(response.status.toString()==="SUCCESS")
           {
             alert("Notice Created Successfully");
-            this.isAddNoticeVisible=false;
+          this.isAddNoticeVisible=false;
+          this.ShowTableToUser = false;
+          this.showTableAdmin =false;
+          this.deleteButton  =false; 
+          this.updateButton =false;  
+          this.updateOption =false; 
+          this.deleteOption=false;
+          this.isAddNoticeVisible=false;
             // this.router.navigate(['/home/notice']);
           }
       },
@@ -70,10 +89,7 @@ export class NoticeComponent {
   
   ShowTableToUser : boolean= false;
   onClickingViewNoticeUser(){   
-    if(this.role?.toString()==='resident' ||this.role?.toString()==='guard'  ){
-      this.ShowTableToUser=true;
-    }
-      
+   this.ShowTableToUser=!this.ShowTableToUser;
     if(this.ShowTableToUser)
       this.onFetchingNoticesUser();
      }
@@ -94,12 +110,19 @@ export class NoticeComponent {
   showTableAdmin: boolean=false;
   onClickingViewNoticeAdmin(){
     this.showTableAdmin= !this.showTableAdmin;
-    this.selectedNoticeForUpdate = null; // Reset selected notice for update
-      this.selectedNotice = null;   // Reset selected notice
-      this.updateOption = false;    // Hide update option
-      this.deleteButton = false;    // Hide delete button
     if(this.showTableAdmin)
-    this.onFetchingNoticesAdmin();
+    {
+      this.ShowTableToUser = false;
+      this.deleteButton  =false; 
+      this.updateButton =false;  
+      this.updateOption =false; 
+      this.deleteOption=false;
+      this.isAddNoticeVisible=false;
+      this.selectedNoticeForUpdate = null; 
+      this.selectedNotice = null;   
+      this.onFetchingNoticesAdmin();
+    }
+   
   }
   onFetchingNoticesAdmin(){
     const sub = this.noticeService.getAllNotice().subscribe({
@@ -113,15 +136,31 @@ export class NoticeComponent {
     }) ;
     this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
   }
-
-    
   //4. Delete Notice By admin only
   //a) Showing  table to select
+  deleteOption:boolean=false;
+  onClickingDeleteOption(){
+    this.deleteOption=!this.deleteButton;
+    if(this.deleteOption){
+      this.showTableAdmin=true;
+      this.ShowTableToUser = false;
+      this.deleteButton  =false; 
+      this.updateButton =false;  
+      this.updateOption =false; 
+      this.isAddNoticeVisible=false;
+      this.onFetchingNoticesAdmin();
+    }
+    }
+    
+  
+    
   // same view all notices so no need to write function refer fun-> ViewNotice
   //b) Selecting the notice and setting it to the selectedNotice and showing deletebutton as well
   selectedNotice: DatabaseNotice| null= null;
   deleteButton:Boolean=false;  
-  onSelectingNotice( notice: DatabaseNotice){ this.deleteButton=!this.deleteButton; this.selectedNotice=notice;  }
+  onSelectingNotice( notice: DatabaseNotice){
+     this.deleteButton=!this.deleteButton;
+      this.selectedNotice=notice;  }
   //c) Deleting notice and also set everything back 
   onClickingDeleteButton(){
     const sub =this.noticeService.deleteNotice(this.selectedNotice!.idNotices).subscribe({
@@ -129,8 +168,13 @@ export class NoticeComponent {
         if(response.status.toString()==="SUCCESS")
           {
             alert("Notice Deleted Successfully");
-            this.showTableAdmin=false;
-            this.deleteButton=false;
+            this.ShowTableToUser = false;
+            this.showTableAdmin =false;
+            this.deleteButton  =false; 
+            this.updateButton =false;  
+            this.updateOption =false; 
+            this.deleteOption=false;
+            this.isAddNoticeVisible=false;
             this.selectedNotice=null;
           }
       }
@@ -149,10 +193,14 @@ export class NoticeComponent {
   updateOption:Boolean=false; 
   UpdateNoticeOption(){
     this.updateOption=!this.updateOption;
-    if(this.updateOption===true){
+    if(this.updateOption){
       this.showTableAdmin=true;
-    if(this.showTableAdmin)
-    this.onFetchingNoticesAdmin();
+      this.ShowTableToUser = false;
+      this.deleteButton  =false; 
+      this.updateButton =false;  
+      this.deleteOption=false;
+      this.isAddNoticeVisible=false;
+      this.onFetchingNoticesAdmin();
     }
   }
   updateForm = new FormGroup({
@@ -163,6 +211,9 @@ export class NoticeComponent {
   onSelectingNoticeUpdate( notice: DatabaseNotice) {
      this.updateButton= !this.updateButton;
      this.selectedNoticeForUpdate=notice 
+     this.showTableAdmin=false;
+     this.isAddNoticeVisible=false;
+     this.deleteButton=false;
  
     // Pre-fill the form with the selected notice's values
     this.updateForm.setValue({

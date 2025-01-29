@@ -41,8 +41,8 @@ export class NavbarComponent implements OnInit{
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
         { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },
-        { label: 'Notices', link: '/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Visitor', link: '/visitor', backgroundColor: '#DDEEBB' }
+        { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' }
       ];
     }
   }

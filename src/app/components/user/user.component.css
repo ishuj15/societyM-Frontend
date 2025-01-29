@@ -45,45 +45,8 @@
     margin-bottom: 20px;
   }
 
-  /* Admin Actions */
-  .admin-actions {
-    margin-top: 20px;
-    margin-left: 400px;
-    height: 50px;
-    padding: 15px;
-    background-color: #e6f7ff;
-    border-radius: 10px;
-  }
 
-  .admin-actions .action-item {
-    background-color: #cce7ff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-  }
-
-  .admin-actions .action-item:hover {
-    background-color: #99c2ff;
-  }
-
-  /* Common Button Styles */
-  .btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-
-  .btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-
+ 
   /* Visibility for Roles */
   .resident-options .btn:not(.view-profile),
   .guard-options .btn:not(.view-profile) {

@@ -35,6 +35,7 @@ ngOnInit() {
 
   //Adding New Visitor 
   qrCodeImage: string | null = null;
+  qrCodeVisible: boolean = false;
   addVisitorFormVisibility: boolean =false;
   selectedUsername: string | null = null;
   listOfUsernames: User[] = [];
@@ -119,6 +120,10 @@ OnSubmitAddVisitor() {
 
           const qrCodeBase64 = responseVisitor.qrCodeBase64;
           this.qrCodeImage = 'data:image/png;base64,' + qrCodeBase64;
+          this.qrCodeVisible = true;
+          setTimeout(() => {
+            this.qrCodeVisible = false;
+          }, 10000); 
         }
       },
       error: (err) => {

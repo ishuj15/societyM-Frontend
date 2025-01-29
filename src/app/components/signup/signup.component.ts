@@ -21,7 +21,7 @@ export class SignupComponent {
   form = new FormGroup({
     email: new FormControl('', {
       validators : [Validators.email, Validators.required],
-      asyncValidators :[]
+      
     }),
 
     password : new FormControl('' ,{

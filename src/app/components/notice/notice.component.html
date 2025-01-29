@@ -2,33 +2,34 @@
     
       <!-- Actions for Residents/Guards -->
       <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="notice-options resident-guard-role">
-        <div    *ngIf="ShowTableToUser" class="notice-table-container">
-          <table class="notice-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Notice</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="let notice of notices; let i = index"
-                (click)="onSelectingNotice(notice)"
-                [class.selected]="notice === selectedNotice"
-              >
-                <td>{{ i + 1 }}</td>
-                <td>{{ notice.title }}</td>
-                <td>{{ notice.message }}</td>
-                <td>{{ notice.date }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>    
+      <div   (click)="onClickingViewNoticeUser()" class="option-box view-notice" > View notices </div>
       </div>
       
-     
+     <!-- Table for resident and guard -->
+     <div    *ngIf="ShowTableToUser" class="notice-table-container">
+      <table class="notice-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Notice</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let notice of notices; let i = index"
+            (click)="onSelectingNotice(notice)"
+            [class.selected]="notice === selectedNotice"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ notice.title }}</td>
+            <td>{{ notice.message }}</td>
+            <td>{{ notice.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>    
       <!-- Actions for Admin -->
       <div  *ngIf= "role?.toString()   === 'admin'"  class="notice-options admin-role" >
         <div (click)="onClickingViewNoticeAdmin()" class="option-box view-notice">
@@ -37,7 +38,7 @@
         <div (click)="onClickingAddNotice()" class="option-box add-notice">
           Add Notices
         </div>
-        <div (click)="onClickingViewNoticeAdmin()" class="option-box delete-notice">
+        <div (click)="onClickingDeleteOption()" class="option-box delete-notice">
           Delete Notices
         </div>
         <div (click)="UpdateNoticeOption()"  class="option-box update-notice">  Update Notice</div>
@@ -87,7 +88,8 @@
         <tbody>
           <tr
             *ngFor="let notice of notices; let i = index"
-            (click)="updateOption ? onSelectingNoticeUpdate(notice) : onSelectingNotice(notice)"
+            (click)="(deleteOption || updateOption) ? (updateOption ? onSelectingNoticeUpdate(notice) : onSelectingNotice(notice)) : null"
+        
             [class.selected]="notice === selectedNotice"
           >
             <td>{{ i + 1 }}</td>

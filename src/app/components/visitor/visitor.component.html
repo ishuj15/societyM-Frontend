@@ -169,8 +169,10 @@
       <button  class="status-button deny"  (click)="onClickingChangeStatusButton('denied')">Deny</button>
     </div>
   </div>
-  <div *ngIf="qrCodeImage" class="qr-code-section">
-    <h3>Visitor QR Code:</h3>
+
+  <!-- show qr code -->
+  <div *ngIf="qrCodeVisible"  class="qr-code-section">
+    <h3>Visitor QR Code: (Visible for 10 seconds only)</h3>
     <img [src]="qrCodeImage" alt="QR Code">
   </div>
 
