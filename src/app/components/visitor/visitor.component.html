@@ -1,6 +1,6 @@
 <div class="visitor-container">
   <!-- Header Section -->
-  <h1>{{ role?.toString() === 'resident' ? 'Resident Visitor Management' : role?.toString() === 'guard' ? 'Guard Visitor Management' : 'Admin Visitor Management' }}</h1>
+  <h1> Visitor Management</h1>
 
   <!-- Visitor Management Options -->
   <div class="visitor-options">
@@ -19,7 +19,22 @@
 
     <ng-container *ngIf="role?.toString() === 'guard'">
       <div class="option-box" (click)="toggleScanner()">Scan Visitor QR Code</div>
+      <div  class="option-box"  (click)="onClickingEnterToken()" > Enter Token </div>
     </ng-container>
+
+    <div class="enter-token-form"  *ngIf="enterTokenVisibility"   >
+      <form (ngSubmit)="onEnteringToken(token.value)">
+        <label for="token"> Token</label> 
+        <input  id="token" type="text"  #token placeholder="Enter the token" required >
+        <div class="form-actions">
+          <button type="submit" >Check Status</button>
+        
+        </div>
+      </form>
+    
+      
+    </div>
+
   </div>
   <!-- Add Visitor Form -->
   <div *ngIf="addVisitorFormVisibility" class="add-visitor-form">
@@ -184,5 +199,7 @@
       (result)="onCodeResult($event)"
     ></ngx-scanner-qrcode>
     <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p> 
-  </div>
+  </div >
+
+  
 </div>

@@ -25,7 +25,12 @@ export class NoticeComponent {
 
   ngOnInit() {
     this.role = this.authService.role$()!;
- 
+    if(this.role.toString()==='resident' ||this.role.toString()==='guard' )
+    {
+      this.ShowTableToUser=true;
+      this.onFetchingNoticesUser();
+
+    }
   }
 
   //1. Adding Notice By admin only

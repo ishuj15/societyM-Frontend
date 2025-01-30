@@ -56,7 +56,7 @@ export class SignupComponent {
         email:this.form.value.email!,
         phoneNo:this.form.value.phoneNo!,
         address:this.form.value.address!,
-        userRole: this.form.value.userRole! as Roles,
+        userRole: this.form.value.userRole!,
         qrToken:'',
         qrImage:''
       };

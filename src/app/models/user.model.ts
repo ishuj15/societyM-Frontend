@@ -6,7 +6,7 @@ export interface User {
     password:string,
     address:string,
     phoneNo:string,
-    userRole:Roles,
+    userRole:string,
     userName: string
     qrToken:string,
     qrImage:string

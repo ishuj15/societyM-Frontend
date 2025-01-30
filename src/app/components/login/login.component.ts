@@ -77,15 +77,15 @@ export class LoginComponent {
             const decodeToken :{role:string} = jwtDecode( token);
             const user = response.error as User;
             const secret = user.qrToken;
-            console.log("secret"+ secret);
+           
             const generatedOTP = await generateTOTP(secret); 
        
-          console.log(generatedOTP)
+        
             if(generatedOTP===otp){
                 this.authService.loggedIn$.set(true);
                 this.authService.user$.set(  response.error as User);
                 this.authService.role$.set(this.authService.user$()?.userRole);
-                // console.log()
+               
                 localStorage.setItem('authToken', token);
                 this.router.navigate(['/home/dashboard']);
               }

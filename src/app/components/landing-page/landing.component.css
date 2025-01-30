@@ -5,7 +5,7 @@ body {
 }
 /* Landing Page Background Color */
 .landing-page {
-  background-color: #DDEEBB; /* Set the background color */
+  background-color: #F5EFFF; /* Set the background color */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -19,7 +19,7 @@ body {
 /* Image on the right side */
 .landing-image {
   position: absolute;
-  top: 0;
+ margin-top: 40px;
   right: 0;
   top: 110px;
   width: 45%; /* Image takes up the right half */
@@ -83,7 +83,7 @@ body {
   width: 200px;
   height: 150px;
   /* border-radius: 100px; */
-  background-color: #809D3C;
+  background-color: #3B1E54;
   color: white;
   text-align: center;
   line-height: 150px; /* Centers the text vertically */
@@ -100,7 +100,7 @@ body {
   width: 200px;
   height: 150px;
   border-radius: 90%;
-  background-color: #809D3C;
+  background-color: #3B1E54;
   color: white;
   text-align: center;
   font-size: 30px;
@@ -110,5 +110,5 @@ body {
 }
 /* Buttons Hover Effect */
 .signup-button:hover, .login-button:hover {
-  background-color: #5D8736 /* Darker green when hovered */
+  background-color: #640D5F /* Darker green when hovered */
 }

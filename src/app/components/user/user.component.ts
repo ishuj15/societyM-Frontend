@@ -6,13 +6,13 @@ import { ResponseEntity } from '../../models/response.model';
 import { Route, Router } from '@angular/router';
 import { Roles } from '../signup/signup.component';
 import { NgFor, NgIf } from '@angular/common';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-user',
   standalone:true,
-  imports: [NgIf,NgFor,NgxScannerQrcodeModule],
+  imports: [NgIf,NgFor,NgxScannerQrcodeModule, ReactiveFormsModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -42,6 +42,7 @@ export class UserComponent {
   users: User[]=[]
   onclickViewUSer(){
     this.viewUserOption= ! this.viewUserOption;
+    this.codeVisiblity=false;
   this.viewAllUsers();
   }
   viewAllUsers() {
@@ -56,66 +57,81 @@ export class UserComponent {
 selectedUserForUpdate: User | null = null;
 updateUserButton: boolean = false;
 updateUserOption: boolean = false;
+updateFormVisibility:boolean=false;
+ userId:string='';
+//by residnet or guard
+UpdateUserOption() {
+  this.updateUserOption = !this.updateUserOption;
 
-// UpdateUserOption() {
-//   this.updateUserOption = !this.updateUserOption;
-//   if (this.updateUserOption === true) {
-//     this.onClickViewAllUsers(); // Function to fetch all users for the admin
-//   }
-// }
+  if (this.updateUserOption ) {
+    this.updateFormVisibility=true;
+    this.updateUserButton=true;
+    this.userId=this.currentUser?.idUser!;
+    this.updateUserForm.setValue({
+      email: this.currentUser!.email,
+      phoneNo: this.currentUser!.phoneNo,
+      address:this.currentUser!.address,
+      password: null
+    });
+  }
+  else
+  {
+    this.updateFormVisibility=false;
+  }
+}
 
 updateUserForm = new FormGroup({
  
   email: new FormControl('', {}),
-  phone: new FormControl('', {}),
+  phoneNo: new FormControl('', {}),
   address: new FormControl('', {}),
   password: new FormControl('', {}),
 });
 
+//By admin
 onSelectingUserUpdate(user: User) {
+  this.updateFormVisibility=true;
   // this.updateUserButton = !this.updateUserButton;
   this.selectedUserForUpdate = user;
-  // this.updateUserButton = true;
+  this.updateUserButton = true;
+  this.userId= user.idUser;
 
   // Pre-fill the form with the selected user's values
   this.updateUserForm.setValue({
-    email: user.email,
-    phone: user.phoneNo,
-    address: user.address,
-    password: user.password
-  });
+      email: this.currentUser!.email,
+      phoneNo: this.currentUser!.phoneNo,
+      address:this.currentUser!.address,
+      password: null
+    });
 }
-   userID:string='';
+  
 // c) On clicking update, show update form
 onClickingUpdateUserButton() {
-  if (this.updateUserForm.valid && this.selectedUserForUpdate) {
- 
+  if (this.updateUserForm.valid ) {
     // Create a copy of the updated user
     const updatedUser: User = {
-      ...this.selectedUserForUpdate,
       // Default to existing value
-      email: this.updateUserForm.value.email ?? this.selectedUserForUpdate.email, // Default to existing value
-      phoneNo: this.updateUserForm.value.phone ?? this.selectedUserForUpdate.phoneNo, // Default to existing value
-      address: this.updateUserForm.value.address ?? this.selectedUserForUpdate.address, // Default to existing value
-      password:  this.updateUserForm.value.password ?? this.selectedUserForUpdate.password
+      email: this.updateUserForm.value.email!, // Default to existing value
+      phoneNo: this.updateUserForm.value.phoneNo!, // Default to existing value
+      address: this.updateUserForm.value.address!, // Default to existing value
+      password: this.updateUserForm.value.password?? this.currentUser?.password?? "",
+      idUser: '',
+      userRole: Roles.RESIDENT,
+      userName: '',
+      qrToken: '',
+      qrImage: ''
     };
+   
+   
+    const sub = this.userService.updateUser(this.userId, updatedUser).subscribe({
     
-    // if(this.currentUser?.userRole.toString()==='admin'){
-    //  this.userID =null;
-    // }
-    // else
-    // {
-    //    this.userID=this.currentUser?.idUser;
-    // }
-
-    // Call the service to update the user
-    const sub = this.userService.updateUser(this.userID!, updatedUser).subscribe({
       next: (response: ResponseEntity) => {
         if (response.status.toString() === 'SUCCESS') {
           alert('User Updated Successfully');
           this.updateUserButton = false;
           this.selectedUserForUpdate = null;
           this.updateUserOption = false;
+          this.updateFormVisibility=false;
         }
       },
     });
@@ -146,6 +162,7 @@ onClickingUpdateUserButton() {
 
     codeVisiblity:boolean=false;
     onClickViewQr(){
+      this.viewUserOption=false;
       this.codeVisiblity= !this.codeVisiblity;
 
     }

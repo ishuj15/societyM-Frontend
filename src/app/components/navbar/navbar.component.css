@@ -6,22 +6,26 @@ body {
 }
 
 .vertical-navbar {
-    width: 300px;
-    background-color: #A9C46C; /* Slightly darker gray */
+    width: 310px;
+    background-color: #B2A5FF; 
     position: fixed;
-    height: 100%;
+    height: calc(100vh - 60px); /* Full height of viewport */
     overflow: auto;
-    padding-top: 60px; /* Push navbar down to avoid overlap with header */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-    margin-top: 60px; 
-    display: block; /* Always show the navbar */
-    z-index:1;
+   padding-top: 60px; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); 
+    display: block;
+    z-index: 10;
+    
+    left: 0;
+    top: 120px;
 }
 
 .vertical-navbar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    top: 200px;
+    
 }
 
 .vertical-navbar li {
@@ -30,15 +34,17 @@ body {
     display: block;
     font-size: 22px; /* Increased font size */
     font-weight: bold;
+    margin-bottom: 8px; /* Adds spacing between list items */
+    /* border-radius: 28px; */
 }
 
 /* Alternate background colors for list items */
 .vertical-navbar li:nth-child(odd) {
-    background-color: rgba(221, 238, 187, 0.666667); /* Dashboard style */
+    background-color: rgba(221, 238, 187, 0.666667);
 }
 
 .vertical-navbar li:nth-child(even) {
-    background-color: #DDEEBB; /* Profile style */
+    background-color: #DAD2FF; /* Profile style */
 }
 
 .vertical-navbar li a {

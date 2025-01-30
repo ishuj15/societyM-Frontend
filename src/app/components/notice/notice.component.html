@@ -1,9 +1,9 @@
 <div class="notice-container">
-    
+  <h1> Notices Management</h1>
       <!-- Actions for Residents/Guards -->
-      <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="notice-options resident-guard-role">
+      <!-- <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="notice-options resident-guard-role">
       <div   (click)="onClickingViewNoticeUser()" class="option-box view-notice" > View notices </div>
-      </div>
+      </div> -->
       
      <!-- Table for resident and guard -->
      <div    *ngIf="ShowTableToUser" class="notice-table-container">

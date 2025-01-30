@@ -23,7 +23,7 @@ export class UserService {
     }
 
     updateUser(userId: string, user: User): Observable<ResponseEntity> {
-        return this.httpClient.patch<ResponseEntity>(`http://localhost:8080/user/${userId}`, user);
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/user/${userId}`, user);
     }
 
     deleteUser(userId: string): Observable<ResponseEntity> {

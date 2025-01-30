@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #809D3C;
+    background-color: #8174A0;
     padding-top: 60px;
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
     position: fixed; /* Fix the header at the top */
@@ -45,6 +45,6 @@ body {
 }
 
 .logout button:hover {
-    background-color: #A9C46C;
+    background-color: #640D5F;
     color: #ffffff;
 }

@@ -1,16 +1,16 @@
 <div class="user-container">
-
-    <<ng-container *ngIf="role?.toString()==='resident' || role?.toString()==='guard'" class="resident-options" >
-      <div class="resident-options btn" (click)="onClickViewProfile()">View Profile</div>
-      <div class="resident-options btn" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
-      <div class=" resident-options btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</div>
-      <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
-    </ng-container>
+  <h1> User Management</h1>
+  <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="user-options">
+    <div class="option-box  view-user " (click)="onClickViewProfile()">View Profile</div>
+    <div class="option-box   delete-user" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
+    <div class="option-box update-user" (click)="UpdateUserOption()">Update Profile</div>
+    <button class="option-box" (click)="onClickViewQr()">View Your MFA QR Code</button>
+  </div>
   
-    <div *ngIf="role?.toString()==='admin'" class="admin-options">
-      <button class="btn" (click)="deleteUser(currentUser!.idUser)">Update Profile</button>
-      <button class="btn" (click)="onclickViewUSer()">View All Users</button>
-      <button class="btn" (click)="onClickViewQr()">View Your MFA Qr code</button>
+    <div *ngIf="role?.toString()==='admin'" class="user-options admin-role">
+      <!-- <button class="btn" (click)="UpdateUserOption()">Update Profile</button> -->
+      <button class="option-box" (click)="onclickViewUSer()">View All Users</button>
+      <button class="option-box" (click)="onClickViewQr()">View Your MFA Qr code</button>
     </div>
   
     <div *ngIf="codeVisiblity" class="qr-code-section">
@@ -19,10 +19,10 @@
       <p *ngIf="!qrCodeImage">QR code not available</p>
     </div>
 
-
-    <div *ngIf="viewProfile">
-      <h2>User Details</h2>
-      <table class="vertical-table">
+<!-- by admin  -->
+    <div *ngIf="viewProfile" class="profile-container">
+      <h2>Details</h2>
+      <table class="profile-table">
         <tr>
           <th>Name:</th>
           <td>{{ currentUser?.userName }}</td>
@@ -64,7 +64,7 @@
             <td>{{ user.phoneNo }}</td>
             <td> {{ user.address}}</td>
             <td>
-              <!-- <button class="btn" (click)="updateUser(user)">Update</button> -->
+              <button class="btn" (click)="onSelectingUserUpdate(user)">Update</button>
               <button class="btn delete" (click)="deleteUser(user.idUser)">Delete</button>
             </td>
           </tr>
@@ -72,7 +72,29 @@
       </table>
     </div>
 
-
+    <!-- Update form  -->
+    <div  *ngIf="updateFormVisibility"  class="update-user-form" >
+      <form  class =" "   [formGroup]="updateUserForm" (ngSubmit)="onClickingUpdateUserButton()">
+        <h2> SignUp</h2>
+    <div>
+        <label  for ="email"> Email </label>
+        <input  id ="email" formControlName="email" type= "email" placeholder="Enter your email"    /> 
+    </div>
+    <div>
+        <label  for ="address"> Address </label>
+        <input  id ="address" formControlName="address" type= "text" placeholder="Enter your address"    /> 
+    </div>
+    <div>
+        <label  for ="phoneNo">Phone Number </label>
+        <input  id ="phoneNo" formControlName="phoneNo" type= "text" placeholder="Enter your phoneNo"    /> 
+    </div>
+    <div >
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="text" placeholder="Enter your password" />
+    </div>
+    <button type="submit">Update </button>
+  </form>
+    </div>
   
     
   </div>

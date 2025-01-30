@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LandingComponent } from './components/landing-page/landing.component';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { UserComponent } from './components/user/user.component';
+import { ServicesComponent } from './components/services/services.component';
 
 export const routes: Routes = [
  
@@ -48,17 +49,16 @@ export const routes: Routes = [
             {
               path:'account',
               component:UserComponent
+            },
 
+            {
+              path:'service',
+              component:ServicesComponent
             }
         ]
     },
    
-    
-    
-    // {
-    //     path: 'alert',
-    //     component: 
-    // }
+
     {
         path:'**',
         component: LandingComponent

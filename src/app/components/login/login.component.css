@@ -1,6 +1,6 @@
 
 .body {
-  background-color: #DDEEBB; /* Your desired background color */
+  background-color: #F5EFFF; /* Your desired background color */
   height: 100vh; /* Fill the viewport height */
   display: flex; /* To arrange children (login-container and others) */
   justify-content: flex-end; /* Push login container to the right */
@@ -36,7 +36,7 @@
   margin-top: 350px;
   margin-left: 1000px;
   padding: 20px;
-  background-color: #F2F4E9;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: absolute; /* Add absolute positioning */

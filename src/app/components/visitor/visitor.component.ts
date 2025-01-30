@@ -249,6 +249,16 @@ onClickingViewVisitorByUser(){
    this.qrResultString = result; // Save the scanned QR token
    this.verifyVisitor(result); // Verify the visitor based on the QR token
  }
+enterTokenVisibility:boolean=false;
+// @Input token
+onClickingEnterToken(){
+this.enterTokenVisibility=!this.enterTokenVisibility;
+}
+ onEnteringToken(token:string){
+  this.verifyVisitor(token);
+  this.enterTokenVisibility=false;
+
+ }
  // Verify visitor status using QR code token
  verifyVisitor(qrCodeToken: string) {
 

@@ -1,28 +1,29 @@
-.user-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 300px; /* Offset for the vertical navbar */
-  padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-  height: calc(100vh - 100px); /* Full height minus header height */
-  background-color: #DDEEBB;
-  max-width: 100%;
+  .user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 300px; /* Offset for the vertical navbar */
+    padding: 100px 20px 20px 20px; /* Padding for proper spacing */
+    height: calc(100vh - 100px); /* Full height minus header height */
+    background-color: #F5EFFF;
+    max-width: 100%;
   }
 
   /* Options Section */
-  .resident-options, .guard-options, .admin-options {
+  .user-options {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
     gap: 20px; /* Space between buttons */
+    
   }
 
-  .resident-options .btn, .guard-options .btn, .admin-options .btn {
+  .user-options .option-box {
     width: 200px;
     height: 100px;
     border-radius: 999px; /* Circular corners */
-    background-color: rgba(53, 95, 46, 0.8); /* Desired color with 80% opacity */
+    background-color: #3B1E54; /* Desired color with 80% opacity */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,77 +34,148 @@
     transition: transform 0.3s ease, background-color 0.3s ease;
   }
 
-  .resident-options .btn:hover, .guard-options .btn:hover, .admin-options .btn:hover {
+  .user-options .option-box:hover {
     transform: scale(1.05);
-    background-color: rgba(53, 95, 46, 1); /* Slightly darker on hover */
+    background-color: #640D5F; /* Slightly darker on hover */
   }
 
-  /* h2 {
-    color: #333;
-    margin-bottom: 20px;
-  } */
-
-  .admin-actions {
+    /* User Table */
+  .user-table-container {
     margin-top: 20px;
-    margin-left: 400px;
-    height: 50px;
-    padding: 15px;
-    background-color: #e6f7ff;
-    border-radius: 10px;
+    width: 90%;
   }
-  
-  .admin-actions .action-item {
-    background-color: #cce7ff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-size: 18px;
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+
+  .user-table th {
+    background-color: #f1f1f1;
+    color: #333;
+  }
+
+  .user-table tr.selected {
+    background-color: #d3f4ff;
+  }
+
+  .user-table tr:hover {
+    background-color: #f9f9f9;
     cursor: pointer;
-  }
-  
-  .admin-actions .action-item:hover {
-    background-color: #99c2ff;
-  }
-  
- 
-  /* Visibility for Roles */
-  .resident-options .btn:not(.view-profile),
-  .guard-options .btn:not(.view-profile) {
-    display: none; /* Hide other options for residents/guards */
+
   }
 
-
-
-  /* Notice Table */
-.user-table-container {
-  margin-top: 20px;
-  width: 90%;
+  /* Button styles inside user table */
+.user-table .btn {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.user-table {
-  width: 100%;
+.user-table .btn:hover {
+  background-color: #45a049; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.user-table .btn.delete {
+  background-color: #f44336;
+}
+
+.user-table .btn.delete:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+  /* Update form */
+
+  .update-user-form {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 60%;
+  }
+
+  .update-user-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .update-user-form input,
+  .update-user-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .update-user-form button {
+    padding: 10px 20px;
+    background-color: #1c3b4d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .update-user-form button:hover {
+    background-color: #00c896;
+  }
+/* Profile Table */
+.profile-table {
+  width: 80%;
+  margin-top: 20px;
   border-collapse: collapse;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.user-table th,
-.user-table td {
-  padding: 12px;
+.profile-table th,
+.profile-table td {
+  padding: 15px;
   text-align: left;
   border: 1px solid #ddd;
 }
 
-.user-table th {
+.profile-table th {
   background-color: #f1f1f1;
   color: #333;
+  font-weight: bold;
 }
 
-.user-table tr.selected {
-  background-color: #d3f4ff;
-}
-
-.user-table tr:hover {
+.profile-table tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.profile-table tr:hover {
+  background-color: #f1f1f1;
   cursor: pointer;
+}
+
+/* Additional styles for the profile container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #DDEEBB;
+  border-radius: 10px;
+  max-width: 100%;
 }

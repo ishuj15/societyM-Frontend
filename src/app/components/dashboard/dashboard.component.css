@@ -1,126 +1,107 @@
-/* Outer Rectangle */
-.outer-rectangle {
-    width: 100%; /* Full width of the screen or container */
-    /* max-width: 1176px; Max width constraint to keep the rectangle size */
-    height: 267px;
-    background-color: #DDEEBB; /* You can customize the color */
-    border-radius: 10px; /* Slight rounding for the outer rectangle */
-    position: absolute; /* Make it absolute for overlapping */
-    top: 100px; /* Adjust to place it below the header */
-    left: 50%; /* Center it horizontally */
-    transform: translateX(-50%); /* Ensure proper centering */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box; /* Ensure padding/margins don't affect width */
-    /* z-index: 1; Ensure it stays above the dashboard */
-}
-
-/* Inner Rectangle (with rounded corners) */
-.inner-rectangle {
-    width: 100%; /* Full width of the outer rectangle */
-    max-width: 1176px; /* Maintain inner rectangle width in line with outer */
-    height: 267px;
-    background-color: rgba(136, 144, 194, 0.1); /* You can customize the color */
-    border-radius: 133.5px; /* Rounded corners */
-    position: absolute;
-    top: 0;
-    left: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional shadow for depth */
-}
-
-/* Text inside the inner rectangle */
-.inner-rectangle-text {
-    color: black;
-    font-size: 40px; /* Adjust size for better visibility */
-    font-weight: bold;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Dashboard Container */
 .dashboard-container {
+    margin-left: 300px; /* Space for the vertical navbar */
+    margin-top: 60px; /* Adjust to prevent overlap with header */
+    background-color: #F5EFFF; /* Set background color */
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-    height: calc(100vh - 100px); /* Full height minus header height */
-    background-color: #DDEEBB; /* Light background for dashboard area */
-    z-index: 0; /* Send dashboard below the rectangle */
-    position: relative; /* Ensure the dashboard container is positioned */
-}
-
-
-
-/* Blocks */
-.dashboard-block {
-    width: 300px;
-    height: 200px;
-    background-color: #1c3b4d;
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 350px;
+    height: 100vh; /* Full height of the viewport */
+    padding: 20px;
+    flex-wrap: wrap;
 }
 
-.dashboard-block h2 {
-    margin: 0;
-    font-size: 24px;
-    margin-bottom: 10px;
+/* Card container with increased card size and spacing */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 100px; /* Increased gap between cards */
+    flex-wrap: wrap;
 }
 
-.dashboard-block p {
-    font-size: 18px;
-    margin: 0;
-}
-
-/* Hover Effect */
-.dashboard-block:hover {
-    background-color: #00c896;
-    transform: scale(1.05);
-}
-
-/* Notice Block */
-#notice-block {
-    background-color: #3b5998; /* Specific color for notice block */
-}
-
-#notice-block:hover {
-    background-color: #00c896; /* Matches hover effect with others */
-}
-
-/* Alert Block */
-#alert-block {
-    background-color: #e74c3c; /* Specific color for alert block */
-}
-
-#alert-block:hover {
-    background-color: #00c896;
-}
-
-/* Notice and Alert Image */
-#notice-block, #alert-block {
+.book {
     position: relative;
+    border-radius: 10px;
+    width: 280px; /* Adjusted card size */
+    height: 350px; /* Adjusted card size */
+    background-color: #f0f0f0;
+    box-shadow: 1px 1px 12px #000;
+    transform: preserve-3d;
+    perspective: 2000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    transition: all 0.3s ease-in-out; /* Smooth transition for size change */
 }
 
-#notice-block::before, #alert-block::before {
-    /* content: url('notice-image-url.png'); Replace with actual image URL */
+.cover {
+    top: 0;
     position: absolute;
+    background-color: #E5D9F2;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+    transform-origin: 0;
+    box-shadow: 1px 1px 12px #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* Ensure cover is on top initially */
 }
 
+.book:hover .cover {
+    transform: rotatey(-80deg); /* On hover, the cover rotates */
+    z-index: 0; /* Move cover behind content */
+}
+
+/* Content styling */
+.card-content {
+    position: absolute;
+    top: 0px;
+    left: 50px;
+    right: 20px;
+    bottom:100px;
+    color: #333;
+     display: none; 
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2; /* Make sure the content stays on top of the cover */
+}
+.book:hover {
+    transform: scale(1.2); /* Increase the size of the card on hover */
+}
+.book:hover .card-content {
+    display: flex; /* Reveal content when card is hovered */
+    z-index: 2; /* Ensure content is above cover */
+}
+.card-content h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.card-content p {
+    font-size: 14px;
+    color: #555;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Style for the link button */
+.btn-link {
+    display: inline-block;
+    background-color: #1c3b4d; /* Dark background for button */
+    color: white; /* White text */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-link:hover {
+    background-color: #A9C46C; /* Light background on hover */
+}

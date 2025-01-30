@@ -7,7 +7,7 @@ import { Services } from "../../models/service.model";
 @Injectable({
     providedIn: 'root'
 })
-export class ServicesService {
+export class ServicesServiceM {
     private httpClient = inject(HttpClient);
 
     createService(userId: string, service: Services): Observable<ResponseEntity> {
@@ -23,7 +23,7 @@ export class ServicesService {
     }
 
     updateService(serviceId: string, service: Services): Observable<ResponseEntity> {
-        return this.httpClient.patch<ResponseEntity>(`http://localhost:8080/service/${serviceId}`, service);
+        return this.httpClient.put<ResponseEntity>(`http://localhost:8080/service/${serviceId}`, service);
     }
 
     deleteService(serviceId: string): Observable<ResponseEntity> {
