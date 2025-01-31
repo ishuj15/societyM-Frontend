@@ -25,25 +25,26 @@ export class NavbarComponent implements OnInit{
   loadSidebarItems() {
     if (this.role?.toString() === 'admin') {
       this.sidebarItems = [ 
-        { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Manage Users', link: '/home/account', backgroundColor: '#DDEEBB' },
-        { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Services', link: '/home/service', backgroundColor: '#DDEEBB' },
-        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },      ];
+        { label: 'Dashboard', link: '/home', backgroundColor: '#DAD2FF' },
+        { label: 'Manage Users', link: '/home/account', backgroundColor: '#B2A5FF' },
+        { label: 'Notices', link: '/home/notice', backgroundColor: '#DAD2FF' },
+        { label: 'Services', link: '/home/service', backgroundColor: '#B2A5FF' },
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DAD2FF' },      ];
     } else if (this.role?.toString() === 'resident') {
       this.sidebarItems = [ 
         { label: 'Dashboard', link: '/home', backgroundColor: '#DAD2FF' },
         { label: 'Account', link: '/home/account', backgroundColor: '#B2A5FF' },
         { label: 'Notices', link: '/home/notice', backgroundColor: '#DAD2FF' },
         { label: 'Services', link: '/home/service', backgroundColor: '#B2A5FF' },
-        { label: 'Visitor', link: '/home/visitor', backgroundColor: ' #DAD2FF' },
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DAD2FF' },
       ];
     } else if (this.role?.toString() === 'guard') {
       this.sidebarItems = [ 
-        { label: 'Dashboard', link: '/home', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Account', link: '/home/account', backgroundColor: '#DDEEBB' },
-        { label: 'Notices', link: '/home/notice', backgroundColor: 'rgba(221, 238, 187, 0.666667)' },
-        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#DDEEBB' },
+        { label: 'Dashboard', link: '/home', backgroundColor: '#DAD2FF' },
+        { label: 'Account', link: '/home/account', backgroundColor: '#B2A5FF' },
+        { label: 'Notices', link: '/home/notice', backgroundColor: '#DAD2FF' },
+        { label: 'Visitor', link: '/home/visitor', backgroundColor: '#B2A5FF' },
+        
         
       ];
     }

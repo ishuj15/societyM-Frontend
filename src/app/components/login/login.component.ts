@@ -9,6 +9,7 @@ import { HeaderComponent } from "../header/header.component";
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../models/user.model';
 import base32Decode from "base32-decode";
+import { Roles } from '../signup/signup.component';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -84,9 +85,10 @@ export class LoginComponent {
             if(generatedOTP===otp){
                 this.authService.loggedIn$.set(true);
                 this.authService.user$.set(  response.error as User);
-                this.authService.role$.set(this.authService.user$()?.userRole);
+                this.authService.role$.set(this.authService.user$()?.userRole as Roles);
                
                 localStorage.setItem('authToken', token);
+                localStorage.setItem('userData', JSON.stringify(user));
                 this.router.navigate(['/home/dashboard']);
               }
               else{

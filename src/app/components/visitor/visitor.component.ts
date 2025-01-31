@@ -11,11 +11,12 @@ import { UserService } from '../../services/user-services/user.services';
 
 import { QRCode } from 'qrcode';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-visitor',
   standalone:true,
-  imports: [NgIf,NgFor,ReactiveFormsModule ,NgxScannerQrcodeModule],
+  imports: [NgIf,NgFor,ReactiveFormsModule ,NgxScannerQrcodeModule, FormsModule],
   templateUrl: './visitor.component.html',
   styleUrl: './visitor.component.css'
 })
@@ -24,7 +25,7 @@ export class VisitorComponent {
    private destroyRef=inject(DestroyRef);
    role : Roles|null | undefined =null;
    user: User | null = null;
-constructor(private authService: AuthService, private userService: UserService ,private visitorService: VisitorService){}
+constructor(private authService: AuthService, private userService: UserService ,private visitorService: VisitorService , private router :Router){}
 ngOnInit() {
   this.user = this.authService.user$();
   this.role = this.authService.role$();
@@ -121,9 +122,9 @@ OnSubmitAddVisitor() {
           const qrCodeBase64 = responseVisitor.qrCodeBase64;
           this.qrCodeImage = 'data:image/png;base64,' + qrCodeBase64;
           this.qrCodeVisible = true;
-          setTimeout(() => {
-            this.qrCodeVisible = false;
-          }, 10000); 
+        
+        
+       
         }
       },
       error: (err) => {
@@ -151,6 +152,9 @@ onViewAllVisitorByAdmin(){
         if(response.status.toString()==="SUCCESS")
         {
           this.listOfVisitors= response.data as Visitor[];
+          this.router.navigate(['./'] ,{
+            onSameUrlNavigation: 'reload'
+          })
         }    
       },
     });
@@ -170,7 +174,7 @@ onClickingViewVisitorByUser(){
   this.showTableByUsern = !this.showTableByUsern ;
   this.addVisitorFormVisibility = false;
   this.ViewPendingRequestsTable=false;
-  
+  this.qrCodeVisible = false;
   if(this.showTableByUsern)
   this.onViewAllVisitorByUser(); 
  }
@@ -182,6 +186,7 @@ onClickingViewVisitorByUser(){
         if(response.status.toString()==="SUCCESS")
           {
           this.listOfVisitorsByUser= response.data as Visitor[];
+         
         }     
       },
     });
@@ -196,6 +201,7 @@ onClickingViewVisitorByUser(){
      this.ViewPendingRequestsTable = !this.ViewPendingRequestsTable; 
      this.showTableByUsern = false ;
   this.addVisitorFormVisibility = false;
+  this.qrCodeVisible = false;
      if(this.ViewPendingRequestsTable) 
       this.FetchPendingRequestTableData()
      }
@@ -205,7 +211,8 @@ onClickingViewVisitorByUser(){
     next: (response:ResponseEntity) => {
       if(response.status.toString()==="SUCCESS"){
         this.listOfPendingRequests= response.data as Visitor[];
-         console.log(this.listOfPendingRequests )
+        
+        //  console.log(this.listOfPendingRequests )
       }
     }
   });
@@ -228,6 +235,9 @@ onClickingViewVisitorByUser(){
             this.selectedVisitorId.set(null);
             this.ViewPendingRequestsTable=false;
             this.listOfPendingRequests=[];
+            this.router.navigate(['./'] ,{
+              onSameUrlNavigation: 'reload'
+            })
           }
       },
     });
@@ -238,7 +248,10 @@ onClickingViewVisitorByUser(){
  // Variables for QR scanning and verification
  qrResultString: string = '';
  showScanner: boolean = false;
-   
+enterTokenForm= new FormGroup({
+  token: new FormControl('',{})
+
+});
  // Toggle QR code scanner visibility
  toggleScanner() {
    this.showScanner = !this.showScanner;
@@ -250,33 +263,40 @@ onClickingViewVisitorByUser(){
    this.verifyVisitor(result); // Verify the visitor based on the QR token
  }
 enterTokenVisibility:boolean=false;
-// @Input token
+
 onClickingEnterToken(){
 this.enterTokenVisibility=!this.enterTokenVisibility;
 }
- onEnteringToken(token:string){
-  this.verifyVisitor(token);
+ onEnteringToken(){
+  this.verifyVisitor(this.enterTokenForm.value.token!);
   this.enterTokenVisibility=false;
 
  }
  // Verify visitor status using QR code token
  verifyVisitor(qrCodeToken: string) {
-
+console.log("verify")
   const sub=  this.visitorService.verifyVisitorByQRCode(qrCodeToken).subscribe({
      next: (response: ResponseEntity) => {
        if (response.status.toString() === 'SUCCESS') {
          const visitor = response.data as Visitor;
-
+        console.log(visitor);
          if (visitor.status === 'Approved') {
+          alert(`Visitor Verified: ${visitor.name} is approved.`);
           this.qrResultString= `Visitor Verified: ${visitor.name} is approved.` ;
          } else if (visitor.status === 'Pending') {
+          alert(`Visitor ${visitor.name}'s request is still pending.`);
            this.qrResultString= `Visitor ${visitor.name}'s request is still pending.`
          } else {
+          alert(`Visitor ${visitor.name}'s request has been rejected.`)
           this.qrResultString= `Visitor ${visitor.name}'s request has been rejected.`;
          }
+
+       
        } else {
          alert('Invalid QR code or visitor not found.');
        }
+
+
      },
      error: (err) => {
        console.error('Error verifying visitor:', err);

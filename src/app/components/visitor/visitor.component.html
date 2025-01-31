@@ -23,9 +23,9 @@
     </ng-container>
 
     <div class="enter-token-form"  *ngIf="enterTokenVisibility"   >
-      <form (ngSubmit)="onEnteringToken(token.value)">
+      <form [formGroup]="enterTokenForm" (ngSubmit)="onEnteringToken()">
         <label for="token"> Token</label> 
-        <input  id="token" type="text"  #token placeholder="Enter the token" required >
+        <input  id="token" type="text"  formControlName="token" placeholder="Enter the token" required >
         <div class="form-actions">
           <button type="submit" >Check Status</button>
         
@@ -94,7 +94,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let visitor of listOfVisitorsByUser; let i = index">
+        <tr *ngFor="let visitor of listOfVisitorsByUser; 
+        let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ visitor.name }}</td>
           <td>{{ visitor.contactNo }}</td>
@@ -200,6 +201,9 @@
     ></ngx-scanner-qrcode>
     <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p> 
   </div >
+
+
+  
 
   
 </div>

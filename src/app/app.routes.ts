@@ -1,59 +1,64 @@
-import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NoticeComponent } from './components/notice/notice.component';
-import { HomeComponent } from './components/home/home.component';
+import {  Routes } from '@angular/router';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { LoginGuard } from './shared/guard/login.huard';
 import { LandingComponent } from './components/landing-page/landing.component';
-import { VisitorComponent } from './components/visitor/visitor.component';
-import { UserComponent } from './components/user/user.component';
-import { ServicesComponent } from './components/services/services.component';
 
 export const routes: Routes = [
  
     {
         path: '',
-        component: LandingComponent,
+        component:LandingComponent
+ 
       },
       {
         path: 'login',
-        component: LoginComponent,
+        loadComponent: () => import('./components/login/login.component').then((mod)=>mod.LoginComponent)
+ 
       },
       {
         path: 'signup',
-        component: SignupComponent,
+        loadComponent: () => import('./components/signup/signup.component').then((mod)=>mod.SignupComponent)
+ 
       },
     {
         path:'home',
-        component: HomeComponent,
+        loadComponent: () => import('./components/home/home.component').then((mod)=>mod. HomeComponent),
         // pathMatch:'prefix',
         children:[
             {
                 path:'',
-                component: DashboardComponent,
+                // component: DashboardComponent,
+                loadComponent: () => import('./components/dashboard/dashboard.component').then((mod)=>mod.DashboardComponent),
+                canActivate :[ LoginGuard]
             },
            
             {
                 path:'dashboard',
-                component: DashboardComponent,
+                loadComponent: () => import('./components/dashboard/dashboard.component').then((mod)=>mod.DashboardComponent),
+                canActivate :[ LoginGuard]
             },
             {
                 path :'notice',
-                component:NoticeComponent
+                loadComponent: () => import('./components/notice/notice.component').then((mod)=>mod.NoticeComponent),
+                canActivate :[ LoginGuard]
             },
             {
               path:'visitor',
-              component:VisitorComponent
+              loadComponent: () => import('./components/visitor/visitor.component').then((mod)=>mod.VisitorComponent),
+              canActivate :[ LoginGuard]
             },
             {
               path:'account',
-              component:UserComponent
+              loadComponent: () => import('./components/user/user.component').then((mod)=>mod.UserComponent),
+              canActivate :[ LoginGuard]
+              
             },
 
             {
               path:'service',
-              component:ServicesComponent
+              loadComponent: () => import('./components/services/services.component').then((mod)=>mod.ServicesComponent),
+              canActivate :[ LoginGuard]
+              
             }
         ]
     },
@@ -61,6 +66,6 @@ export const routes: Routes = [
 
     {
         path:'**',
-        component: LandingComponent
+        loadComponent: () => import('./components/landing-page/landing.component').then((mod)=>mod.LandingComponent)
     },
 ];

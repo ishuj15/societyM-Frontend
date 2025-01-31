@@ -140,7 +140,7 @@ export class ServicesComponent {
   // 4. Delete Service by admin only
   deleteOption: boolean = false;
   onClickingDeleteOption() {
-    this.deleteOption = !this.deleteButton;
+    this.deleteOption = !this.deleteOption;
     if (this.deleteOption) {
       this.showTableAdmin =false ;
       this.ShowTableToUser = true;
@@ -155,7 +155,8 @@ export class ServicesComponent {
   selectedService:Services | null = null;
   deleteButton: Boolean = false;
   onSelectingService(service: Services) {
-    this.deleteButton = !this.deleteButton;
+    if(this.deleteOption)
+      this.deleteButton=true;
     this.selectedService = service;
   }
 

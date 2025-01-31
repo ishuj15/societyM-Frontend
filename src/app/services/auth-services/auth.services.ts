@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { loginResponse } from "../../models/auth.model";
 import { User } from "../../models/user.model";
 import { Roles } from "../../components/signup/signup.component";
@@ -10,8 +10,14 @@ import { jwtDecode } from "jwt-decode";
     providedIn:'root'
 })
 export class AuthService{
+  // response:loginResponse=null;
+    constructor(   private httpClient: HttpClient) {
 
-    constructor(   private httpClient: HttpClient) {}
+      if(this.loggedIn$()){
+        this.fetchUser();
+      }
+
+    }
   
     loggedIn$= signal<boolean>(this.hasValidToken());
     role$ = signal<Roles| undefined>(undefined);
@@ -49,6 +55,27 @@ export class AuthService{
         return this.httpClient.post<loginResponse>( "http://localhost:8080/api/auth/user",
             user
         );
+    }
+
+    fetchUser(){
+      const token= localStorage.getItem('authToken');
+     if(!token)
+      return false;
+      
+    else {
+      try {
+        const decodedToken: { role: string } = jwtDecode(token);
+        const userData = localStorage.getItem('userData');
+        
+        this.loggedIn$.set(true);
+        this.role$.set(decodedToken.role as Roles);
+        this.user$.set(userData ? JSON.parse(userData) : null);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+      return true;
+    }
+     
     }
    
 }

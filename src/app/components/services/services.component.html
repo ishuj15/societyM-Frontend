@@ -16,15 +16,19 @@
     </div>
    <!-- Cards for resident and guard -->
    <div *ngIf="ShowTableToUser" class="service-card-container">
-    <div class="card" *ngFor="let service of services; let i = index" (click)="onSelectingService(service)" [class.selected]="service === selectedService">
+    <div class="card" *ngFor="let service of services; let i = index"
+    (click)="(deleteOption || updateOption) ? (updateOption 
+    ? onSelectingServiceUpdate(service) : onSelectingService(service)) : null"
+     (click)="onSelectingService(service)"
+     
+    [class.selected]="service === selectedService">
       
-      <!-- Background image or other content if needed -->
-      <!-- <img src="path_to_image.jpg" alt="Service Image"> -->
-  
+     
       <!-- Card Content -->
       <div class="content">
         <!-- Service Name -->
         <div class="title">
+          
           <span>{{ service.serviceName }}</span>
         </div>
         
@@ -64,7 +68,7 @@
   
     <!-- Admin Services Cards -->
     <div *ngIf="showTableAdmin" class="service-card-container">
-      <div class="service-card" *ngFor="let service of services; let i = index" (click)="(deleteOption || updateOption) ? (updateOption ? onSelectingServiceUpdate(service) : onSelectingService(service)) : null" [class.selected]="service === selectedService">
+      <div class=" card" *ngFor="let service of services; let i = index" (click)="(deleteOption || updateOption) ? (updateOption ? onSelectingServiceUpdate(service) : onSelectingService(service)) : null" [class.selected]="service === selectedService">
         <h3>{{ service.serviceName }}</h3>
         <p>{{ service.description }}</p>
         <p>Status: {{ service.status }}</p>
