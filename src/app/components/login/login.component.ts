@@ -36,66 +36,22 @@ export class LoginComponent {
         }),
   })
 
-//  onSubmit(): void{ 
-//     if(this.form.valid){
-//       const formUserName = this .form .value.username!
-//       const formPassword = this.form.value.password!;
-      
-//       const sub = this.authService.login(formUserName ,formPassword).subscribe( {
-//         next: (response:loginResponse) =>{
-//           if(response.status.toString()==="SUCCESS")
-//           {
-//             const token = (response.data as any)['JWT Token'];
-//             const decodeToken :{role:string} = jwtDecode( token);
-//                 this.authService.loggedIn$.set(true);
-//                 this.authService.user$.set(  response.error as User);
-//                 this.authService.role$.set(this.authService.user$()?.userRole);
-//                 localStorage.setItem('authToken', token);
-//                 this.router.navigate(['/home/dashboard']);
-//           }
-//           else
-//           {
-//             alert("Couldn't login , Please try again");
-//             this.router.navigate(['/login']);
-//           }
-//         },
-//       });
-//       this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
-//     }
-
-//   }
-  async onSubmit(): Promise<void>{ 
+ onSubmit(): void{ 
     if(this.form.valid){
       const formUserName = this .form .value.username!
       const formPassword = this.form.value.password!;
-      const otp= this.form.value.otp!;
+      
       const sub = this.authService.login(formUserName ,formPassword).subscribe( {
-        next: async (response:loginResponse) =>{
+        next: (response:loginResponse) =>{
           if(response.status.toString()==="SUCCESS")
           {
             const token = (response.data as any)['JWT Token'];
-           
             const decodeToken :{role:string} = jwtDecode( token);
-            const user = response.error as User;
-            const secret = user.qrToken;
-           
-            const generatedOTP = await generateTOTP(secret); 
-       
-        
-            if(generatedOTP===otp){
                 this.authService.loggedIn$.set(true);
                 this.authService.user$.set(  response.error as User);
                 this.authService.role$.set(this.authService.user$()?.userRole as Roles);
-               
                 localStorage.setItem('authToken', token);
-                localStorage.setItem('userData', JSON.stringify(user));
                 this.router.navigate(['/home/dashboard']);
-              }
-              else{
-                alert("Couldn't login , Please try again");
-                this.router.navigate(['/login']);
-              }
-
           }
           else
           {
@@ -108,6 +64,50 @@ export class LoginComponent {
     }
 
   }
+  // async onSubmit(): Promise<void>{ 
+  //   if(this.form.valid){
+  //     const formUserName = this .form .value.username!
+  //     const formPassword = this.form.value.password!;
+  //     const otp= this.form.value.otp!;
+  //     const sub = this.authService.login(formUserName ,formPassword).subscribe( {
+  //       next: async (response:loginResponse) =>{
+  //         if(response.status.toString()==="SUCCESS")
+  //         {
+  //           const token = (response.data as any)['JWT Token'];
+           
+  //           const decodeToken :{role:string} = jwtDecode( token);
+  //           const user = response.error as User;
+  //           const secret = user.qrToken;
+           
+  //           const generatedOTP = await generateTOTP(secret); 
+       
+        
+  //           if(generatedOTP===otp){
+  //               this.authService.loggedIn$.set(true);
+  //               this.authService.user$.set(  response.error as User);
+  //               this.authService.role$.set(this.authService.user$()?.userRole as Roles);
+               
+  //               localStorage.setItem('authToken', token);
+  //               localStorage.setItem('userData', JSON.stringify(user));
+  //               this.router.navigate(['/home/dashboard']);
+  //             }
+  //             else{
+  //               alert("Couldn't login , Please try again");
+  //               this.router.navigate(['/login']);
+  //             }
+
+  //         }
+  //         else
+  //         {
+  //           alert("Couldn't login , Please try again");
+  //           this.router.navigate(['/login']);
+  //         }
+  //       },
+  //     });
+  //     this.destroyRef.onDestroy(()=>{  sub.unsubscribe();  });
+  //   }
+
+  // }
 
   get UserNameIsInvalid() {
     return (

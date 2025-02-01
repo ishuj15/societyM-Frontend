@@ -1,25 +1,27 @@
 <div class="service-container">
   <h1> Services </h1>
     <!-- Actions for Residents/Guards -->
-    <div *ngIf="role?.toString() === 'resident' " class="service-options resident-guard-role">
-      <div (click)="onClickingViewServiceUser()" class="option-box view-service">View Your Services</div>
-      <div (click)="onClickingAddService()" class="option-box add-service">Add Services</div>
-      <div (click)="onClickingDeleteOption()" class="option-box delete-service">Delete Services</div>
-      <div (click)="UpdateServiceOption()" class="option-box update-service">Update Service</div>
-      <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>
-    </div>
+    @if(role?.toString() === 'resident') {
+    <div   class="service-options resident-guard-role" >
+        
+        <div (click)="onClickingViewServiceUser()" class="option-box view-service">View Your Services</div>
+        <div (click)="onClickingAddService()" class="option-box add-service">Add Services</div>
+        <div (click)="onClickingDeleteOption()" class="option-box delete-service">Delete Services</div>
+        <div (click)="UpdateServiceOption()" class="option-box update-service">Update Service</div>
+        <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>
+      </div>
+    }
     
     <!-- Actions for Admin -->
-    <div *ngIf="role?.toString() === 'admin'" class="service-options admin-role">
-      <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>
-      
-    </div>
+    @if(role?.toString() === 'admin'){
+    <div    class="service-options admin-role">
+        <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>    
+      </div>
+    }
    <!-- Cards for resident and guard -->
    <div *ngIf="ShowTableToUser" class="service-card-container">
     <div class="card" *ngFor="let service of services; let i = index"
-    (click)="(deleteOption || updateOption) ? (updateOption 
-    ? onSelectingServiceUpdate(service) : onSelectingService(service)) : null"
-     (click)="onSelectingService(service)"
+    (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
      
     [class.selected]="service === selectedService">
       
@@ -43,64 +45,82 @@
         </div>
       </div>
     </div>
-  </div>
+    
+    
   
   
   
     <!-- Add Service Form -->
-    <div *ngIf="isAddServiceVisible" class="add-service-form">
-      <form [formGroup]="form" (ngSubmit)="onSubmitNewService()">
-        <div class="form-group">
-          <label for="serviceName">Service Name</label>
-          <input id="serviceName" formControlName="serviceName" placeholder="Enter Service Name" />
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description" placeholder="Enter Service Description"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="status">Status</label>
-          <input type="status" id="status" formControlName="status" placeholder="Enter the status"/>
-        </div>
-        <button type="submit" [disabled]="form.invalid">Submit</button>
-      </form>
-    </div>
+    @if(isAddServiceVisible){
+    <div   class="add-service-form">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmitNewService()">
+          <div class="form-group">
+            <label for="serviceName">Service Name</label>
+            <input id="serviceName" formControlName="serviceName" placeholder="Enter Service Name" />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" placeholder="Enter Service Description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <input type="status" id="status" formControlName="status" placeholder="Enter the status"/>
+          </div>
+          <button type="submit" [disabled]="form.invalid">Submit</button>
+        </form>
+      </div>
+      }
   
     <!-- Admin Services Cards -->
-    <div *ngIf="showTableAdmin" class="service-card-container">
-      <div class=" card" *ngFor="let service of services; let i = index" (click)="(deleteOption || updateOption) ? (updateOption ? onSelectingServiceUpdate(service) : onSelectingService(service)) : null" [class.selected]="service === selectedService">
-        <h3>{{ service.serviceName }}</h3>
-        <p>{{ service.description }}</p>
-        <p>Status: {{ service.status }}</p>
+    
+    @if(showTableAdmin)
+    {
+        <div  class="service-card-container">
+          @for(  service of services; track service  ){
+            <div class=" card" >
+            (click)="(deleteOption || updateOption) 
+            ? onSelectingService(service): null" [class.selected]="service === selectedService">
+             <h3>{{ service.serviceName }}</h3>
+             <p>{{ service.description }}</p>
+             <p>Status: {{ service.status }}</p>
+            </div>
+          }
       </div>
-    </div>
+    }
   
     <!-- Delete Button -->
-    <div *ngIf="deleteButton">
-      <button (click)="onClickingDeleteButton()" class="delete-btn">Delete</button>
-      <button (click)="onCancelDelete()" class="cancel-btn">Cancel</button>
-    </div>
+    @if(deleteButton){
+    <div >
+
+        <button (click)="onClickingDeleteButton()" class="delete-btn">Delete</button>
+        <button (click)="onCancel()" class="cancel-btn">Cancel</button>
+      </div>
+    }
   
     <!-- Update form -->
-    <div *ngIf="updateButton" class="update-service-form">
-      <h3>Update Service</h3>
-      <form [formGroup]="updateForm" (ngSubmit)="onClickingUpdateButton()">
-        <div>
-          <label for="serviceName">Service Name:</label>
-          <input id="serviceName" formControlName="serviceName" />
-        </div>
-        <div>
-          <label for="description">Description:</label>
-          <textarea id="description" formControlName="description"></textarea>
-        </div>
-        <div>
-          <label for="status">Status:</label>
-          <input id="status" type="text" formControlName="date" />
-        </div>
-        <button type="submit">Update Service</button>
-        <button type="button" (click)="onCancelUpdate()">Cancel</button>
-      </form>
-    </div>
+    @if(updateButton){
+    <div  class="update-service-form">
+      
+        <h3>Update Service</h3>
+        <form [formGroup]="updateForm" (ngSubmit)="onClickingUpdateButton()">
+          <div>
+            <label for="serviceName">Service Name:</label>
+            <input id="serviceName" formControlName="serviceName" />
+          </div>
+          <div>
+            <label for="description">Description:</label>
+            <textarea id="description" formControlName="description"></textarea>
+          </div>
+          <div>
+            <label for="status">Status:</label>
+            <input id="status" type="text" formControlName="date" />
+          </div>
+          <button type="submit">Update Service</button>
+          <button type="button" (click)="onCancel()">Cancel</button>
+        </form>
+      </div>
+    }
   
   </div>
   

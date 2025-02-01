@@ -7,13 +7,13 @@ import { TargetRole } from '../../models/notice.model';
 import { AuthService } from '../../services/auth-services/auth.services';
 import { Roles } from '../signup/signup.component';
 import { ServicesServiceM } from '../../services/servicesM-services/servicesm.servcies';
-import { NgFor, NgIf } from '@angular/common';
 import { User } from '../../models/user.model';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-services',
   standalone:true,
-  imports: [NgFor,NgIf,ReactiveFormsModule],
+  imports: [ ReactiveFormsModule,NgIf, NgFor],
   templateUrl: './services.component.html',
   styleUrl: './services.component.css'
 })
@@ -93,7 +93,7 @@ export class ServicesComponent {
       this.updateOption = false;
       this.deleteOption = false;
       this.isAddServiceVisible = false;
-      this.selectedServiceForUpdate = null;
+   
       this.selectedService = null;
     }
   }
@@ -120,7 +120,7 @@ export class ServicesComponent {
       this.updateOption = false;
       this.deleteOption = false;
       this.isAddServiceVisible = false;
-      this.selectedServiceForUpdate = null;
+      
       this.selectedService = null;
       this.onFetchingServicesAdmin();
     }
@@ -154,12 +154,7 @@ export class ServicesComponent {
 
   selectedService:Services | null = null;
   deleteButton: Boolean = false;
-  onSelectingService(service: Services) {
-    if(this.deleteOption)
-      this.deleteButton=true;
-    this.selectedService = service;
-  }
-
+  
   onClickingDeleteButton() {
     const sub = this.serviceService.deleteService(this.selectedService!.idServices).subscribe({
       next: (response: ResponseEntity) => {
@@ -178,14 +173,43 @@ export class ServicesComponent {
     });
     this.destroyRef.onDestroy(() => { sub.unsubscribe(); });
   }
+  
+  onCancel() {
 
-  onCancelDelete() {
-    this.deleteButton = false;
-    this.selectedService = null;
+    if(this.deleteOption)
+    {
+      this.deleteButton = false;
+      this.selectedService = null;
+    }
+    else if(this.updateOption)
+    {
+      this.updateButton = false;
+      this.selectedService = null;
+    }
+  }
+  onSelectingService(service: Services) {
+    // for delete
+    if(this.deleteOption)
+      this.deleteButton=true;
+// for update
+   else  if(this.updateOption)
+    {
+      this.updateButton=true;
+      this.showTableAdmin = false;
+      this.deleteButton = false;
+      this.updateForm.setValue({
+        serviceName: service.serviceName!,
+        description: service.description,
+       status:service.status
+      });
+      
+   }
+    this.selectedService = service;
+    this.isAddServiceVisible = false;
   }
 
   // 5. Update Service
-  selectedServiceForUpdate: Services | null = null;
+  // selectedServiceForUpdate: Services | null = null;
   updateButton: Boolean = false;
   updateOption: Boolean = false;
   UpdateServiceOption() {
@@ -207,36 +231,23 @@ export class ServicesComponent {
     status: new FormControl('', {}),
   });
 
-  onSelectingServiceUpdate(service: Services) {
-    this.updateButton = !this.updateButton;
-    this.selectedServiceForUpdate = service;
-    this.showTableAdmin = false;
-    this.isAddServiceVisible = false;
-    this.deleteButton = false;
-
-    // Pre-fill the form with the selected service's values
-    this.updateForm.setValue({
-      serviceName: service.serviceName!,
-      description: service.description,
-     status:service.status
-    });
-  }
+ 
 
   onClickingUpdateButton() {
-    if (this.updateForm.valid && this.selectedServiceForUpdate) {
+    if (this.updateForm.valid && this.selectedService) {
       const updatedService: Services = {
-        ...this.selectedServiceForUpdate,
-        serviceName: this.updateForm.value.serviceName ?? this.selectedServiceForUpdate.serviceName,
-        description: this.updateForm.value.description ?? this.selectedServiceForUpdate.description,
-        status: this.updateForm.value.status ?? this.selectedServiceForUpdate.status,
+        ...this.selectedService,
+        serviceName: this.updateForm.value.serviceName ?? this.selectedService.serviceName,
+        description: this.updateForm.value.description ?? this.selectedService.description,
+        status: this.updateForm.value.status ?? this.selectedService.status,
       };
 
-      const sub = this.serviceService.updateService(this.selectedServiceForUpdate.idServices, updatedService).subscribe({
+      const sub = this.serviceService.updateService(this.selectedService.idServices, updatedService).subscribe({
         next: (response: ResponseEntity) => {
           if (response.status.toString() === 'SUCCESS') {
             alert('Service Updated Successfully');
             this.updateButton = false;
-            this.selectedServiceForUpdate = null;
+            this.selectedService = null;
             this.updateOption = false;
             this.showTableAdmin = false;
           }
@@ -246,8 +257,4 @@ export class ServicesComponent {
     }
   }
 
-  onCancelUpdate() {
-    this.updateButton = false;
-    this.selectedServiceForUpdate = null;
-  }
 }
