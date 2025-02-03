@@ -9,13 +9,15 @@ import { Roles } from '../signup/signup.component';
 import { ServicesServiceM } from '../../services/servicesM-services/servicesm.servcies';
 import { User } from '../../models/user.model';
 import { NgFor, NgIf } from '@angular/common';
+import {ViewEncapsulation} from '@angular/core'
 
 @Component({
   selector: 'app-services',
   standalone:true,
   imports: [ ReactiveFormsModule,NgIf, NgFor],
   templateUrl: './services.component.html',
-  styleUrl: './services.component.css'
+  styleUrl: './services.component.css',
+  // encapsulation: ViewEncapsulation.ShadowDom
 })
 export class ServicesComponent {
   constructor(private authService: AuthService, private serviceService: ServicesServiceM, private router: Router) { }
@@ -32,6 +34,8 @@ export class ServicesComponent {
 
   // 1. Adding Service by admin only
   isAddServiceVisible: boolean = false;
+
+ 
   onClickingAddService() {
     this.isAddServiceVisible = !this.isAddServiceVisible;
     if (this.isAddServiceVisible) {

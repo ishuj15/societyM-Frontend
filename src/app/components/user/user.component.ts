@@ -141,6 +141,12 @@ onClickingUpdateUserButton() {
   }
 }
 
+deleteUserConfirmation(userId:string){
+  if(window.confirm('Do you really want to delete?')){
+    this.deleteUser(userId);
+  }
+
+}
   //delete user  --working
   deleteUser(userId:string): void {
     const sub=  this.userService.deleteUser(userId).subscribe(

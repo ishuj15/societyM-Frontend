@@ -10,11 +10,13 @@ import { jwtDecode } from "jwt-decode";
     providedIn:'root'
 })
 export class AuthService{
-  // response:loginResponse=null;
+  
     constructor(   private httpClient: HttpClient) {
 
       if(this.loggedIn$()){
+       
         this.fetchUser();
+        console.log(this.user$())
       }
 
     }
@@ -59,20 +61,33 @@ export class AuthService{
 
     fetchUser(){
       const token= localStorage.getItem('authToken');
+      
      if(!token)
       return false;
       
     else {
       try {
-        const decodedToken: { role: string } = jwtDecode(token);
-        const userData = localStorage.getItem('userData');
+        const decodedToken: {role:string,  sub: string } = jwtDecode(token);
         
-        this.loggedIn$.set(true);
-        this.role$.set(decodedToken.role as Roles);
-        this.user$.set(userData ? JSON.parse(userData) : null);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-      }
+          const userName= decodedToken.sub;
+     
+        const result= this.httpClient.get<loginResponse>(`http://localhost:8080/user/userName/${userName}`, ).subscribe({
+          next : (response:loginResponse)=>{
+            if(response.status.toString()==="SUCCESS"){
+
+              const user= response.data as User;
+              this.loggedIn$.set(true);
+              this.user$.set(user)
+              this.role$.set(user.userRole as Roles);
+            }
+      
+            
+        }
+      });
+   
+    } catch (error) {
+      console.error('Error decoding token:', error);
+    }
       return true;
     }
      

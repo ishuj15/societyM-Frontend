@@ -31,9 +31,9 @@ export class LoginComponent {
         password : new FormControl('' ,{
           validators: [Validators.required, Validators.minLength(8)],
         }),
-        otp: new FormControl('' ,{
-          validators: [Validators.required],
-        }),
+        // otp: new FormControl('' ,{
+        //   validators: [Validators.required],
+        // }),
   })
 
  onSubmit(): void{ 
@@ -64,6 +64,8 @@ export class LoginComponent {
     }
 
   }
+
+  //Authpoint - otp verifying
   // async onSubmit(): Promise<void>{ 
   //   if(this.form.valid){
   //     const formUserName = this .form .value.username!

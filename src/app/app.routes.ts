@@ -2,6 +2,7 @@ import {  Routes } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { LoginGuard } from './shared/guard/login.huard';
 import { LandingComponent } from './components/landing-page/landing.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 export const routes: Routes = [
  
@@ -17,7 +18,7 @@ export const routes: Routes = [
       },
       {
         path: 'signup',
-        loadComponent: () => import('./components/signup/signup.component').then((mod)=>mod.SignupComponent)
+        component:SignupComponent
  
       },
     {

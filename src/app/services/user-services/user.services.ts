@@ -32,5 +32,9 @@ export class UserService {
     getUserNames() :Observable<ResponseEntity> {
         return this.httpClient.get<ResponseEntity>("http://localhost:8080/userName");
     }
+
+    getUserByUserName(userName:string):Observable<ResponseEntity> {
+        return this.httpClient.get<ResponseEntity>(`http://localhost:8080/user/userName/${userName}`);
+    }
     
 }
