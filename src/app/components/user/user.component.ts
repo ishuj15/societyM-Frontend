@@ -27,7 +27,7 @@ export class UserComponent {
   ngOnInit(): void {
     this.currentUser= this.authService.user$();
     this.role = this.authService.role$();
-    console.log(this.role)
+  
    const  qrCodeBase64 = this.currentUser?.qrImage;
     this.qrCodeImage = qrCodeBase64 ? 'data:image/png;base64,' + qrCodeBase64 : null;
   }

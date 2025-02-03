@@ -1,8 +1,8 @@
-<div class="service-container">
+<div class="global-container">
   <h1> Services </h1>
     <!-- Actions for Residents/Guards -->
     @if(role?.toString() === 'resident') {
-    <div   class="service-options resident-guard-role" >
+    <div   class="global-options resident-guard-role" >
         
         <div (click)="onClickingViewServiceUser()" class="option-box view-service">View Your Services</div>
         <div (click)="onClickingAddService()" class="option-box add-service">Add Services</div>
@@ -14,11 +14,11 @@
     
     <!-- Actions for Admin -->
     @if(role?.toString() === 'admin'){
-    <div    class="service-options admin-role">
+    <div    class="global-options admin-role">
         <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>    
       </div>
     }
-   <!-- Cards for resident and guard -->
+   <!-- Cards for resident   -->
    <div *ngIf="ShowTableToUser" class="service-card-container">
     <div class="card" *ngFor="let service of services; let i = index"
     (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
@@ -46,13 +46,9 @@
       </div>
     </div>
     
-    
-  
-  
-  
     <!-- Add Service Form -->
-    @if(isAddServiceVisible){
-    <div   class="add-service-form">
+   
+    <div  *ngIf="isAddServiceVisible" class="add-service-form">
 
         <form [formGroup]="form" (ngSubmit)="onSubmitNewService()">
           <div class="form-group">
@@ -70,13 +66,12 @@
           <button type="submit" [disabled]="form.invalid">Submit</button>
         </form>
       </div>
-      }
+    
   
     <!-- Admin Services Cards -->
     
-    @if(showTableAdmin)
-    {
-        <div  class="service-card-container">
+    
+        <div *ngIf="showTableAdmin" class="service-card-container">
           @for(  service of services; track service  ){
             <div class=" card" >
             (click)="(deleteOption || updateOption) 
@@ -87,8 +82,7 @@
             </div>
           }
       </div>
-    }
-  
+   
     <!-- Delete Button -->
     @if(deleteButton){
     <div >

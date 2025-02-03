@@ -1,13 +1,13 @@
-<div class="user-container">
+<div class="global-container">
   <h1> User Management</h1>
-  <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="user-options">
+  <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="global-options">
     <div class="option-box  view-user " (click)="onClickViewProfile()">View Profile</div>
     <div class="option-box   delete-user" (click)="deleteUser(currentUser!.idUser)">Delete Profile</div>
     <div class="option-box update-user" (click)="UpdateUserOption()">Update Profile</div>
     <button class="option-box" (click)="onClickViewQr()">View Your MFA QR Code</button>
   </div>
   
-    <div *ngIf="role?.toString()==='admin'" class="user-options admin-role">
+    <div *ngIf="role?.toString()==='admin'" class="global-options admin-role">
       <!-- <button class="btn" (click)="UpdateUserOption()">Update Profile</button> -->
       <button class="option-box" (click)="onclickViewUSer()">View All Users</button>
       <button class="option-box" (click)="onClickViewQr()">View Your MFA Qr code</button>

@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from "@angular/core";
+import {  Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
 import { loginResponse } from "../../models/auth.model";
@@ -10,11 +10,8 @@ import { jwtDecode } from "jwt-decode";
     providedIn:'root'
 })
 export class AuthService{
-  
     constructor(   private httpClient: HttpClient) {
-
       if(this.loggedIn$()){
-       
         this.fetchUser();
         console.log(this.user$())
       }
@@ -68,29 +65,20 @@ export class AuthService{
     else {
       try {
         const decodedToken: {role:string,  sub: string } = jwtDecode(token);
-        
-          const userName= decodedToken.sub;
-     
-        const result= this.httpClient.get<loginResponse>(`http://localhost:8080/user/userName/${userName}`, ).subscribe({
-          next : (response:loginResponse)=>{
-            if(response.status.toString()==="SUCCESS"){
-
-              const user= response.data as User;
-              this.loggedIn$.set(true);
-              this.user$.set(user)
-              this.role$.set(user.userRole as Roles);
-            }
-      
-            
-        }
-      });
-   
+        const userName= decodedToken.sub;
+        this.httpClient.get<loginResponse>(`http://localhost:8080/user/userName/${userName}`, ).pipe(
+            tap( (response:loginResponse)=>{
+                    if(response.status.toString()==="SUCCESS"){
+                      const user= response.data as User;
+                      this.loggedIn$.set(true);
+                      this.user$.set(user)
+                      this.role$.set(user.userRole as Roles);
+                    }    }
+                    )) .subscribe();
     } catch (error) {
       console.error('Error decoding token:', error);
     }
       return true;
     }
-     
-    }
-   
+    } 
 }

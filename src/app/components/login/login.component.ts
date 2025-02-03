@@ -1,11 +1,9 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup,  ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { AuthService } from '../../services/auth-services/auth.services';
 import { loginResponse } from '../../models/auth.model';
 import {  Router } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
-
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../models/user.model';
 import base32Decode from "base32-decode";

@@ -1,43 +1,4 @@
-  .user-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 300px; /* Offset for the vertical navbar */
-    padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-    height: calc(100vh - 100px); /* Full height minus header height */
-    background-color: #F5EFFF;
-    max-width: 100%;
-  }
 
-  /* Options Section */
-  .user-options {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px; /* Space between buttons */
-    
-  }
-
-  .user-options .option-box {
-    width: 200px;
-    height: 100px;
-    border-radius: 999px; /* Circular corners */
-    background-color: #3B1E54; /* Desired color with 80% opacity */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-
-  .user-options .option-box:hover {
-    transform: scale(1.05);
-    background-color: #640D5F; /* Slightly darker on hover */
-  }
 
     /* User Table */
   .user-table-container {
@@ -101,12 +62,12 @@
   /* Update form */
 
   .update-user-form {
-    margin-top: 20px;
-    background-color: #fff;
+    margin-top: 40px;
+    background-color: #DAD2FF;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 60%;
+    width: 40%;
   }
 
   .update-user-form label {
@@ -117,7 +78,7 @@
 
   .update-user-form input,
   .update-user-form textarea {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -178,4 +139,5 @@
   background-color: #DAD2FF;
   border-radius: 10px;
   max-width: 100%;
+  margin-top: 40px;
 }

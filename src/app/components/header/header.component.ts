@@ -21,7 +21,7 @@ export class HeaderComponent {
     alert('You have logged out!');
     this.router.navigate(['/landing']);
 
-    // Implement your logout logic here, e.g., clear session, redirect to login, etc.
+    
   }
   isLoggedIn(): boolean{
     return this.authService.loggedIn$();

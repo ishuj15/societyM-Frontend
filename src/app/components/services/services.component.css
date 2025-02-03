@@ -1,59 +1,106 @@
-/* Add margin-top to prevent overlap with header/navbar */
-.service-container {
+/* Service Cards Container */
+.service-card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 30px; /* Reduced gap between cards horizontally */
+  width: 100%;
+  padding: 40px; /* Padding for container */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  margin-left: 20px; /* Adjust left margin for proper spacing from the sidebar */
+  margin-top: 80px; /* Adjust top margin for spacing from the header */
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border-radius: 15px; /* Slightly rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  width: 90%; /* Set card width to fill container */
+  height: 350px; /* Slightly taller card */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 300px; /* Offset for the vertical navbar */
-  padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-  height: calc(100vh - 100px); /* Full height minus header height */
-  background-color: #F5EFFF;
-  max-width: 100%; /* Optional padding for spacing */
+  text-align: center;
+  padding: 20px;
+  overflow: hidden; /* Prevents overflow of content */
 }
-.service-options {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+/* Content Section */
+.card .content {
   margin-top: 20px;
-  gap: 20px; /* Space between buttons */
-  
-}
-/* Option Box Styles (For Resident/Guard/Admin Options) */
-.service-options .option-box {
-  width: 200px;
-  height: 100px;
-  border-radius: 999px; /* Circular corners */
-  background-color: #3B1E54; /* Desired color with 80% opacity */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 15px; /* Increased gap between elements */
   align-items: center;
-  color: white;
-  font-weight: bold;
+  flex-grow: 1; /* Ensures content takes up available space */
+}
+
+/* Title Styling */
+.card .title span {
+  font-size: 26px; /* Larger title */
+  font-weight: 600; /* Slightly lighter weight for emphasis */
+  color: #333;
+  margin-bottom: 10px; /* Space below the title */
+  text-transform: capitalize; /* Capitalizes first letter of each word */
+  letter-spacing: 1px; /* Slight letter spacing for style */
+}
+
+/* Description Styling */
+.card .description p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.7; /* Increased line-height for readability */
+  font-family: 'Arial', sans-serif; /* Clean and modern font */
+  text-align: justify; /* Justifies the text for better alignment */
+  max-height: 100px; /* Limit the description height */
+  overflow: hidden; /* Prevent overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+/* Status Styling */
+.card .status strong {
+  color: #28a745;
   font-size: 18px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  font-weight: bold; /* Strong emphasis */
+  padding: 5px 10px;
+  border-radius: 12px; /* Rounded status label */
+  background-color: #e7f9e7; /* Light background for status */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05); /* Light shadow for depth */
 }
 
-
-.service-options .option-box:hover {
-  transform: scale(1.05);
-  background-color: #640D5F; /* Slightly darker on hover */
+/* Selected Card */
+.selected {
+  border: 2px solid #007bff;
+  background-color: #f0f8ff; /* Light background for selected card */
 }
 
-/* Add service Form */
-.add-service-form {
+/* Forms */
+.add-service-form,
+.update-service-form {
   margin-top: 20px;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 60%;
+  width: 100%;
+  max-width: 600px; /* Limit form width */
 }
 
-.add-service-form .form-group {
+.add-service-form .form-group,
+.update-service-form .form-group {
   margin-bottom: 15px;
 }
 
-.add-service-form label {
+.add-service-form label,
+.update-service-form label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
@@ -61,45 +108,7 @@
 
 .add-service-form input,
 .add-service-form textarea,
-.add-service-form select {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.add-service-form button {
-  padding: 10px 20px;
-  background-color: #1c3b4d;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.add-service-form button:hover {
-  background-color: #00c896;
-  transform: scale(1.05);
-}
- /* Update form */
-
- .update-service-form {
-  margin-top: 20px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 60%;
-}
-
-.update-service-form label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
+.add-service-form select,
 .update-service-form input,
 .update-service-form textarea {
   width: 100%;
@@ -109,30 +118,37 @@
   border-radius: 5px;
 }
 
+.add-service-form button,
 .update-service-form button {
   padding: 10px 20px;
-  background-color: #1c3b4d;
+  background-color: #3B1E54;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.add-service-form button:hover,
 .update-service-form button:hover {
-  background-color: #00c896;
+  background-color: #640D5F;
+  transform: scale(1.05);
 }
 
-
-/* Delete Button */
-.delete-btn {
+/* Delete and Cancel Buttons */
+.delete-btn,
+.cancel-btn {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #ff4d4d;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
 }
 
 .delete-btn:hover {
@@ -140,81 +156,15 @@
   transform: scale(1.05);
 }
 
-.delete-btn:active {
-  background-color: #cc0000;
-}
-
-/* Cancel Button */
 .cancel-btn {
-  margin-left: 10px;
-  padding: 10px 20px;
   background-color: #cccccc;
   color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 10px;
 }
 
 .cancel-btn:hover {
   background-color: #999999;
   transform: scale(1.05);
 }
-.service-card-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
-  gap: 1px;
-  width: 100%; /* Ensures it fills the container */
-  padding: 20px;
-  justify-content: center; /* Centers the cards */
-}
-/* Service Cards */
-.card {
-  background: white;
-  border-radius: 50px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 40px;
-  margin-left: 120px;
-  padding: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-  min-height: 300px; /* Ensures consistent height */
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  /* gap: 1px; */
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.card .content {
-  margin-top: 35px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.card .title span {
-  
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.card .description p {
-  font-size: 20px;
-  color: #666;
-}
-
-.card .status strong {
-  color: #28a745;
-}
-
-/* Selected Card */
-.selected {
-  border: 2px solid #007bff;
-}
+ 
+ 

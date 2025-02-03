@@ -27,12 +27,12 @@ body {
     font-weight: bold;
     color: #1a0101;
     margin: 0;
-    margin-left: 700px;
+    margin-left: 50px;
     margin-bottom: 50px;
 }
 
 .logout button {
-    padding: 10px 20px;
+    padding: 15px 30px;
     font-size: 14px;
     background-color: #1c3b4d;
     color: #ffffff;
@@ -42,6 +42,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
     margin-right: 130px;
     margin-bottom: 60px;
+    
 }
 
 .logout button:hover {

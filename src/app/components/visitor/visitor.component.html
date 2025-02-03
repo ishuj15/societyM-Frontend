@@ -1,9 +1,9 @@
-<div class="visitor-container">
+<div class="global-container">
   <!-- Header Section -->
   <h1> Visitor Management</h1>
 
   <!-- Visitor Management Options -->
-  <div class="visitor-options">
+  <div class="global-options">
     <ng-container *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'">
       <div class="option-box" (click)="onClickingAddVisitor()">Add Visitor</div>
     </ng-container>

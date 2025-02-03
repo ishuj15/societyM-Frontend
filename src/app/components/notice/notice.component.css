@@ -1,44 +1,4 @@
 /* Notice Container */
-.notice-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 300px; /* Offset for the vertical navbar */
-  padding: 100px 20px 20px 20px; /* Padding for proper spacing */
-  height: calc(100vh - 100px); /* Full height minus header height */
-  background-color: #F5EFFF;
-  max-width: 100%;
-}
-
-/* Options Section */
-.notice-options {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 20px;
-  gap: 20px; /* Space between buttons */
-  
-}
-
-.notice-options .option-box {
-  width: 200px;
-  height: 100px;
-  border-radius: 999px; /* Circular corners */
-  background-color: #3B1E54; /* Desired color with 80% opacity */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.notice-options .option-box:hover {
-  transform: scale(1.05);
-  background-color: #640D5F; /* Slightly darker on hover */
-}
 
 /* Visibility for Roles */
 .notice-options.resident-role .option-box:not(.view-notice),
