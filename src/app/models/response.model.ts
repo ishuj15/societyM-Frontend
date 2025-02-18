@@ -16,10 +16,10 @@ import { HttpStatusCode } from "@angular/common/http"
 // }
 export type ResponseEntity ={
     status : ApiResponseStatus
+    statusCode : HttpStatusCode,
     message :string,
     data :object
     error:object
-    statusCode : HttpStatusCode,
 }
 export type ApiResponseStatus= {
     SUCCESS:string,

@@ -69,7 +69,15 @@ export class SignupComponent {
             alert('Registered successfully, Please scan your MFA Qr code to continue');
             this.qrCodeVisibility=true; 
         }
+        else{
+         
+          console.log(response)
+        }
       },
+      error:(err)=>{
+        console.log(err)
+        console.log("Obs error")
+      }
      });       
     }
   }

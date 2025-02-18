@@ -50,9 +50,9 @@ export class AuthService{
     }
 
     signup(user: User) : Observable<loginResponse>{
-       console.log("signup");
+       console.log(user);
         return this.httpClient.post<loginResponse>( "http://localhost:8080/api/auth/user",
-            user
+            user 
         );
     }
 
