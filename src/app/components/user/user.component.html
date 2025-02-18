@@ -44,7 +44,7 @@
   
     <div *ngIf="viewUserOption">   
       <h2>All Users</h2>
-      <table class="user-table">
+      <table class="global-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Update form  -->
-    <div  *ngIf="updateFormVisibility"  class="update-user-form" >
+    <div  *ngIf="updateFormVisibility"  class="update-global-form" >
       <form  class =" "   [formGroup]="updateUserForm" (ngSubmit)="onClickingUpdateUserButton()">
         <h2> SignUp</h2>
     <div>

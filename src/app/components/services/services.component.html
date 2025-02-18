@@ -23,9 +23,8 @@
     <div class="card" *ngFor="let service of services; let i = index"
     (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
      
-    [class.selected]="service === selectedService">
+    [class.selected]="service === selectedService" >
       
-     
       <!-- Card Content -->
       <div class="content">
         <!-- Service Name -->
@@ -43,44 +42,69 @@
         <div class="status">
           Status: <strong>{{ service.status }}</strong>
         </div>
-      </div>
-    </div>
-    
+
+      </div>  <!-- content div -->
+  
+      </div>  <!-- card div -->
+    </div>  <!-- container div -->
+   
     <!-- Add Service Form -->
    
-    <div  *ngIf="isAddServiceVisible" class="add-service-form">
+    <div  *ngIf="isAddServiceVisible" class="add-global-form">
 
         <form [formGroup]="form" (ngSubmit)="onSubmitNewService()">
-          <div class="form-group">
+           
             <label for="serviceName">Service Name</label>
             <input id="serviceName" formControlName="serviceName" placeholder="Enter Service Name" />
-          </div>
-          <div class="form-group">
+         
+          
             <label for="description">Description</label>
             <textarea id="description" formControlName="description" placeholder="Enter Service Description"></textarea>
-          </div>
-          <div class="form-group">
+       
+            <label for="contact">Description</label>
+            <textarea id="contact" formControlName="contact" placeholder="Enter Your contact NO."></textarea>
+       
             <label for="status">Status</label>
             <input type="status" id="status" formControlName="status" placeholder="Enter the status"/>
-          </div>
-          <button type="submit" [disabled]="form.invalid">Submit</button>
+           
+
+            <div class="form-actions">
+              <button type="submit" [disabled]="form.invalid">Submit</button>
+             
+            </div>
+         
         </form>
       </div>
     
   
-    <!-- Admin Services Cards -->
-    
-    
+   
+   
+      <!-- Admin Services Cards -->
         <div *ngIf="showTableAdmin" class="service-card-container">
-          @for(  service of services; track service  ){
-            <div class=" card" >
-            (click)="(deleteOption || updateOption) 
-            ? onSelectingService(service): null" [class.selected]="service === selectedService">
-             <h3>{{ service.serviceName }}</h3>
-             <p>{{ service.description }}</p>
-             <p>Status: {{ service.status }}</p>
+          <div class=" card"   *ngFor=" let service of services;let i = index "
+          (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
+          [class.selected]="service === selectedService"  >
+            <!-- Card Content -->
+      <div class="content">
+        <!-- Service Name -->
+        <div class="title">
+          
+          <span>{{ service.serviceName }}</span>
+        </div>
+        
+        <!-- Service Description -->
+        <div class="description">
+          <p>{{ service.description }}</p>
+        </div>
+        
+        <!-- Service Status -->
+        <div class="status">
+          Status: <strong>{{ service.status }}</strong>
+        </div>
+
+      </div>
             </div>
-          }
+          
       </div>
    
     <!-- Delete Button -->
@@ -94,7 +118,7 @@
   
     <!-- Update form -->
     @if(updateButton){
-    <div  class="update-service-form">
+    <div  class="update-global-form">
       
         <h3>Update Service</h3>
         <form [formGroup]="updateForm" (ngSubmit)="onClickingUpdateButton()">
@@ -115,6 +139,6 @@
         </form>
       </div>
     }
-  
+ 
   </div>
   

@@ -1,107 +1,74 @@
-.dashboard-container {
-    margin-left: 300px; /* Space for the vertical navbar */
-    margin-top: 60px; /* Adjust to prevent overlap with header */
-    background-color: #F5EFFF; /* Set background color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full height of the viewport */
+.about-us {
+    background-color: #fff;
     padding: 20px;
-    flex-wrap: wrap;
-}
-
-/* Card container with increased card size and spacing */
-.card-container {
-    display: flex;
-    justify-content: center;
-    gap: 100px; /* Increased gap between cards */
-    flex-wrap: wrap;
-}
-
-.book {
-    position: relative;
     border-radius: 10px;
-    width: 280px; /* Adjusted card size */
-    height: 350px; /* Adjusted card size */
-    background-color: #f0f0f0;
-    box-shadow: 1px 1px 12px #000;
-    transform: preserve-3d;
-    perspective: 2000px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    transition: all 0.3s ease-in-out; /* Smooth transition for size change */
-}
-
-.cover {
-    top: 0;
-    position: absolute;
-    background-color: #E5D9F2;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.5s;
-    transform-origin: 0;
-    box-shadow: 1px 1px 12px #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1; /* Ensure cover is on top initially */
-}
-
-.book:hover .cover {
-    transform: rotatey(-80deg); /* On hover, the cover rotates */
-    z-index: 0; /* Move cover behind content */
-}
-
-/* Content styling */
-.card-content {
-    position: absolute;
-    top: 0px;
-    left: 50px;
-    right: 20px;
-    bottom:100px;
-    color: #333;
-     display: none; 
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 2; /* Make sure the content stays on top of the cover */
-}
-.book:hover {
-    transform: scale(1.2); /* Increase the size of the card on hover */
-}
-.book:hover .card-content {
-    display: flex; /* Reveal content when card is hovered */
-    z-index: 2; /* Ensure content is above cover */
-}
-.card-content h2 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #000;
-}
-
-.card-content p {
-    font-size: 14px;
-    color: #555;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-/* Style for the link button */
-.btn-link {
-    display: inline-block;
-    background-color: #1c3b4d; /* Dark background for button */
-    color: white; /* White text */
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
+    height: 100vh;
+  }
+  
+  /* Title for About Us */
+  .about-us h2 {
+    font-size: 50px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Description Text */
+  .about-us p {
+    font-size: 26px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
 
-.btn-link:hover {
-    background-color: #A9C46C; /* Light background on hover */
-}
+/* Image Slider */
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Limit the width */
+    margin: 0 auto;
+    overflow: hidden; /* Hide images that are out of the container */
+  }
+  
+  .slide {
+    display: none;
+  }
+  
+  .slide img {
+    width: 120%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+  
+  .prev {
+    top:700px;
+    left: 810px;
+  }
+  
+  .next {
+    top:700px;
+    right: 530px;
+  }
+  
+  /* Showing the active slide */
+  .active {
+    display: block;
+  }
+  

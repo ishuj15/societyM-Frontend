@@ -10,8 +10,8 @@ import { Visitor } from "../../models/visitor.model";
 export class VisitorService {
     private httpClient = inject(HttpClient);
 
-    createVisitor(userId: string, visitor: Visitor): Observable<ResponseEntity> {
-        return this.httpClient.post<ResponseEntity>(`http://localhost:8080/visitor/${userId}`, visitor);
+    createVisitor(role: string, visitor: Visitor): Observable<ResponseEntity> {
+        return this.httpClient.post<ResponseEntity>(`http://localhost:8080/visitor/${role}`, visitor);
     }
 
     getAllVisitors(): Observable<ResponseEntity> {

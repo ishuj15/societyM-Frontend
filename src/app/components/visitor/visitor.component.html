@@ -37,7 +37,7 @@
 
   </div>
   <!-- Add Visitor Form -->
-  <div *ngIf="addVisitorFormVisibility" class="add-visitor-form">
+  <div *ngIf="addVisitorFormVisibility" class="add-global-form">
     <h2>Add Visitor</h2>
     <form [formGroup]="form" (ngSubmit)="OnSubmitAddVisitor()">
       <div *ngIf="role?.toString() === 'guard'" class="form-group">
@@ -77,9 +77,9 @@
   </div>
 
   <!-- Visitors Table for Resident -->
-  <div *ngIf="showTableByUsern" class="view-visitor-table-container">
+  <div *ngIf="showTableByUsern" class=" global-table-container">
     <h2>Your Visitors</h2>
-    <table class ="view-visitor-table">
+    <table class =" global-table">
       <thead>
         <tr>
           <th>S.No</th>
@@ -111,9 +111,9 @@
   </div>
 
  <!-- Visitors Table Admin -->
-  <div *ngIf="showTableByAdmin" class="view-visitor-table-container">
+  <div *ngIf="showTableByAdmin" class=" global-table-container">
   <h2> List of All Visitors</h2>
-  <table class ="view-visitor-table">
+  <table class =" global-table">
     <thead>
       <tr>
         <th>S.No</th>
@@ -145,9 +145,9 @@
  </div>
 
    <!-- Pending Requests Table -->
-   <div *ngIf="ViewPendingRequestsTable"class="view-visitor-table-container" >
+   <div *ngIf="ViewPendingRequestsTable"class=" global-table-container" >
     <h2>Pending Requests</h2>
-    <table class ="view-visitor-table">
+    <table class =" global-table">
       <thead>
         <tr>
           <th>S.No</th>

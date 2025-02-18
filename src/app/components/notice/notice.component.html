@@ -6,8 +6,8 @@
       </div> -->
       
      <!-- Table for resident and guard -->
-     <div    *ngIf="ShowTableToUser" class="notice-table-container">
-      <table class="notice-table">
+     <div    *ngIf="ShowTableToUser" class="global-table-container">
+      <table class="global-table">
         <thead>
           <tr>
             <th>#</th>
@@ -46,7 +46,7 @@
     
   
     <!-- Add Notice Form -->
-    <div *ngIf="isAddNoticeVisible" class="add-notice-form">
+    <div *ngIf="isAddNoticeVisible" class="add-global-form">
       <form [formGroup]="form" (ngSubmit)="onSubmitNewNotice()">
         <div class="form-group">
           <label for="title">Title</label>
@@ -73,8 +73,8 @@
     </div>
   
     <!-- Admin Notices Table -->
-    <div *ngIf="showTableAdmin" class="notice-table-container">
-      <table class="notice-table">
+    <div *ngIf="showTableAdmin" class="global-table-container">
+      <table class="global-table">
         <thead>
           <tr>
             <th>#</th>
@@ -108,7 +108,7 @@
     </div>
 
     <!-- Update form  -->
-    <div *ngIf="updateButton" class ="update-notice-form">
+    <div *ngIf="updateButton" class ="update-global-form">
       <h3>Update Notice</h3>
       <form [formGroup]="updateForm" (ngSubmit)="onClicikingUpdateButton()">
         <div>

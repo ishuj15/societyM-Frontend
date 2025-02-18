@@ -1,40 +1,6 @@
 
 
-    /* User Table */
-  .user-table-container {
-    margin-top: 20px;
-    width: 90%;
-  }
-
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .user-table th,
-  .user-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-
-  .user-table th {
-    background-color: #f1f1f1;
-    color: #333;
-  }
-
-  .user-table tr.selected {
-    background-color: #d3f4ff;
-  }
-
-  .user-table tr:hover {
-    background-color: #f9f9f9;
-    cursor: pointer;
-
-  }
-
+   
   /* Button styles inside user table */
 .user-table .btn {
   padding: 8px 16px;
@@ -59,44 +25,7 @@
 .user-table .btn.delete:hover {
   background-color: #d32f2f; /* Darker red on hover */
 }
-  /* Update form */
-
-  .update-user-form {
-    margin-top: 40px;
-    background-color: #DAD2FF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 40%;
-  }
-
-  .update-user-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .update-user-form input,
-  .update-user-form textarea {
-    width: 95%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  .update-user-form button {
-    padding: 10px 20px;
-    background-color: #1c3b4d;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .update-user-form button:hover {
-    background-color: #00c896;
-  }
+ 
 /* Profile Table */
 .profile-table {
   width: 80%;

@@ -32,7 +32,7 @@ ngOnInit() {
 }
  //variables
   // used for both delete and update 
-  selectedVisitorId=signal<string | null>(null);
+  selectedVisitorId :string | null=null;
 
   //Adding New Visitor 
   qrCodeImage: string | null = null;
@@ -93,6 +93,7 @@ OnSubmitAddVisitor() {
   } else if (this.role?.toString() === "guard") {
     status = "Pending";
     userID = this.form.value.selectedUsername!
+    console.log(status)
   }
 
   const visitor: Visitor = {
@@ -111,7 +112,7 @@ OnSubmitAddVisitor() {
   };
 
   if (this.form.valid) {
-    const sub = this.visitorService.createVisitor(userID!, visitor).subscribe({
+    const sub = this.visitorService.createVisitor(this.role! as Roles, visitor).subscribe({
       next: (response: ResponseEntity) => {
         // console.log("Response from createVisitor: ", response);
         if (response.status.toString() === "SUCCESS") {
@@ -222,17 +223,20 @@ onClickingViewVisitorByUser(){
   showChangestatusButton=false;
   onSelectingVisitor(visitor :Visitor){
   this.showChangestatusButton=true;
-  this.selectedVisitorId.set(visitor.idVisitor);
+  this.selectedVisitorId=visitor.idVisitor;
+  // this.selectedVisitorId.set(visitor.idVisitor);
 }
   // 3. Changing Status of Visitor 
   onClickingChangeStatusButton(status:string){
-    const sub = this.visitorService.updateVisitorStatus(this.selectedVisitorId.toString(), status  ).subscribe({
+    
+    const sub = this.visitorService.updateVisitorStatus(this.selectedVisitorId! , status  ).subscribe({
       next: (response: ResponseEntity) =>{
         if(response.status.toString()==="SUCCESS")
           {
             alert("Status Change successfully");
             this.showChangestatusButton = false;
-            this.selectedVisitorId.set(null);
+            this.selectedVisitorId=null;
+            this.selectedVisitorId=null;
             this.ViewPendingRequestsTable=false;
             this.listOfPendingRequests=[];
             this.router.navigate(['./'] ,{

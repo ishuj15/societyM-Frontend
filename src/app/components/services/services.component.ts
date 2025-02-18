@@ -30,7 +30,7 @@ export class ServicesComponent {
     this.user=this.authService.user$()!;
   }
 
-  // 1. Adding Service by admin only
+  // 1. Adding Service by user only
   isAddServiceVisible: boolean = false;
 
  
@@ -50,6 +50,7 @@ export class ServicesComponent {
     serviceName: new FormControl('', {}),
     description: new FormControl('', {}),
     targetRole: new FormControl<TargetRole | null>(null, {}),
+    contact:  new FormControl('', {}),
     status: new FormControl('', {}),
   });
 
@@ -61,6 +62,7 @@ export class ServicesComponent {
         serviceName: this.form.value.serviceName!,
         description: this.form.value.description!,
         status: this.form.value.status!,
+        contact:this.form.value.contact!,
       
       };
 
