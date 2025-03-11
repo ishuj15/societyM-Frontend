@@ -1,6 +1,6 @@
 import {  Routes } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
-import { LoginGuard } from './shared/guard/login.huard';
+import { LoginGuard } from './shared/guard/login.guard';
 import { LandingComponent } from './components/landing-page/landing.component';
 import { SignupComponent } from './components/signup/signup.component';
 
