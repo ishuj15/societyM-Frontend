@@ -1,0 +1,114 @@
+
+body {
+  overflow: hidden; /* This will prevent scrolling */
+  margin: 0; /* Remove any default margins */
+}
+/* Landing Page Background Color */
+.landing-page {
+  background-color: #F5EFFF; /* Set the background color */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh; /* Fill the viewport height */
+  width: 100%;
+  position: relative;
+  /* top: 60px; Push the landing page down so header doesn't overlap */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Image on the right side */
+.landing-image {
+  position: absolute;
+ margin-top: 40px;
+  right: 0;
+  top: 110px;
+  width: 45%; /* Image takes up the right half */
+  height: calc(100vh - 60px - 150px);  /* Full viewport height */
+  object-fit: cover; /* Ensure the image covers the area */
+  border-top-left-radius: 100px; /* Round the top-left corner */
+  border-bottom-left-radius: 100px; 
+  overflow: hidden; 
+  margin-bottom: 20px;
+  z-index: 1;
+}
+/* Content Section for Buttons */
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50%; /* Left half of the page */
+  padding: 20px;
+  top: 60px;
+}
+/* text  */
+.text-container {
+  width: 800px; /* The text width */
+  height: auto; /* Text height as desired */
+  /* position: relative; */
+  font-family: 'Langar', sans-serif; /* Assuming the font is loaded */
+  margin-top: -100px; 
+}
+
+.landing-text {
+  font-family: 'Langar', cursive, sans-serif; 
+  font-style: italic; 
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 1.5;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  white-space: normal;
+  overflow: hidden;
+  text-align: left;
+  margin-left:40px;
+}
+/* Buttons Section: Horizontal Alignment */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Align buttons horizontally */
+  align-items: center;
+  width: 100%; /* Take full width */
+  margin-top: 120px; /* Adjust space between text and buttons */
+  gap: 6px;
+  margin-left: 40px;
+}
+
+/* Buttons CSS */
+.signup-button {
+  position: absolute;
+  margin-top:290px;
+  left: 150px; /* Sign Up button 60px from the left */
+  width: 200px;
+  height: 150px;
+  /* border-radius: 100px; */
+  background-color: #3B1E54;
+  color: white;
+  text-align: center;
+  line-height: 150px; /* Centers the text vertically */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 30px;
+  border-radius: 90%;
+}
+
+.login-button {
+  position: absolute;
+  margin-top:290px;
+  left: 550px; /* Login button 90px from the left */
+  width: 200px;
+  height: 150px;
+  border-radius: 90%;
+  background-color: #3B1E54;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  line-height: 150px; /* Centers the text vertically */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/* Buttons Hover Effect */
+.signup-button:hover, .login-button:hover {
+  background-color: #640D5F /* Darker green when hovered */
+}

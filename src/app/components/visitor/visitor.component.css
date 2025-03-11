@@ -1,0 +1,104 @@
+
+/* Visibility for Roles */
+.visitor-options.resident-role .option-box:not(.view-visitor),
+.visitor-options.guard-role .option-box:not(.view-visitor) {
+  display: none; /* Hide options for other roles */
+}
+
+.status-change {
+  background-color: #f9f9f9; /* Light background for contrast */
+  padding: 16px; /* Add spacing inside the container */
+  border: 1px solid #ddd; /* Subtle border for separation */
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+  max-width: 400px; /* Limit width for better readability */
+  margin: 16px auto; /* Center the container with margin */
+  text-align: center; /* Center align the content */
+}
+
+.status-change p {
+  font-size: 16px; /* Increase font size for better readability */
+  font-weight: 500; /* Slightly bold text for emphasis */
+  color: #333; /* Neutral text color */
+  margin-bottom: 12px; /* Add spacing below the paragraph */
+}
+
+.button-container {
+  display: flex; /* Use flexbox for button alignment */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 16px; /* Add spacing between buttons */
+}
+
+.status-button {
+  padding: 10px 20px; /* Add padding for clickable area */
+  font-size: 14px; /* Ensure text is legible */
+  font-weight: 600; /* Bold text for better visibility */
+  border: none; /* Remove default borders */
+  border-radius: 4px; /* Slight rounding for buttons */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.status-button.approve {
+  background-color: #4caf50; /* Green for approval */
+  color: white; /* White text on green background */
+}
+
+.status-button.approve:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+}
+
+.status-button.deny {
+  background-color: #f44336; /* Red for denial */
+  color: white; /* White text on red background */
+}
+
+.status-button.deny:hover {
+  background-color: #d32f2f; /* Slightly darker red on hover */
+}
+
+/* Container for the Enter Token Form */
+.enter-token-form {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 60%;
+}
+
+/* Label Styling */
+.enter-token-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Input Field Styling */
+.enter-token-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Submit Button Styling */
+.enter-token-form .form-actions button {
+  padding: 10px 20px;
+  background-color: #1c3b4d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enter-token-form .form-actions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.enter-token-form .form-actions button:hover {
+  background-color: #00c896;
+}

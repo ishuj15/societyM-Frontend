@@ -1,0 +1,89 @@
+/* Service Cards Container */
+.service-card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 30px; /* Reduced gap between cards horizontally */
+  width: 100%;
+  padding: 40px; /* Padding for container */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  margin-left: 20px; /* Adjust left margin for proper spacing from the sidebar */
+  margin-top: 80px; /* Adjust top margin for spacing from the header */
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border-radius: 15px; /* Slightly rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  width: 90%; /* Set card width to fill container */
+  height: 350px; /* Slightly taller card */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden; /* Prevents overflow of content */
+}
+
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+/* Content Section */
+.card .content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap between elements */
+  align-items: center;
+  flex-grow: 1; /* Ensures content takes up available space */
+}
+
+/* Title Styling */
+.card .title span {
+  font-size: 26px; /* Larger title */
+  font-weight: 600; /* Slightly lighter weight for emphasis */
+  color: #333;
+  margin-bottom: 10px; /* Space below the title */
+  text-transform: capitalize; /* Capitalizes first letter of each word */
+  letter-spacing: 1px; /* Slight letter spacing for style */
+}
+
+/* Description Styling */
+.card .description p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.7; /* Increased line-height for readability */
+  font-family: 'Arial', sans-serif; /* Clean and modern font */
+  text-align: justify; /* Justifies the text for better alignment */
+  max-height: 100px; /* Limit the description height */
+  overflow: hidden; /* Prevent overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+/* Status Styling */
+.card .status strong {
+  color: #28a745;
+  font-size: 18px;
+  font-weight: bold; /* Strong emphasis */
+  padding: 5px 10px;
+  border-radius: 12px; /* Rounded status label */
+  background-color: #e7f9e7; /* Light background for status */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05); /* Light shadow for depth */
+}
+
+/* Selected Card */
+.selected {
+  border: 2px solid #007bff;
+  background-color: #f0f8ff; /* Light background for selected card */
+}
+
+ 
+ 
+ 
+ 
+ 

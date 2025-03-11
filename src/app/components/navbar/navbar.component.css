@@ -1,0 +1,71 @@
+/* Navbar Styles */
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    margin: 0;
+    padding: 0;
+}
+
+.vertical-navbar {
+    width: 310px;
+    background-color: #B2A5FF; 
+    position: fixed;
+    height: calc(100vh - 60px); /* Full height of viewport */
+    overflow: auto;
+   padding-top: 60px; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); 
+    display: block;
+    z-index: 10;
+    
+    left: 0;
+    top: 120px;
+}
+
+.vertical-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    top: 200px;
+    
+}
+
+.vertical-navbar li {
+    text-align: left;
+    padding: 20px 20px;
+    display: block;
+    font-size: 22px; /* Increased font size */
+    font-weight: bold;
+    margin-bottom: 8px; /* Adds spacing between list items */
+    /* border-radius: 28px; */
+}
+
+/* Alternate background colors for list items */
+.vertical-navbar li:nth-child(odd) {
+    background-color: rgba(221, 238, 187, 0.666667);
+}
+
+.vertical-navbar li:nth-child(even) {
+    background-color: #DAD2FF; /* Profile style */
+}
+
+.vertical-navbar li a {
+    color: #1a0101; /* Dark text */
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
+}
+
+.vertical-navbar li a:hover {
+    color: #3815e8;
+    text-decoration: underline;
+}
+
+.router-link-active {
+    background-color: #00c896; /* More vibrant active color */
+    color: white;
+}
+
+.hamburger {
+    display: none; /* Hide the hamburger as it's no longer needed */
+}
+
+/* Optional: Add a margin to the main content to prevent overlap with navbar */

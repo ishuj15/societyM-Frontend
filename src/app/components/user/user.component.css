@@ -1,0 +1,72 @@
+
+
+   
+  /* Button styles inside user table */
+.user-table .btn {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.user-table .btn:hover {
+  background-color: #45a049; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.user-table .btn.delete {
+  background-color: #f44336;
+}
+
+.user-table .btn.delete:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+ 
+/* Profile Table */
+.profile-table {
+  width: 80%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.profile-table th,
+.profile-table td {
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.profile-table th {
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: bold;
+}
+
+.profile-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.profile-table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Additional styles for the profile container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #DAD2FF;
+  border-radius: 10px;
+  max-width: 100%;
+  margin-top: 40px;
+}

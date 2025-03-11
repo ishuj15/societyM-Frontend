@@ -1,0 +1,144 @@
+<div class="global-container">
+  <h1> Services </h1>
+    <!-- Actions for Residents/Guards -->
+    @if(role?.toString() === 'resident') {
+    <div   class="global-options resident-guard-role" >
+        
+        <div (click)="onClickingViewServiceUser()" class="option-box view-service">View Your Services</div>
+        <div (click)="onClickingAddService()" class="option-box add-service">Add Services</div>
+        <div (click)="onClickingDeleteOption()" class="option-box delete-service">Delete Services</div>
+        <div (click)="UpdateServiceOption()" class="option-box update-service">Update Service</div>
+        <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>
+      </div>
+    }
+    
+    <!-- Actions for Admin -->
+    @if(role?.toString() === 'admin'){
+    <div    class="global-options admin-role">
+        <div (click)="onClickingViewServiceAdmin()" class="option-box view-service">View List of  Services</div>    
+      </div>
+    }
+   <!-- Cards for resident   -->
+   <div *ngIf="ShowTableToUser" class="service-card-container">
+    <div class="card" *ngFor="let service of services; let i = index"
+    (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
+     
+    [class.selected]="service === selectedService" >
+      
+      <!-- Card Content -->
+      <div class="content">
+        <!-- Service Name -->
+        <div class="title">
+          
+          <span>{{ service.serviceName }}</span>
+        </div>
+        
+        <!-- Service Description -->
+        <div class="description">
+          <p>{{ service.description }}</p>
+        </div>
+        
+        <!-- Service Status -->
+        <div class="status">
+          Status: <strong>{{ service.status }}</strong>
+        </div>
+
+      </div>  <!-- content div -->
+  
+      </div>  <!-- card div -->
+    </div>  <!-- container div -->
+   
+    <!-- Add Service Form -->
+   
+    <div  *ngIf="isAddServiceVisible" class="add-global-form">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmitNewService()">
+           
+            <label for="serviceName">Service Name</label>
+            <input id="serviceName" formControlName="serviceName" placeholder="Enter Service Name" />
+         
+          
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" placeholder="Enter Service Description"></textarea>
+       
+            <label for="contact">Description</label>
+            <textarea id="contact" formControlName="contact" placeholder="Enter Your contact NO."></textarea>
+       
+            <label for="status">Status</label>
+            <input type="status" id="status" formControlName="status" placeholder="Enter the status"/>
+           
+
+            <div class="form-actions">
+              <button type="submit" [disabled]="form.invalid">Submit</button>
+             
+            </div>
+         
+        </form>
+      </div>
+    
+  
+   
+   
+      <!-- Admin Services Cards -->
+        <div *ngIf="showTableAdmin" class="service-card-container">
+          <div class=" card"   *ngFor=" let service of services;let i = index "
+          (click)=" (deleteOption || updateOption) ?   onSelectingService(service) : null"
+          [class.selected]="service === selectedService"  >
+            <!-- Card Content -->
+      <div class="content">
+        <!-- Service Name -->
+        <div class="title">
+          
+          <span>{{ service.serviceName }}</span>
+        </div>
+        
+        <!-- Service Description -->
+        <div class="description">
+          <p>{{ service.description }}</p>
+        </div>
+        
+        <!-- Service Status -->
+        <div class="status">
+          Status: <strong>{{ service.status }}</strong>
+        </div>
+
+      </div>
+            </div>
+          
+      </div>
+   
+    <!-- Delete Button -->
+    @if(deleteButton){
+    <div >
+
+        <button (click)="onClickingDeleteButton()" class="delete-btn">Delete</button>
+        <button (click)="onCancel()" class="cancel-btn">Cancel</button>
+      </div>
+    }
+  
+    <!-- Update form -->
+    @if(updateButton){
+    <div  class="update-global-form">
+      
+        <h3>Update Service</h3>
+        <form [formGroup]="updateForm" (ngSubmit)="onClickingUpdateButton()">
+          <div>
+            <label for="serviceName">Service Name:</label>
+            <input id="serviceName" formControlName="serviceName" />
+          </div>
+          <div>
+            <label for="description">Description:</label>
+            <textarea id="description" formControlName="description"></textarea>
+          </div>
+          <div>
+            <label for="status">Status:</label>
+            <input id="status" type="text" formControlName="date" />
+          </div>
+          <button type="submit">Update Service</button>
+          <button type="button" (click)="onCancel()">Cancel</button>
+        </form>
+      </div>
+    }
+ 
+  </div>
+  

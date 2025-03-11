@@ -1,0 +1,13 @@
+<!-- header.component.html -->
+<header class="header-container">
+    <div class="welcome-message">
+      <h1> NeighborHood</h1>
+    </div>
+    @if(isLoggedIn()){
+    <div class="logout">
+      <button (click)="logout()">Logout</button>
+    </div>
+}
+    
+  </header>
+  

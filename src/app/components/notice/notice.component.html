@@ -1,0 +1,133 @@
+<div class="global-container">
+  <h1> Notices Management</h1>
+      <!-- Actions for Residents/Guards -->
+      <!-- <div *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'" class="notice-options resident-guard-role">
+      <div   (click)="onClickingViewNoticeUser()" class="option-box view-notice" > View notices </div>
+      </div> -->
+      
+     <!-- Table for resident and guard -->
+     <div    *ngIf="ShowTableToUser" class="global-table-container">
+      <table class="global-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Notice</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let notice of notices; let i = index"
+            
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ notice.title }}</td>
+            <td>{{ notice.message }}</td>
+            <td>{{ notice.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>    
+      <!-- Actions for Admin -->
+      <div  *ngIf= "role?.toString()   === 'admin'"  class="global-options admin-role" >
+        <div (click)="onClickingViewNoticeAdmin()" class="option-box view-notice">
+          View Notices
+        </div>
+        <div (click)="onClickingAddNotice()" class="option-box add-notice">
+          Add Notices
+        </div>
+        <div (click)="onClickingDeleteOption()" class="option-box delete-notice">
+          Delete Notices
+        </div>
+        <div (click)="UpdateNoticeOption()"  class="option-box update-notice">  Update Notice</div>
+
+      </div>
+    
+  
+    <!-- Add Notice Form -->
+    <div *ngIf="isAddNoticeVisible" class="add-global-form">
+      <form [formGroup]="form" (ngSubmit)="onSubmitNewNotice()">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="title" formControlName="title" placeholder="Enter Notice Title" />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" formControlName="message" placeholder="Enter Notice Message"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="targetRole">Target Role</label>
+          <select id="targetRole" formControlName="targetRole">
+            <option value="RESIDENT">Resident</option>
+            <option value="GUARD">Guard</option>
+            <option value="ALL">All</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" formControlName="date" />
+        </div>
+        <button type="submit" [disabled]="form.invalid">Submit</button>
+      </form>
+    </div>
+  
+    <!-- Admin Notices Table -->
+    <div *ngIf="showTableAdmin" class="global-table-container">
+      <table class="global-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Notice</th>
+            <th>Role</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let notice of notices; let i = index"
+            (click)="(deleteOption || updateOption) ? (updateOption ? onSelectingNoticeUpdate(notice) : onSelectingNotice(notice)) : null"
+        
+            [class.selected]="notice === selectedNotice"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ notice.title }}</td>
+            <td>{{ notice.message }}</td>
+            <td>{{ notice.targetRole }}</td>
+            <td>{{ notice.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Delete Button -->
+    <div *ngIf="deleteButton">
+      <button (click)="onClickingDeleteButton()" class="delete-btn">Delete</button>
+      <button (click)="onCancelDelete()" class="cancel-btn">Cancel</button>
+    </div>
+
+    <!-- Update form  -->
+    <div *ngIf="updateButton" class ="update-global-form">
+      <h3>Update Notice</h3>
+      <form [formGroup]="updateForm" (ngSubmit)="onClicikingUpdateButton()">
+        <div>
+          <label for="title">Title:</label>
+          <input id="title" formControlName="title" />
+        </div>
+        <div>
+          <label for="message">Message:</label>
+          <textarea id="message" formControlName="message"></textarea>
+        </div>
+        <div>
+          <label for="date">Date:</label>
+          <input id="date" type="date" formControlName="date" />
+        </div>
+        <button type="submit">Update Notice</button>
+        <button type="button" (click)="onCancelUpdate()">Cancel</button>
+      </form>
+    </div>
+
+   
+  </div>
+  

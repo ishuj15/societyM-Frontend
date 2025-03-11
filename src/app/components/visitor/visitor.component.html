@@ -1,0 +1,209 @@
+<div class="global-container">
+  <!-- Header Section -->
+  <h1> Visitor Management</h1>
+
+  <!-- Visitor Management Options -->
+  <div class="global-options">
+    <ng-container *ngIf="role?.toString() === 'resident' || role?.toString() === 'guard'">
+      <div class="option-box" (click)="onClickingAddVisitor()">Add Visitor</div>
+    </ng-container>
+  
+    <ng-container *ngIf="role?.toString() === 'resident'">
+      <div class="option-box" (click)="onClickingViewVisitorByUser()">View All Visitors</div>
+      <div class="option-box" (click)="onClickingManageRequests()">Manage Requests</div>
+    </ng-container>
+  
+    <ng-container *ngIf="role?.toString() === 'admin'">
+      <div class="option-box" (click)="onViewAllVisitorByAdmin()">View List of All Visitors</div>
+    </ng-container>
+
+    <ng-container *ngIf="role?.toString() === 'guard'">
+      <div class="option-box" (click)="toggleScanner()">Scan Visitor QR Code</div>
+      <div  class="option-box"  (click)="onClickingEnterToken()" > Enter Token </div>
+    </ng-container>
+
+    <div class="enter-token-form"  *ngIf="enterTokenVisibility"   >
+      <form [formGroup]="enterTokenForm" (ngSubmit)="onEnteringToken()">
+        <label for="token"> Token</label> 
+        <input  id="token" type="text"  formControlName="token" placeholder="Enter the token" required >
+        <div class="form-actions">
+          <button type="submit" >Check Status</button>
+        
+        </div>
+      </form>
+    
+      
+    </div>
+
+  </div>
+  <!-- Add Visitor Form -->
+  <div *ngIf="addVisitorFormVisibility" class="add-global-form">
+    <h2>Add Visitor</h2>
+    <form [formGroup]="form" (ngSubmit)="OnSubmitAddVisitor()">
+      <div *ngIf="role?.toString() === 'guard'" class="form-group">
+        <label for="username">Select Username</label>
+        <select id="username" formControlName="selectedUsername" >
+          <option *ngFor="let user of listOfUsernames" [value]="user.idUser">
+            {{ user.userName }}
+          </option>
+        </select>
+      </div>
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+
+      <label for="purpose">Purpose</label>
+      <input id="purpose" type="text" formControlName="purpose" />
+
+      <label for="arrivalDate">Arrival Date</label>
+      <input id="arrivalDate" type="date" formControlName="arrivalDate" />
+
+      <label for="arrivalTime">Arrival Time</label>
+      <input id="arrivalTime" type="time" formControlName="arrivalTime" />
+
+      <label for="dep_date">Departure Date</label>
+      <input id="dep_date" type="date" formControlName="dep_date" />
+
+      <label for="departureTime">Departure Time</label>
+      <input id="departureTime" type="time" formControlName="departureTime" />
+
+      <label for="contactNo">Contact Number</label>
+      <input id="contactNo" type="text" formControlName="contactNo" />
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="!form.valid">Add Visitor</button>
+        <button type="button" (click)="onClickingAddVisitor()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Visitors Table for Resident -->
+  <div *ngIf="showTableByUsern" class=" global-table-container">
+    <h2>Your Visitors</h2>
+    <table class =" global-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Purpose</th>
+          <th>Arrival Date</th>
+          <th>Arrival Time</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visitor of listOfVisitorsByUser; 
+        let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ visitor.name }}</td>
+          <td>{{ visitor.contactNo }}</td>
+          <td>{{ visitor.purpose }}</td>
+          <td>{{ visitor.arrivalDate }}</td>
+          <td>{{ visitor.arrivalTime }}</td>
+          <td>{{ visitor.dep_date }}</td>
+          <td>{{ visitor.departureTime }}</td>
+          <td>{{ visitor.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ <!-- Visitors Table Admin -->
+  <div *ngIf="showTableByAdmin" class=" global-table-container">
+  <h2> List of All Visitors</h2>
+  <table class =" global-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Purpose</th>
+        <th>Arrival Date</th>
+        <th>Arrival Time</th>
+        <th>Departure Date</th>
+        <th>Departure Time</th>
+        <th>Status</th>
+        <th>Username</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let visitor of listOfVisitors; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ visitor.name }}</td>
+        <td>{{ visitor.contactNo }}</td>
+        <td>{{ visitor.purpose }}</td>
+        <td>{{ visitor.arrivalDate }}</td>
+        <td>{{ visitor.arrivalTime }}</td>
+        <td>{{ visitor.dep_date }}</td>
+        <td>{{ visitor.departureTime }}</td>
+        <td>{{ visitor.status }}</td>
+        <td>{{ getUserName(visitor.userId) }}</td>
+      </tr>
+    </tbody>
+  </table>
+ </div>
+
+   <!-- Pending Requests Table -->
+   <div *ngIf="ViewPendingRequestsTable"class=" global-table-container" >
+    <h2>Pending Requests</h2>
+    <table class =" global-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Purpose</th>
+        <th>Arrival Date</th>
+        <th>Arrival Time</th>
+        <th>Departure Date</th>
+        <th>Departure Time</th>
+        <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visitor of listOfPendingRequests;  let i = index" 
+        (click)="onSelectingVisitor(visitor)"  >
+          <td>{{ i + 1 }}</td>
+          <td>{{ visitor.name }}</td>
+          <td>{{ visitor.contactNo }}</td>
+          <td>{{ visitor.purpose }}</td>
+          <td>{{ visitor.arrivalDate }}</td>
+          <td>{{ visitor.arrivalTime }}</td>
+          <td>{{ visitor.dep_date }}</td>
+          <td>{{ visitor.departureTime }}</td>
+          <td>{{ visitor.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="showChangestatusButton" class="status-change">
+    <p>Manage status for selected visitor:</p>
+    <div class="button-container">
+      <button   class="status-button approve"(click)="onClickingChangeStatusButton('Approved')">Approve</button>
+      <button  class="status-button deny"  (click)="onClickingChangeStatusButton('denied')">Deny</button>
+    </div>
+  </div>
+
+  <!-- show qr code -->
+  <div *ngIf="qrCodeVisible"  class="qr-code-section">
+    <h3>Visitor QR Code: (Visible for 10 seconds only)</h3>
+    <img [src]="qrCodeImage" alt="QR Code">
+  </div>
+
+  <!-- QR Code Scanner -->
+  <div *ngIf="showScanner" class="qr-scanner">
+    <h2>Scan Visitor QR Code</h2>
+    <ngx-scanner-qrcode
+      #action="scanner"
+      (result)="onCodeResult($event)"
+    ></ngx-scanner-qrcode>
+    <p *ngIf="qrResultString">Scanned QR Code: {{ qrResultString }}</p> 
+  </div >
+
+
+  
+
+  
+</div>
